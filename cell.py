@@ -42,4 +42,4 @@ class Cell:
         return len(self._creatures)
 
     def __str__(self):
-        return str(self._coord) + ' F:' + str(self.get_food()) + ' C:' + str(len(self.creatures()))
+        return str(self._coord) + ':F(' + str(self.get_food()) + ')C(' + str(len(self.creatures())) + ') '

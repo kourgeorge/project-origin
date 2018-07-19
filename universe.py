@@ -8,15 +8,16 @@ import utils
 class Universe:
 
     def __init__(self, num_fathers):
-        self._mate_energy = 5
+        self._mate_energy = Creature.INITIAL_ENERGY/4
         self._move_energy = 1
+        self._fight_energy = 3
         self._space_size = 10
         self._space = Space(self._space_size)
 
         locations = np.random.choice(self._space_size, num_fathers)
+
         for i in range(num_fathers):
-            dna = np.random.normal(size=Creature.DNA_SIZE)
-            dna = utils.softmax(dna)
+            dna = utils.random_dna(Creature.DNA_SIZE)
             self.create_creature(dna, locations[i])
 
     def space(self):
@@ -69,6 +70,25 @@ class Universe:
     def kill(self, creature):
         cell = creature.cell()
         cell.remove_creature(creature)
+
+    def fight(self, creature):
+        if creature.energy() < self._fight_energy:
+            self.kill(creature)
+            return
+        opponent = creature.cell().get_mate_body(creature)
+        if opponent is None:
+            return
+        creature.reduce_energy(self._fight_energy)
+        fight_res = utils.roll_fight(creature.energy(), opponent.energy())
+        if fight_res > 0:
+            opponent.add_energy(creature.energy())
+            #opponent.add_energy(5)
+            self.kill(creature)
+        else:
+            creature.add_energy(opponent.energy())
+            #creature.add_energy(5)
+            self.kill(opponent)
+
 
     def get_state_in_coord(self, coord):
         return self.space().get_state_in_coord(coord)

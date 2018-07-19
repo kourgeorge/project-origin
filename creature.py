@@ -3,7 +3,8 @@ import utils
 
 class Creature:
     counter = 0
-    DNA_SIZE = 4
+    DNA_SIZE = 5
+    INITIAL_ENERGY = 50
 
     @staticmethod
     def allocate_id():
@@ -12,7 +13,7 @@ class Creature:
 
     def __init__(self, universe, dna, id):
         self._id = id
-        self._energy = 10
+        self._energy = Creature.INITIAL_ENERGY
         self._cell = None
         self._universe = universe
         self._dna = dna
@@ -42,6 +43,9 @@ class Creature:
     def mate(self):
         self._universe.mate_creature(self)
 
+    def fight(self):
+        self._universe.fight(self)
+
     def dna(self):
         return self._dna
 
@@ -53,15 +57,17 @@ class Creature:
             print('stop')
         space_state = self._universe.get_state_in_coord(self.coord())
         state = space_state + self.internal_state()
-        decision = self._brain.decide(state)
+        decision = self._brain.decide_on_action(state)
         if decision == 0:
-            self.eat()
-        if decision == 1:
-            self.mate()
-        if decision == 2:
             self.move(-1)
-        if decision == 3:
+        if decision == 1:
             self.move(1)
+        if decision == 2:
+            self.eat()
+        if decision == 3:
+            self.mate()
+        if decision== 4:
+            self.fight()
 
     def energy(self):
         return self._energy
@@ -76,4 +82,4 @@ class Creature:
         self._universe.kill(self)
 
     def __str__(self):
-        return str(self.id())
+        return str(self._id)

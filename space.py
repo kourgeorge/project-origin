@@ -27,7 +27,7 @@ class Space:
     def __str__(self):
         string = ''
         for cell in self._grid:
-            string = string + str(cell) + '\n'
+            string = string + str(cell) + ' '
 
         return string
 

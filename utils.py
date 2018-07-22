@@ -4,6 +4,7 @@ from sklearn.preprocessing import normalize
 
 def random_dna(dna_size):
     dna = np.random.normal(size=dna_size)
+    dna = [0.19330016,  0.19252654,  0.21730512,  0.21953546,  0.17733273]
     return softmax(dna)
 
 
@@ -17,7 +18,7 @@ def softmax(x):
     #x = normalize(np.reshape(x, (1, -1)), norm='l2')[0]
     scoreMatExp = np.exp(np.subtract(x,max(x)))
     if np.isinf(np.sum(scoreMatExp)):
-        x = 1
+        print('Inf in softmax')
     return scoreMatExp / scoreMatExp.sum(0)
 
 

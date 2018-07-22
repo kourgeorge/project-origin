@@ -10,9 +10,10 @@ class Universe:
     def __init__(self, num_fathers):
         self._mate_energy = Creature.INITIAL_ENERGY/4
         self._move_energy = 1
-        self._fight_energy = 3
+        self._fight_energy = 5
         self._space_size = 10
         self._space = Space(self._space_size)
+        self__stats = {}
 
         locations = np.random.choice(self._space_size, num_fathers)
 
@@ -28,12 +29,12 @@ class Universe:
         creature.add_energy(available_food)
         creature.cell().remove_food(available_food)
 
-    def add_creature(self, location, creature):
-        if self.is_legal_location(location):
-            self.space().grid()[location].insert_creature(creature)
-
-    def is_legal_location(self, location):
-        return 0 < location < self._space_size
+    # def add_creature(self, location, creature):
+    #     if self.is_legal_location(location):
+    #         self.space().grid()[location].insert_creature(creature)
+    #
+    # def is_legal_location(self, location):
+    #     return 0 < location < self._space_size
 
     def move_creature(self, creature, direction):
         if creature.energy() < self._mate_energy:
@@ -106,7 +107,8 @@ class Universe:
         num_iterations = 1
         food_cells = np.random.choice(self._space_size, num_iterations)
         for i in range(num_iterations):
-            self.space().grid()[food_cells[i]].add_food(5)
+            self.space().grid()[food_cells[i]].add_food(1)
 
     def get_all_creatures(self):
         return self.space().get_all_creatures()
+

@@ -1,5 +1,5 @@
 from brain import Brain
-import utils
+
 
 class Creature:
     counter = 0
@@ -66,7 +66,8 @@ class Creature:
             self.eat()
         if decision == 3:
             self.mate()
-        if decision== 4:
+        if decision == 4:
+            #self.reduce_energy(1)
             self.fight()
 
     def energy(self):

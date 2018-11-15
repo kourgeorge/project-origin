@@ -41,15 +41,15 @@ The scientific question this simulation aims at is the following:
 Namely, being put in a challenging environment, can the state of the art AI, using trial and error and evolution, 
 learn how to survive?
 Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
-Would they learn using their actions (moving, mating, and producing sound) and "understand" the effect of the these actions on
-their own survival and on the environment? 
+Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
+Would they "understand" the effect of the these actions on their own survival and on the environment? 
 Would they develop non-obvious behavior showing their understanding on the effect of time and age? 
 
 Answering these questions, by demonstrating how complicated skills can be developed by artificial agents in a simulation
 would shed some light and take us closer toward understanding the mechanics and the true nature of our intelligence.
 It may even reveal some insights about more abstract nature and skills that animal and humans posses, like socializing, communication and even love. 
 
-For instance, assume that the physics of the simulation dictates that two creatures should be in specific place and perform 
+To make this more tangible consider the following examples: 
+- Assume that the physics of the simulation dictates that two creatures should be in specific place and perform 
 a specific operation simultaneously in order to both get reward, would they learn to do so?
-Another example, if the physics of the environment, that doing an action in a specific age or a specific time cycle of the universe, 
-could result in a great reward, would make them "wait" to this age to do the action?
+- If doing an action in a specific age or a specific time cycle of the universe, could result in a great reward, would make them "wait" to this age to do the action?

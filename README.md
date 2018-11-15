@@ -33,3 +33,18 @@ While still have no morphology and form, mangos have a brain, sensors and set of
 At each time step, they see their surrounding environment and select an action.
 The creatures can move in the grid, eat, mate and fight.
 Their destiny is controlled by the universe physics, but mainly by their intelligence which dictates their actions, interactions and skills.
+
+
+## Research Questions
+The scientific question this simulation aims at is the following: 
+**Can we create intelligent creatures that can develop survival skills such as collaboration and communication?**
+Namely, being put in a challenging environment, can AI, using trial and error and evolution, learn how to survive.
+Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
+Would they learn using their actions (moving, mating, and producing sound) and "understand" the effect of the these actions on
+their own survival and on the environment? Would they develop non-obvious behavior for the end of survival?
+Would they understand the effect of time? 
+
+For instance, assume that the physics of the simulation dictates that two creatures should be in specific place and perform 
+a specific operation simultaneously in order to both get reward, would they learn to do so?
+Another example, if the physics of the environment, that doing an action in a specific age or a specific time cycle of the universe, 
+could result in a great reward, would make them "wait" to this age to do the action?

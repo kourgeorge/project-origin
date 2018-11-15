@@ -74,3 +74,4 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 - While currently, space is a 1-D, in the future it should allow supporting different types of spaces.
 - Controlling biological aspects of physics such as mating rule, evolution, and intelligence inheritance.
 - It should allow extending the creature's capabilities, such as adding vocal communication and even love, hate, and motivation.
+- Use dynamic graph deep learning framework such as TensorFlow 2.0 or Pytorch

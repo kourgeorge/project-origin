@@ -7,24 +7,29 @@ import utils
 
 class Universe:
 
-    def __init__(self, num_fathers):
+    def __init__(self, num_fathers, space_size):
         self._mate_energy = Creature.INITIAL_ENERGY/4
         self._move_energy = 1
         self._fight_energy = 5
-        self._space_size = 10
+        self._space_size = space_size
         self._space = Space(self._space_size)
-        self__stats = {}
+        self._creature_maturity_age = 10
 
         locations = np.random.choice(self._space_size, num_fathers)
 
         for i in range(num_fathers):
             dna = utils.random_dna(Creature.DNA_SIZE)
-            self.create_creature(dna, locations[i])
+            self.create_creature(dna, locations[i], None)
 
     def space(self):
         return self._space
 
     def feed(self, creature):
+
+        if creature.energy() < self._move_energy:
+            self.kill(creature)
+            return
+        creature.reduce_energy(self._move_energy)
         available_food = creature.cell().get_food()
         creature.add_energy(available_food)
         creature.cell().remove_food(available_food)
@@ -37,7 +42,7 @@ class Universe:
     #     return 0 < location < self._space_size
 
     def move_creature(self, creature, direction):
-        if creature.energy() < self._mate_energy:
+        if creature.energy() < self._move_energy:
             self.kill(creature)
             return
         creature.reduce_energy(self._move_energy)
@@ -61,12 +66,23 @@ class Universe:
         if creature.energy() < self._mate_energy:
             self.kill(creature)
             return
+        if creature.age() < self._creature_maturity_age:
+            creature.reduce_energy(self._move_energy)
+            return
+
         creature.reduce_energy(self._mate_energy)
         mate_body = creature.cell().get_mate_body(creature)
         if mate_body is None:
             return
+
+        # Selecting the dominant parent, based on the energy level, to copy the wisdom from
+        dominant_parent = creature
+        if mate_body.energy() > creature.energy():
+            dominant_parent = mate_body
+
         new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
-        self.create_creature(new_dna, creature.coord())
+        self.create_creature(new_dna, creature.coord(), dominant_parent.id())
+
 
     def kill(self, creature):
         cell = creature.cell()
@@ -94,8 +110,8 @@ class Universe:
     def get_state_in_coord(self, coord):
         return self.space().get_state_in_coord(coord)
 
-    def create_creature(self, dna, coord):
-        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id())
+    def create_creature(self, dna, coord, parent):
+        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), parent=parent)
         self.space().grid()[coord].insert_creature(descendant)
 
     def pass_time(self):
@@ -103,12 +119,13 @@ class Universe:
             for creature in cell.creatures():
                 creature.act()
 
-    def give_food(self):
-        num_iterations = 1
-        food_cells = np.random.choice(self._space_size, num_iterations)
-        for i in range(num_iterations):
+    def give_food(self, amount):
+        food_cells = np.random.choice(self._space_size, amount)
+        for i in range(amount):
             self.space().grid()[food_cells[i]].add_food(1)
 
     def get_all_creatures(self):
         return self.space().get_all_creatures()
 
+    def num_creatures(self):
+        return len(self.get_all_creatures())

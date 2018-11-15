@@ -9,12 +9,12 @@ However, contemplating the term "artificial intelligence" in my view means much 
 It may refer to Intelligent creatures or subjects that live in some universe and want to survive using their intelligence and skills.
 Depending on the universe rules and physics they live in, these creatures may develop complicated skills such as collaboration and communication.
 
-In the last few years, with the emerge of deep learning and reinforcement learning, there has been a great effort to develop environments
+In the last few years, with the emerging interest in deep learning and reinforcement learning, there has been a great effort to develop environments
 that can be used to demonstrate the ability of AI.
-Nevertheless, most of these simulations are game environment, see for instance the [https://gym.openai.com/](OpenAI gym).
+Nevertheless, most of these simulations are game environment, see for instance the (OpenAI gym)[https://gym.openai.com/].
 However, the limitation of game environments is that the actions of the agents are limited and its goal is too strict.
 While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
-complex behavior, social behavior and survival skills.
+complex behavior, social behavior, and survival skills.
 This simulation aims at developing a sample environment to satisfy this unmet need.
 It is the first attempt to develop an environment that allows investigating how intelligence may be developed under a specific physics.
 How it can learn to survive and react to signals from the environment using reinforcement learning.
@@ -24,7 +24,7 @@ An algorithm (a model) can develop such skills in the same way algorithm learn t
 Different universes may have different rules which we call *physics*. 
 The creatures may have different senses and a different set of actions.
 The most important aspect of the creature is its brain which controls its actions given its internal and external state.
-It is interesting to see how different intelligence and behaviours can be developed under different physics.
+It is interesting to see how different intelligence and behaviors can be developed under different physics.
 Intelligence may be affected and controlled not only by the environment physics but also by the creature physical structure, sensors, and actions.
 
 The **"life"** universe is made simple without complex rules and with no graphics, however, it is built and visioned to be easy to imagine.
@@ -40,7 +40,7 @@ For instance, "Mangolid", "Mangodo" and "Mangodino" are all valid names for mang
 While still have no morphology and form, mangos have a brain, sensors and set of actions.
 At each time step, they see their surrounding environment and select an action.
 The creatures can move in the grid, eat, mate and fight.
-Their destiny is controlled by the universe physics, but mainly by their intelligence which dictates their actions, interactions and skills.
+Their destiny is controlled by the universe's physics, but mainly by their intelligence which dictates their actions, interactions and skills.
 
 In addition to the thrill of developing intelligent creators, life allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
 
@@ -51,12 +51,12 @@ Namely, being put in a challenging environment, can the state of the art AI, usi
 learn how to survive?
 Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
 Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
-Would they "understand" the effect of the these actions on their own survival and on the environment? 
-Would they develop non-obvious behavior showing their understanding on the effect of time and age? 
+Would they "understand" the effect of these actions on their own survival and on the environment? 
+Would they develop non-obvious behavior showing their understanding of the effect of time and age? 
 
 Answering these questions, by demonstrating how complicated skills can be developed by artificial agents in a simulation
 would shed some light and take us closer toward understanding the mechanics and the true nature of our intelligence.
-It may even reveal some insights about more abstract nature and skills that animal and humans posses, like socializing, communication and even love. 
+It may even reveal some insights about more abstract nature and skills that animal and humans possess, like socializing, communication and even love. 
 
 To make this more tangible consider the following examples: 
 - Assume that the physics of the simulation dictates that two creatures should be in specific place and perform 

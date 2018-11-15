@@ -1,6 +1,3 @@
-# Project Origin
-### A simulation of the universe
-
 When thinking about Artificial Intelligence (AI) what most people in the field have in mind is machine learning models and 
 heuristics to solve problems that are complex enough that their solution cannot be written using an exact set of steps but 
 should be learned from data or from interaction with the environment.

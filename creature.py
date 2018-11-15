@@ -72,7 +72,7 @@ class Creature:
 
         self._age += 1
         previous_energe = self._energy
-        space_state = self._universe.get_state_in_coord(self.coord())
+        space_state = self._universe.get_surroundings(self.coord())
         state = space_state + self.internal_state()
         self.obs.append(state)
         decision = self._brain.act(state)

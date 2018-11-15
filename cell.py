@@ -12,7 +12,6 @@ class Cell:
         creature.update_cell(None)
         self._creatures.remove(creature)
 
-
     def add_food(self, amount):
         self._food += amount
 

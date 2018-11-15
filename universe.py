@@ -16,8 +16,43 @@ class Universe:
             dna = utils.random_dna(Config.ConfigBiology.DNA_SIZE)
             self.create_creature(dna, fathers_locations[i], None)
 
+    # Space Management
     def space(self):
         return self._space
+
+    def get_surroundings(self, coord):
+        return self._space.get_state_in_coord(coord)
+
+    # Time Management
+    def pass_time(self):
+        self._time += 1
+        if self._time < Config.ConfigPhysics.MAX_TIME:
+            for cell in self.space().grid():
+                for creature in cell.creatures():
+                    creature.act()
+            return self._time
+        else:
+            return None
+
+    def get_time(self):
+        return self._time
+
+    # Food Supply management
+    def give_food(self, amount):
+        food_cells = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, amount)
+        for i in range(amount):
+            self.space().grid()[food_cells[i]].add_food(1)
+
+    # Creatures Control
+    def create_creature(self, dna, coord, parent):
+        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), parent=parent)
+        self.space().grid()[coord].insert_creature(descendant)
+
+    def get_all_creatures(self):
+        return self.space().get_all_creatures()
+
+    def num_creatures(self):
+        return len(self.get_all_creatures())
 
     def feed(self, creature):
         if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
@@ -91,33 +126,3 @@ class Universe:
             # creature.add_energy(5)
             self.kill(opponent)
 
-    def get_state_in_coord(self, coord):
-        return self.space().get_state_in_coord(coord)
-
-    def create_creature(self, dna, coord, parent):
-        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), parent=parent)
-        self.space().grid()[coord].insert_creature(descendant)
-
-    def pass_time(self):
-        self._time += 1
-        if self._time < Config.ConfigPhysics.MAX_TIME:
-            for cell in self.space().grid():
-                for creature in cell.creatures():
-                    creature.act()
-            return self._time
-        else:
-            return None
-
-    def get_time(self):
-        return self._time
-
-    def give_food(self, amount):
-        food_cells = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, amount)
-        for i in range(amount):
-            self.space().grid()[food_cells[i]].add_food(1)
-
-    def get_all_creatures(self):
-        return self.space().get_all_creatures()
-
-    def num_creatures(self):
-        return len(self.get_all_creatures())

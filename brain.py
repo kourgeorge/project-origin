@@ -2,7 +2,7 @@ __author__ = 'gkour'
 
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
-import brain_utils as brain_utils
+import utils as utils
 import numpy as np
 
 
@@ -36,7 +36,7 @@ class Brain:
         # Initialize Variables
         Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope)))
         if copy_from is not None:
-            Brain.sess.run(brain_utils.update_target_graph(copy_from, scope))
+            Brain.sess.run(utils.update_target_graph(copy_from, scope))
 
         self.saver = tf.train.Saver()
         self.merged = tf.summary.merge_all()
@@ -73,7 +73,7 @@ class Brain:
 
     def act(self, obs):
         action_dist = Brain.sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})
-        action = brain_utils.dist_selection(action_dist[0])
+        action = utils.dist_selection(action_dist[0])
         # action = utils.epsilon_greedy(0.01, action_dist[0])
         return action
 

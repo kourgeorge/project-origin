@@ -1,5 +1,4 @@
 from brain import Brain
-import brain_utils
 import log
 from config import Config
 

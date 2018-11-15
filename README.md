@@ -1,3 +1,5 @@
+## Motivation
+
 When thinking about Artificial Intelligence (AI) what most people in the field have in mind is machine learning models and 
 heuristics to solve problems that are complex enough that their solution cannot be written using an exact set of steps but 
 should be learned from data or from interaction with the environment.
@@ -12,8 +14,19 @@ Nevertheless, most of these simulations are game environment, see for instance, 
 However, the limitation of game environments is that the actions of the agents are limited and its goal is too strict.
 While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
 complex behavior, social behavior, and survival skills.
-Progect Origin aims at developing a sample environment to satisfy this unmet need.
-It is the first attempt to develop an environment that allows investigating how intelligence may be developed under a specific physics.
+
+**Can we create intelligent creatures that can develop survival skills such as collaboration and communication?**
+Namely, being put in a challenging environment, can the state of the art AI, using trial and error and evolution, 
+learn how to survive?
+Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
+Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
+Would they "understand" the effect of these actions on their own survival and on the environment? 
+Would they develop non-obvious behavior showing their understanding of the effect of time and age? 
+
+
+## The Story of Project Origin
+
+Progect Origin is the first attempt to develop an environment that allows investigating how intelligence may be developed under a specific physics.
 How it can learn to survive and react to signals from the environment using reinforcement learning.
 An algorithm (a model) can develop such skills in the same way algorithm learn to play Atari 2600 games. 
 
@@ -42,15 +55,6 @@ Their destiny is controlled by the universe's physics, but mainly by their intel
 
 In addition to the thrill of developing intelligent creators, origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
 
-## Research Questions
-The scientific question this simulation aims at is the following: 
-**Can we create intelligent creatures that can develop survival skills such as collaboration and communication?**
-Namely, being put in a challenging environment, can the state of the art AI, using trial and error and evolution, 
-learn how to survive?
-Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
-Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
-Would they "understand" the effect of these actions on their own survival and on the environment? 
-Would they develop non-obvious behavior showing their understanding of the effect of time and age? 
 
 Answering these questions, by demonstrating how complicated skills can be developed by artificial agents in a simulation
 would shed some light and take us closer toward understanding the mechanics and the true nature of our intelligence.
@@ -61,7 +65,7 @@ To make these ideas more tangible consider the following examples:
 a specific operation simultaneously in order to both get reward, would they learn to do so?
 - If doing an action in a specific age or a specific time cycle of the universe, could result in a great reward, would make them "wait" to this age to do the action?
 
-## The vision of Project Origin
+### The future of Project Origin
 This project is a seed for a far-reaching vision. In the future, it should allow developing a wide variety of universes. Below are some examples of future capabilities of project Origin:
 
 - Project Origin should allow extending the physics of the environment easily and maybe incorporate realistic physical simulators.

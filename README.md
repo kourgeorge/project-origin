@@ -1,23 +1,31 @@
 # Project "life"
 ### A simulation of the universe
 
-Today, when we think about Artificial Intelligence (AI) what we have in mind is machine learning models and heuristics to solve problems that are complex enough that their solution cannot be written using an exact set of steps but should be learned from data or from interaction with the environment.
-In this narrow view, AI is a collection of procedures that can be seen as a smart extension of functions (in classical computer programs) that we can be used to make our life easier.
-However, contemplating the term artificial intelligence one appreciates the fact that it actually means much more. 
+When thinking about Artificial Intelligence (AI) what most people in the field have in mind is machine learning models and 
+heuristics to solve problems that are complex enough that their solution cannot be written using an exact set of steps but 
+should be learned from data or from interaction with the environment.
+In this narrow view, AI is a collection of procedures that can be seen as a smart extension of functions (in classical computer programs) that we can employ to make our life easier.
+However, contemplating the term "artificial intelligence" in my view means much more. 
 It may refer to Intelligent creatures or subjects that live in some universe and want to survive using their intelligence and skills.
+Depending on the universe rules and physics they live in, these creatures may develop complicated skills such as collaboration and communication.
 
-Depending on the universe rules and physics they live in, these creatures may develop complicated skills and even collaborations and maybe would need a system of communication.
-*In addition to the thrill of developing intelligent creators, we as humans can observe the behavior of these creatures and maybe learn something about ourselves.*
-
-Similar to a reinforcement algorithm learning to play Atari 2600 games, an algorithm (a model) may be able to learn how to survive and flourish in a given environment. 
-Universes are environments that creatures live in, adapt to and succeed.
-Different universes may have different rules which we call physics. 
-The creatures may have different senses and a different set of actions.
-It is interesting to see how different intelligence can be developed under different physics.
-Intelligence may be affected and controlled not only by the environment physics but also by the creature physical structure, sensors, and actions.
-
-life is the first attempt to develop such an environment to allow investigating how intelligence may be developed under a specific physics.
+In the last few years, with the emerge of deep learning and reinforcement learning, there has been a great effort to develop environments
+that can be used to demonstrate the ability of AI.
+Nevertheless, most of these simulations are game environment, see for instance the [https://gym.openai.com/](OpenAI gym).
+However, the limitation of game environments is that the actions of the agents are limited and its goal is too strict.
+While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
+complex behavior, social behavior and survival skills.
+This simulation aims at developing a sample environment to satisfy this unmet need.
+It is the first attempt to develop an environment that allows investigating how intelligence may be developed under a specific physics.
 How it can learn to survive and react to signals from the environment using reinforcement learning.
+An algorithm (a model) can develop such skills in the same way algorithm learn to play Atari 2600 games. 
+
+*Universes* are environments that *creatures* live in, adapt to, flourish or extinct.
+Different universes may have different rules which we call *physics*. 
+The creatures may have different senses and a different set of actions.
+The most important aspect of the creature is its brain which controls its actions given its internal and external state.
+It is interesting to see how different intelligence and behaviours can be developed under different physics.
+Intelligence may be affected and controlled not only by the environment physics but also by the creature physical structure, sensors, and actions.
 
 The **"life"** universe is made simple without complex rules and with no graphics, however, it is built and visioned to be easy to imagine.
 life has all the aspect that any universe has: Space, time, physics and chance.
@@ -27,13 +35,14 @@ The physics (rules), time and chance are controlled by the universe. The univers
 
 The creatures in life are called "Mangos", viz. "Mango" is the name of their race.
 Mangos may have private names which must have the "mango" prefix. 
-For instance, "mangolid", "mangodo" and "mangodino" are all valid names for mangos.
+For instance, "Mangolid", "Mangodo" and "Mangodino" are all valid names for mangos.
 
 While still have no morphology and form, mangos have a brain, sensors and set of actions.
 At each time step, they see their surrounding environment and select an action.
 The creatures can move in the grid, eat, mate and fight.
 Their destiny is controlled by the universe physics, but mainly by their intelligence which dictates their actions, interactions and skills.
 
+In addition to the thrill of developing intelligent creators, life allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
 
 ## Research Questions
 The scientific question this simulation aims at is the following: 

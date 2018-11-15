@@ -19,7 +19,7 @@ def main():
         if universe.get_time() % 10 == 0:
 
             print(universe.space(), end='\t')
-            print("action: dist:" + str(np.array(log.action_log)/sum(log.action_log)))
+            print("[LREMF]:" + str(np.array(log.action_log)/sum(log.action_log)))
             # energy = [creature.energy() for creature in universe.get_all_creatures()]
             # print(np.histogram(energy))
 

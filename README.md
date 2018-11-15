@@ -21,7 +21,8 @@ learn how to survive?
 Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
 Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
 Would they "understand" the effect of these actions on their own survival and on the environment? 
-Would they develop non-obvious behavior showing their understanding of the effect of time and age? 
+Would they develop non-obvious behavior showing their understanding of the effect of time and age?
+How fast can they adapt to changes in the environment that change the game rule like epidemic or dearth?  
 
 
 ## The Story of Project Origin
@@ -74,4 +75,7 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 - While currently, space is a 1-D, in the future it should allow supporting different types of spaces.
 - Controlling biological aspects of physics such as mating rule, evolution, and intelligence inheritance.
 - It should allow extending the creature's capabilities, such as adding vocal communication and even love, hate, and motivation.
+- It should allow defining dynamic natures, like periods of dearth and epidemics. 
+- Online visualization of the population and environment statistics such as creatures locations actions distribution and food location.
+- Online control of nature to observe the effect of the population. 
 - Use dynamic graph deep learning framework such as TensorFlow 2.0 or Pytorch

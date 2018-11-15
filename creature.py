@@ -1,12 +1,11 @@
 from brain import Brain
-from Config import Config
 import brain_utils
 import log
+from config import Config
+
 
 class Creature:
     counter = 0
-    DNA_SIZE = 5
-    INITIAL_ENERGY = 50
 
     @staticmethod
     def allocate_id():
@@ -15,22 +14,31 @@ class Creature:
 
     def __init__(self, universe, dna, id, parent):
         self._id = id
-        self._energy = Creature.INITIAL_ENERGY
+        self._name = str(id) + Config.ConfigBiology.RACE_NAME
+        self._dna = dna
+        self._age = 0
+        self._energy = Config.ConfigBiology.INITIAL_ENERGY
         self._cell = None
         self._universe = universe
-        self._dna = dna
-        self._brain = Brain(optimizer=Config.optimizer, s_size=Config.state_size, action_size=Config.action_size, h_size=128, scope=str(id)+'mango')
-        self._age = 0
-
-        if parent is not None:
-            Config.sess.run(brain_utils.update_target_graph(str(parent)+'mango', str(id)+'mango'))
-
+        self._brain = Brain(lr=Config.ConfigBrain.LEARNING_RATE, s_size=Config.ConfigBrain.STATE_SIZE,
+                            action_size=Config.ConfigBrain.ACTION_SIZE, h_size=Config.ConfigBrain.HIDDEN_LAYER_SIZE,
+                            scope=self._name, copy_from=None if parent is None else parent.name())
         self.obs = []
         self.acts = []
         self.rews = []
 
-    def eat(self):
-        self._universe.feed(self)
+    # Identity
+    def id(self):
+        return self._id
+
+    def name(self):
+        return self._name
+
+    def age(self):
+        return self._age
+
+    def dna(self):
+        return self._dna
 
     def cell(self):
         return self._cell
@@ -41,32 +49,24 @@ class Creature:
     def coord(self):
         return self._cell.get_coord()
 
+    def energy(self):
+        return self._energy
+
     def add_energy(self, amount):
         self._energy += amount
 
-    def move(self, direction):
-        self._universe.move_creature(self, direction)
-
-    def id(self):
-        return self._id
-
-    def age(self):
-        return self._age
-
-    def mate(self):
-        self._universe.mate_creature(self)
-
-    def fight(self):
-        self._universe.fight(self)
-
-    def dna(self):
-        return self._dna
+    def reduce_energy(self, amount):
+        if self._energy < amount:
+            self.die()
+            return
+        self._energy -= amount
 
     def internal_state(self):
-        return [self._energy]
+        return [self._energy, self._age]
 
+    # Actions
     def act(self):
-        if self._age > 20:
+        if self._age > Config.ConfigBiology.MAX_AGE:
             self.die()
             return
 
@@ -75,7 +75,7 @@ class Creature:
         space_state = self._universe.get_state_in_coord(self.coord())
         state = space_state + self.internal_state()
         self.obs.append(state)
-        decision = self._brain.act(Config.sess, state)
+        decision = self._brain.act(state)
         if decision == 0:
             log.action_log[0] += 1
             self.move(-1)
@@ -90,27 +90,31 @@ class Creature:
             self.mate()
         if decision == 4:
             log.action_log[4] += 1
-            #self.reduce_energy(1)
             self.fight()
 
         self.acts.append(decision)
         self.rews.append(self.energy() - previous_energe)
 
-        if self._age % 5 == 0:
-            self._brain.train(Config.sess, self.obs, self.acts, self.rews)
-            self.obs, self.acts, self.rews = [], [], []
+        if self._age % Config.ConfigBiology.WISDOM_INTERVAL == 0:
+            self.smarten()
 
-    def energy(self):
-        return self._energy
+    def move(self, direction):
+        self._universe.move_creature(self, direction)
 
-    def reduce_energy(self, amount):
-        if self._energy < amount:
-            self.die()
-            return
-        self._energy -= amount
+    def eat(self):
+        self._universe.feed(self)
+
+    def mate(self):
+        self._universe.mate_creature(self)
+
+    def fight(self):
+        self._universe.fight(self)
+
+    def smarten(self):
+        self._brain.train(self.obs, self.acts, self.rews)
+        self.obs, self.acts, self.rews = [], [], []
 
     def die(self):
-        # b_rews = (b_rews - np.mean(b_rews)) / (np.std(b_rews) + 1e-10)
         self._universe.kill(self)
 
     def __str__(self):

@@ -24,6 +24,9 @@ class Space:
 
         return flat_list
 
+    def get_food_distribution(self):
+        return [cell.get_food() for cell in self._grid]
+
     def __str__(self):
         string = ''
         for cell in self._grid:

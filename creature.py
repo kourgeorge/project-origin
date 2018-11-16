@@ -21,7 +21,7 @@ class Creature:
         self._universe = universe
         self._brain = Brain(lr=Config.ConfigBrain.LEARNING_RATE, s_size=Config.ConfigBrain.STATE_SIZE,
                             action_size=Config.ConfigBrain.ACTION_SIZE, h_size=Config.ConfigBrain.HIDDEN_LAYER_SIZE,
-                            scope=self._name, copy_from=None if parent is None else parent.name())
+                            scope=self._name, copy_from_scope=None if parent is None else parent.name())
         self.obs = []
         self.acts = []
         self.rews = []
@@ -56,7 +56,7 @@ class Creature:
 
     def reduce_energy(self, amount):
         if self._energy < amount:
-            self.die()
+            print('An error - reduce energy called when there is no enough energy')
             return
         self._energy -= amount
 
@@ -66,7 +66,7 @@ class Creature:
     # Actions
     def act(self):
         if self._age > Config.ConfigBiology.MAX_AGE:
-            self.die()
+            self._universe.kill(self, cause='elderly')
             return
 
         self._age += 1
@@ -94,8 +94,8 @@ class Creature:
         self.acts.append(decision)
         self.rews.append(self.energy() - previous_energe)
 
-        if self._age % Config.ConfigBiology.WISDOM_INTERVAL == 0:
-            self.smarten()
+        # if self._age % Config.ConfigBiology.WISDOM_INTERVAL == 0:
+        #     self.smarten()
 
     def move(self, direction):
         self._universe.move_creature(self, direction)
@@ -112,9 +112,6 @@ class Creature:
     def smarten(self):
         self._brain.train(self.obs, self.acts, self.rews)
         self.obs, self.acts, self.rews = [], [], []
-
-    def die(self):
-        self._universe.kill(self)
 
     def __str__(self):
         return str(self._id)

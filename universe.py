@@ -4,6 +4,7 @@ from evolution import Evolution
 from config import Config
 import numpy as np
 import utils
+import log
 
 
 class Universe:
@@ -51,6 +52,9 @@ class Universe:
     def get_all_creatures(self):
         return self.space().get_all_creatures()
 
+    def get_food_distribution(self):
+        return self.space().get_food_distribution()
+
     def num_creatures(self):
         return len(self.get_all_creatures())
 
@@ -81,8 +85,6 @@ class Universe:
             self.space().grid()[current_coord].remove_creature(creature)
             self.space().grid()[current_coord - 1].insert_creature(creature)
 
-        creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
-
     def mate_creature(self, creature):
         if creature.energy() < Config.ConfigBiology.MATE_ENERGY:
             self.kill(creature)
@@ -92,7 +94,7 @@ class Universe:
             return
 
         creature.reduce_energy(Config.ConfigBiology.MATE_ENERGY)
-        mate_body = creature.cell().get_mate_body(creature)
+        mate_body = creature.cell().get_nearby_creature(creature)
         if mate_body is None:
             return
 
@@ -104,25 +106,30 @@ class Universe:
         new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
         self.create_creature(new_dna, creature.coord(), dominant_parent)
 
-    def kill(self, creature):
+    def kill(self, creature, cause='fatigue'):
         cell = creature.cell()
         cell.remove_creature(creature)
+        if cause == 'fatigue':
+            log.death_cause[0] += 1
+        if cause == 'fight':
+            log.death_cause[1] += 1
+        if cause == 'elderly':
+            log.death_cause[2] +=1
 
     def fight(self, creature):
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
             self.kill(creature)
             return
-        opponent = creature.cell().get_mate_body(creature)
+        creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
+        opponent = creature.cell().get_nearby_creature(creature)
         if opponent is None:
             return
-        creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
         fight_res = utils.roll_fight(creature.energy(), opponent.energy())
         if fight_res > 0:
             opponent.add_energy(creature.energy())
             # opponent.add_energy(5)
-            self.kill(creature)
+            self.kill(creature, 'fight')
         else:
             creature.add_energy(opponent.energy())
             # creature.add_energy(5)
-            self.kill(opponent)
-
+            self.kill(opponent, 'fight')

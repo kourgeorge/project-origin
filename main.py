@@ -1,29 +1,37 @@
 from universe import Universe
-import tensorflow as tf
+from creature import Creature
 import numpy as np
 import log
 
 
 def main():
-
     universe = Universe()
 
     while universe.pass_time():
 
-        universe.give_food(1)
-
-        print(str(universe.num_creatures()), end=' ')
         if universe.num_creatures() == 0:
             return
 
-        if universe.get_time() % 10 == 0:
+        current_time = universe.get_time()
+        universe.give_food(1)
 
-            print(universe.space(), end='\t')
-            print("[LREMF]:" + str(np.array(log.action_log)/sum(log.action_log)))
+        print(str(current_time) + ' - Population: ' + str(universe.num_creatures()), end='\t - ')
+        print('IDs:' + str(Creature.counter), end='\t - ')
+        mean_age = np.round(np.mean([creature.age() for creature in universe.get_all_creatures()]))
+        print('Mean age: ' + str(mean_age), end='\t - ')
+        print('Death Cause [Fa Fi E]: ' + str(log.death_cause))
+        log.death_cause = [0, 0, 0]
+
+        if current_time % 10 == 0:
+            # print(universe.space(), end='\t')
+            print('Food Supply: ' + str(universe.get_food_distribution()))
+            print('Action Dist [LREMF]: ' + str(np.round(np.array(log.action_log) / sum(log.action_log), 2)))
             # energy = [creature.energy() for creature in universe.get_all_creatures()]
             # print(np.histogram(energy))
 
-        #if (len(universe.get_all_creatures())) == 1:
+            log.action_log = [0, 0, 0, 0, 0]
+
+        # if (len(universe.get_all_creatures())) == 1:
         #    print(universe.get_all_creatures()[0].dna())
 
 

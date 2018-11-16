@@ -10,7 +10,7 @@ class Brain:
     tf.reset_default_graph()
     sess = tf.Session()
 
-    def __init__(self, lr, s_size, action_size, h_size, scope, copy_from):
+    def __init__(self, lr, s_size, action_size, h_size, scope, copy_from_scope):
         self._s_size = s_size
         self._action_size = action_size
         self._h_size = h_size
@@ -35,8 +35,8 @@ class Brain:
 
         # Initialize Variables
         Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope)))
-        if copy_from is not None:
-            Brain.sess.run(utils.update_target_graph(copy_from, scope))
+        if copy_from_scope is not None:
+            Brain.sess.run(utils.update_target_graph(copy_from_scope, scope))
 
         self.saver = tf.train.Saver()
         self.merged = tf.summary.merge_all()

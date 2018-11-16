@@ -13,7 +13,7 @@ class Config:
         DNA_SIZE = 5
         MOVE_ENERGY = 1
         FIGHT_ENERGY = 5
-        INITIAL_ENERGY = 50
+        INITIAL_ENERGY = 20
         MATE_ENERGY = INITIAL_ENERGY / 4
         MATURITY_AGE = 5
         WISDOM_INTERVAL = 5

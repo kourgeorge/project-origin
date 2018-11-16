@@ -27,7 +27,7 @@ class Cell:
     def get_coord(self):
         return self._coord
 
-    def get_mate_body(self, creature):
+    def get_nearby_creature(self, creature):
         if len(self._creatures) < 2:
             return None
         for i in range(len(self._creatures)):

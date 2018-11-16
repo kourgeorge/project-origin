@@ -66,6 +66,13 @@ To make these ideas more tangible consider the following examples:
 a specific operation simultaneously in order to both get reward, would they learn to do so?
 - If doing an action in a specific age or a specific time cycle of the universe, could result in a great reward, would make them "wait" to this age to do the action?
 
+## Widening the horizons of Intelligence research
+In the current implementation of Project Origin, there are aspects that in other game environment is not possible or not relevant, for instance, the combination of Evolution and Learning for development and survival in the race.
+In the current implementation of Origin DNA can affect some biological aspects of the creature, for example, changing its sight range.
+While all implementations of agents playing games, has a constant input state size, in Origin different policy graphs can be implemented with a different number of input parameters or even different inner structure of state input or action set output and parameters.
+In addition, the neural network train and improve using backpropagation during the lifetime of the creature.
+This allows investigating how both evolution and intelligence contribute to the creation of highly skilled creatures.
+
 ### The future of Project Origin
 This project is a seed for a far-reaching vision. In the future, it should allow developing a wide variety of universes. Below are some examples of future capabilities of project Origin:
 

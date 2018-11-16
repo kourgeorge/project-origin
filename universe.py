@@ -27,7 +27,7 @@ class Universe:
     # Time Management
     def pass_time(self):
         self._time += 1
-        if self._time < Config.ConfigPhysics.MAX_TIME:
+        if self._time < Config.ConfigPhysics.ETERNITY:
             for cell in self.space().grid():
                 for creature in cell.creatures():
                     creature.act()

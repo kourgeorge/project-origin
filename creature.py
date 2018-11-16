@@ -65,7 +65,7 @@ class Creature:
 
     # Actions
     def act(self):
-        if self._age > Config.ConfigBiology.MAX_AGE:
+        if self._age > Config.ConfigBiology.DYING_AGE:
             self._universe.kill(self, cause='elderly')
             return
 
@@ -90,12 +90,15 @@ class Creature:
         if decision == 4:
             log.action_log[4] += 1
             self.fight()
+        # if decision == 5:
+        #     log.action_log[5] += 1
+        #     self.smarten()
 
         self.acts.append(decision)
         self.rews.append(self.energy() - previous_energe)
 
-        # if self._age % Config.ConfigBiology.WISDOM_INTERVAL == 0:
-        #     self.smarten()
+        if self._age % Config.ConfigBiology.WISDOM_INTERVAL == 0:
+           self.smarten()
 
     def move(self, direction):
         self._universe.move_creature(self, direction)

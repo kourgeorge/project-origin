@@ -1,5 +1,6 @@
 from universe import Universe
 from creature import Creature
+from config import Config
 import numpy as np
 import log
 
@@ -13,7 +14,7 @@ def main():
             return
 
         current_time = universe.get_time()
-        universe.give_food(1)
+        universe.give_food(Config.ConfigPhysics.NUM_FATHERS)
 
         print(str(current_time) + ' - Population: ' + str(universe.num_creatures()), end='\t - ')
         print('IDs:' + str(Creature.counter), end='\t - ')
@@ -29,7 +30,7 @@ def main():
             # energy = [creature.energy() for creature in universe.get_all_creatures()]
             # print(np.histogram(energy))
 
-            log.action_log = [0, 0, 0, 0, 0]
+            log.action_log = np.zeros_like(log.action_log)
 
         # if (len(universe.get_all_creatures())) == 1:
         #    print(universe.get_all_creatures()[0].dna())

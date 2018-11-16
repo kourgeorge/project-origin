@@ -27,14 +27,14 @@ class Brain:
 
         taken_action_probability = Brain.get_decision_probability(self.action_holder, self.action_distribution)
 
-        entropy = tf.reduce_mean(tf.nn.softmax(self.action_distribution) * tf.nn.log_softmax(self.action_distribution))
-        self.loss = -tf.reduce_mean(tf.log(taken_action_probability) * self.reward_holder) - 0.1 * entropy
+        self.loss = -tf.reduce_mean(tf.log(taken_action_probability) * self.reward_holder)
 
         tf.summary.scalar('loss_act', self.loss)
         self.optimize = tf.train.GradientDescentOptimizer(learning_rate=lr).minimize(self.loss)
 
         # Initialize Variables
         Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope)))
+
         if copy_from_scope is not None:
             Brain.sess.run(utils.update_target_graph(copy_from_scope, scope))
 
@@ -43,19 +43,11 @@ class Brain:
 
     def _construct_policy_model(self, scope):
         with tf.variable_scope(scope):
-            # imgs = tf.reshape(self.state_in, shape=(-1, 28, 28, 1))
-            # net = slim.convolution2d(imgs, 10, [5, 5], scope='conv2_1', padding='VALID')
-            # net = slim.max_pool2d(net, [2, 2])
-            # net = slim.convolution2d(net, 20, [5, 5], scope='conv2_2', padding='VALID')
-            # net = slim.max_pool2d(net, [2, 2])
-            # net = slim.flatten(net)
 
-            net = slim.stack(self.state_in, slim.fully_connected, [self._h_size],
-                             activation_fn=tf.nn.relu, scope='fc')
+            net = slim.stack(self.state_in, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)
 
             action_output = slim.fully_connected(net, self._action_size, activation_fn=tf.nn.softmax,
-                                                 weights_regularizer=slim.l2_regularizer(self._regularization_param),
-                                                 scope='fc_act')
+                                                 weights_regularizer=slim.l2_regularizer(self._regularization_param))
 
         return action_output
 

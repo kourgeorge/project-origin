@@ -15,19 +15,21 @@ However, the limitation of game environments is that the actions of the agents a
 While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
 complex behavior, social behavior, and survival skills.
 
-**Can we create intelligent creatures that can develop survival skills such as collaboration and communication?**
+### A Scientific Motivation
+We want to build a framework to get us closer to answer intriguing questions on intelligence such as:
+ - Can we create intelligent creatures that can develop survival skills such as collaboration and communication?**
 Namely, being put in a challenging environment, can the state of the art AI, using trial and error and evolution, 
 learn how to survive?
-Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
-Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
-Would they "understand" the effect of these actions on their own survival and on the environment? 
-Would they develop non-obvious behavior showing their understanding of the effect of time and age?
-How fast can they adapt to changes in the environment that change the game rule like epidemic or dearth?  
-
+- Can they learn to look for food?
+- Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
+- Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
+- Would they "understand" the effect of these actions on their own survival and on the environment? 
+- Would they develop non-obvious behavior showing their understanding of the effect of time and age?
+- How fast can they adapt to changes in the environment that change the game rule like epidemic or dearth?  
 
 ## The Story of Project Origin
 
-Progect Origin is the first attempt to develop an environment that allows investigating how intelligence may be developed under a specific physics.
+Project Origin is the first attempt to develop an environment that allows investigating how intelligence may be developed under a specific physics.
 How it can learn to survive and react to signals from the environment using reinforcement learning.
 An algorithm (a model) can develop such skills in the same way algorithm learn to play Atari 2600 games. 
 

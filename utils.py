@@ -1,8 +1,10 @@
 import numpy as np
 import tensorflow as tf
 from scipy.signal import lfilter
+from random import randint
 import csv
 import os
+from config import Config
 
 
 def discount_rewards(r, gamma):
@@ -55,7 +57,7 @@ def update_target_graph(from_scope, to_scope):
     from_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, from_scope)
     to_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, to_scope)
 
-    if len(from_vars)!=len(to_vars):
+    if len(from_vars) != len(to_vars):
         print("unequal number of variables of source and target networks.")
 
     op_holder = []
@@ -72,12 +74,6 @@ def log(logdir, episode, accuracy, training_reward, episode_length, update_frequ
         myfile.close()
 
 
-def random_dna(dna_size):
-    dna = np.random.normal(size=dna_size)
-    dna = [0.19330016,  0.19252654,  0.21730512,  0.21953546,  0.17733273]
-    return softmax(dna)
-
-
 def softmax(x):
     """
     Compute softmax values for each sets of scores in x.
@@ -85,8 +81,8 @@ def softmax(x):
     Rows are scores for each class.
     Columns are predictions (samples).
     """
-    #x = normalize(np.reshape(x, (1, -1)), norm='l2')[0]
-    scoreMatExp = np.exp(np.subtract(x,max(x)))
+    # x = normalize(np.reshape(x, (1, -1)), norm='l2')[0]
+    scoreMatExp = np.exp(np.subtract(x, max(x)))
     if np.isinf(np.sum(scoreMatExp)):
         print('Inf in softmax')
     return scoreMatExp / scoreMatExp.sum(0)

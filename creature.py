@@ -1,6 +1,7 @@
 from brain import Brain
 import log
 from config import Config
+import utils
 
 
 class Creature:
@@ -19,8 +20,12 @@ class Creature:
         self._energy = Config.ConfigBiology.INITIAL_ENERGY
         self._cell = None
         self._universe = universe
-        self._brain = Brain(lr=Config.ConfigBrain.LEARNING_RATE, s_size=Config.ConfigBrain.STATE_SIZE,
-                            action_size=Config.ConfigBrain.ACTION_SIZE, h_size=Config.ConfigBrain.HIDDEN_LAYER_SIZE,
+        parent = None
+
+        # sorounding(2*vrange+1)*2(food and creatures) + 2 (intenal state)
+        state_size = (self.vision_range()*2 + 1) * 2 + 2
+        self._brain = Brain(lr=self.learning_rate(), s_size=state_size,
+                            action_size=Config.ConfigBrain.ACTION_SIZE, h_size=self.brain_hidden_layer(),
                             scope=self._name, copy_from_scope=None if parent is None else parent.name())
         self.obs = []
         self.acts = []
@@ -35,6 +40,21 @@ class Creature:
 
     def age(self):
         return self._age
+
+    def vision_range(self):
+        return self._dna[0]
+
+    def learning_rate(self):
+        return self._dna[1]
+
+    def brain_hidden_layer(self):
+        return self._dna[2]
+
+    def learning_frequency(self):
+        return self._dna[3]
+
+    def max_age(self):
+        return self._dna[4]
 
     def dna(self):
         return self._dna
@@ -65,13 +85,13 @@ class Creature:
 
     # Actions
     def act(self):
-        if self._age > Config.ConfigBiology.DYING_AGE:
+        if self._age > self.max_age():
             self._universe.kill(self, cause='elderly')
             return
 
         self._age += 1
-        previous_energe = self._energy
-        space_state = self._universe.get_surroundings(self.coord())
+        previous_energy = self._energy
+        space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
         state = space_state + self.internal_state()
         self.obs.append(state)
         decision = self._brain.act(state)
@@ -95,10 +115,10 @@ class Creature:
         #     self.smarten()
 
         self.acts.append(decision)
-        self.rews.append(self.energy() - previous_energe)
+        self.rews.append(self.energy() - previous_energy)
 
-        if self._age % Config.ConfigBiology.WISDOM_INTERVAL == 0:
-           self.smarten()
+        if self._age % self.learning_frequency() == 0:
+            self.smarten()
 
     def move(self, direction):
         self._universe.move_creature(self, direction)

@@ -18,10 +18,20 @@ def main():
 
         print(str(current_time) + ' - Population: ' + str(universe.num_creatures()), end='\t - ')
         print('IDs:' + str(Creature.counter), end='\t - ')
-        mean_age = np.round(np.mean([creature.age() for creature in universe.get_all_creatures()]))
-        print('Mean age: ' + str(mean_age), end='\t - ')
+        print('Mean age: ' + str(np.round(np.mean([creature.age() for creature in universe.get_all_creatures()]))),
+              end='\t - ')
+        print('Mean Max age: ' + str(
+            np.round(np.mean([creature.max_age() for creature in universe.get_all_creatures()]))), end='\t - ')
+        print('Mean Hidden Layer: ' + str(
+            np.round(np.mean([creature.brain_hidden_layer() for creature in universe.get_all_creatures()]))), end='\t - ')
+        print('Mean Learn Freq: ' + str(
+            np.round(np.mean([creature.learning_frequency() for creature in universe.get_all_creatures()]))),
+              end='\t - ')
+        print('Mean Vision range: ' + str(
+            np.round(np.mean([creature.vision_range() for creature in universe.get_all_creatures()]))),
+              end='\t - ')
         print('Death Cause [Fa Fi E]: ' + str(log.death_cause))
-        log.death_cause = [0, 0, 0]
+        log.death_cause = np.zeros_like(log.death_cause)
 
         if current_time % 10 == 0:
             # print(universe.space(), end='\t')

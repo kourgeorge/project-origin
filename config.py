@@ -3,8 +3,8 @@ __author__ = 'gkour'
 
 class Config:
     class ConfigPhysics:
-        SPACE_SIZE = 5
-        NUM_FATHERS = 10
+        SPACE_SIZE = 11
+        NUM_FATHERS = 30
         ETERNITY = 100000
 
     class ConfigBiology:
@@ -14,7 +14,7 @@ class Config:
         MOVE_ENERGY = 1
         FIGHT_ENERGY = 5
         INITIAL_ENERGY = 20
-        MATE_ENERGY = INITIAL_ENERGY / 2
+        MATE_ENERGY = INITIAL_ENERGY / 4
         MATURITY_AGE = 0
         WISDOM_INTERVAL = 5
 

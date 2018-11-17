@@ -29,7 +29,7 @@ class Brain:
 
         self.loss = -tf.reduce_mean(tf.log(taken_action_probability) * self.reward_holder)
 
-        tf.summary.scalar('loss_act', self.loss)
+        #tf.summary.scalar('loss_act', self.loss)
         self.optimize = tf.train.GradientDescentOptimizer(learning_rate=lr).minimize(self.loss)
 
         # Initialize Variables
@@ -38,8 +38,8 @@ class Brain:
         if copy_from_scope is not None:
             Brain.sess.run(utils.update_target_graph(copy_from_scope, scope))
 
-        self.saver = tf.train.Saver()
-        self.merged = tf.summary.merge_all()
+        #self.saver = tf.train.Saver()
+        #self.merged = tf.summary.merge_all()
 
     def _construct_policy_model(self, scope):
         with tf.variable_scope(scope):
@@ -57,11 +57,11 @@ class Brain:
             1] + actual_decision
         return tf.gather(tf.reshape(decisions_probabilities, [-1]), action_indexes)
 
-    def save_model(self, path):
-        self.saver.save(Brain.sess, path)
-
-    def load_model(self, path):
-        self.saver.restore(Brain.sess, path)
+    # def save_model(self, path):
+    #     self.saver.save(Brain.sess, path)
+    #
+    # def load_model(self, path):
+    #     self.saver.restore(Brain.sess, path)
 
     def act(self, obs):
         action_dist = Brain.sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})

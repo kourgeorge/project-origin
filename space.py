@@ -1,4 +1,5 @@
 from cell import Cell
+from config import Config
 
 
 class Space:
@@ -11,9 +12,15 @@ class Space:
     def grid(self):
         return self._grid
 
-    def get_state_in_coord(self, coord):
-        cell = self._grid[coord]
-        return [cell.get_food(), cell.num_creatures()]
+    def get_state_in_coord(self, coord, vision_range):
+        state = []
+        for i in range(coord - vision_range, coord + vision_range + 1): #range(-1,1) = [-1,0]
+            if i < 0 or i >= Config.ConfigPhysics.SPACE_SIZE:
+                state.extend([-1, -1])
+            else:
+                cell = self._grid[i]
+                state.extend([cell.get_food(), cell.num_creatures()])
+        return state
 
     def get_all_creatures(self):
         all_creatures = [cell.creatures() for cell in self._grid]
@@ -33,4 +40,3 @@ class Space:
             string = string + str(cell) + ' '
 
         return string
-

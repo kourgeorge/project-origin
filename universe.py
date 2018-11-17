@@ -14,15 +14,15 @@ class Universe:
         self._time = 0
         fathers_locations = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
         for i in range(Config.ConfigPhysics.NUM_FATHERS):
-            dna = utils.random_dna(Config.ConfigBiology.DNA_SIZE)
+            dna = Evolution.random_dna()
             self.create_creature(dna, fathers_locations[i], None)
 
     # Space Management
     def space(self):
         return self._space
 
-    def get_surroundings(self, coord):
-        return self._space.get_state_in_coord(coord)
+    def get_surroundings(self, coord, vision_range):
+        return self._space.get_state_in_coord(coord, vision_range)
 
     # Time Management
     def pass_time(self):

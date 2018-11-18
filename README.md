@@ -91,7 +91,8 @@ For instance in his field of study - bacterial sciences and antibiotics developm
 - Explain why pathogens behave differently in lab bacterial culture vs. in organismic hosts? How they learn to use different aspects of the environment to survive when they are in environments with different hostile agents. For instance, in lab bacterial culture the germs mostly eat the glucose provided in the Petric plate but in the organic host, they eat feces of their friends.
 
 Building a simulation which is close enough to reality by modeling the important aspects of nature could be a great tool and a new method for practicing science. 
-***Once the experimenter is not only explaining by observing a phenomenon under specific physics but can play "god" and change the rules of nature and observe the effect of the change on the phenomenon, he can obtain a deeper understanding of nature. ***
+This field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
+***Once the experimenter is not only observing a phenomenon under specific physics but can play "god", change the rules of nature and observe the effect of the change on the phenomenon, his understanding of the phenomenon deepens.***
 
 
 ### Widening the horizons of Intelligence research

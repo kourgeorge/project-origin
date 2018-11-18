@@ -1,4 +1,4 @@
-## Motivation
+## Introduction
 
 When thinking about Artificial Intelligence (AI) what most people in the field have in mind is machine learning models and 
 heuristics to solve problems that are complex enough that their solution cannot be written using an exact set of steps but 
@@ -15,8 +15,14 @@ However, the limitation of game environments is that the actions of the agents a
 While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
 complex behavior, social behavior, and survival skills.
 
-### A Scientific Motivation
-Project Origin can be employed to get as closer answering intriguing questions on intelligence such as:
+## Scientific Motivation
+Project Origin can be employed to get us closer to answering intriguing questions on *intelligence*, on the *behavior of intelligent creatures* and maybe help us *hypothesise on the reason underlying nature rules".
+
+In the intelligence realm, first, it is a realistic environment for training intelligent creatures with with various skills.
+Second, it may give us a depper understanding of the development aspect of intelligence mechnisms.
+Third, it can show us how intelligence and evolution, are two different mechanisms that affect each other and "cooperate" to build intelligence.
+Below are several example questions embodying these aspects:
+
  - Can we create intelligent creatures that can develop survival skills such as collaboration and communication?
 Namely, being put in a challenging environment, can the state of the art AI, using trial and error and evolution, 
 learn how to survive?
@@ -27,7 +33,7 @@ learn how to survive?
 - Would they develop non-obvious behavior showing their understanding of the effect of time and age?
 - How fast can they adapt to changes in the environment that change the game rule like epidemic or dearth?  
 
-Furthermore, this project can be used as a tool by researchers in other disciples of science to give an explanation to a wide range of phenomena in nature.
+In addition, this project can be used as a tool by researchers in different disciples of science to give possible explanations to a wide range of phenomena in nature and help us reveal the essentiality of specific rules.
 For instance, consider the question of the need for minimal reproduction age in organisms biology.
 One answer may be that this mechanism ensures that anscestors are physically and mentally mature enough to be able to take care of their offsprings. 
 However, this is an insufficient explanation when it comes to germs or other organisms that do not take care of their offsprings but their biolology implements this mechanism.
@@ -37,13 +43,13 @@ However, this phenomenon rarely happens in universes enforcing maturity age.
 This suggests that the minimal reproduction age is implemented in nature not only to make sure that anscestors are mature enough to be able to take care of their offsprings but also that the maturity age is an essential element of the developing intelligent and fit creatures. Namely, one should prove that it has some survival abilities before passing down its genes.
 This is a nice example showing how natural selection and intelligence are basically two mechanisms that work together to produce fit creatures.
 
-Talking with Dr. Joseph Fanous (a.k.a "iljoe") - pharmaceutical scientist and a close friend of mine; he mentioned that such simulation, not only can help giving alternative an interesting answers to long standing questions in biology but can be used to also to answer questions raised by recent observations. For instance in his field of study - bacterial sciences it can help giving mathematical, namely mechanical, answers to the following questions:
+Talking with Dr. Joseph Fanous (a.k.a "iljoe") - pharmaceutical scientist and a close friend of mine; he mentioned that such simulation, not only can help giving alternative an interesting answers to long standing questions in biology but can be used to also to answer questions raised by recent observations about the behaviour of organisms. For instance in his field of study - bacterial sciences it can help giving mathematical, namely mechanical, answers to the following questions:
 - Why germs which develope more slowely show better survivals skills?
 - How persistors, germ individual in a bacterial culture, that develope superior survival abilitites in a hostile environment (an environment with antibiotics).
 - Explain why pathogens develop and adapt differently in lab bacterial culture and in organismic hosts? How they learn to use different aspects of the environment to survive when they are in environments with different hostile agents. For instance, in lab bacterial culture the germs mostly eat the glucose provided in the Petric plate but in the organic host, they learn to eat the feces of their friends.
 
 Building a simulation which is close enough to reality by modeling the important aspects of nature could be a great tool and a new method for practicing science. 
-**Once the experimenter is not only explaining by observing a phenomenon under specific physics but can play "god" and change the rules of nature and observe the effect of the change on the phenomenon, he can obtain a deeper understanding of nature. **
+***Once the experimenter is not only explaining by observing a phenomenon under specific physics but can play "god" and change the rules of nature and observe the effect of the change on the phenomenon, he can obtain a deeper understanding of nature. ***
 
 ## The Story of Project Origin
 

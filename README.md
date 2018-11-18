@@ -38,7 +38,7 @@ This suggests that the minimal reproduction age is implemented in nature not onl
 
 This is a nice example showing how natural selection and intelligence are basically two mechanisms that work together to produce fit creatures.
 
-Talking with a biologist close friend of mine (Dr. Joe Fanous), he mentioned that such simulation can be used to answer questions in bacterial sciences:
+Talking with a biologist close friend of mine (Dr. Joseph Fanous, a.k.a "iljoe"), he mentioned that such simulation can be used to answer questions in bacterial sciences:
 - Why germs which develope more slowely show better survivals skills?
 - How persistors, germ individual in a bacterial culture, that develope superior survival abilitites in a hostile environment (an environment with antibiotics).
 - Explain why pathogens develop and adapt differently in lab bacterial culture and in organismic hosts? How they learn to use different aspects of the environment to survive when they are in environments with different hostile agents. For instance, in lab bacterial culture the germs mostly eat the glucose provided in the Petric plate but in the organic host, they learn to eat the feces of their friends.

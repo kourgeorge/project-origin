@@ -35,13 +35,15 @@ Using the simulation we noted that if no maturity age is implemented in the univ
 This statistically can happen because natural selection can push them to reproduce frequently and immediately after birth, allowing their race to flourish without showing any tracts of intelligent behavior.
 However, this phenomenon rarely happens in universes enforcing maturity age.
 This suggests that the minimal reproduction age is implemented in nature not only to make sure that anscestors are mature enough to be able to take care of their offsprings but also that the maturity age is an essential element of the developing intelligent and fit creatures. Namely, one should prove that it has some survival abilities before passing down its genes.
-
 This is a nice example showing how natural selection and intelligence are basically two mechanisms that work together to produce fit creatures.
 
-Talking with a biologist close friend of mine (Dr. Joseph Fanous, a.k.a "iljoe"), he mentioned that such simulation can be used to answer questions in bacterial sciences:
+Talking with Dr. Joseph Fanous (a.k.a "iljoe") - pharmaceutical scientist and a close friend of mine; he mentioned that such simulation, not only can help giving alternative an interesting answers to long standing questions in biology but can be used to also to answer questions raised by recent observations. For instance in his field of study - bacterial sciences it can help giving mathematical, namely mechanical, answers to the following questions:
 - Why germs which develope more slowely show better survivals skills?
 - How persistors, germ individual in a bacterial culture, that develope superior survival abilitites in a hostile environment (an environment with antibiotics).
 - Explain why pathogens develop and adapt differently in lab bacterial culture and in organismic hosts? How they learn to use different aspects of the environment to survive when they are in environments with different hostile agents. For instance, in lab bacterial culture the germs mostly eat the glucose provided in the Petric plate but in the organic host, they learn to eat the feces of their friends.
+
+Building a simulation which is close enough to reality by modeling the important aspects of nature could be a great tool and a new method for practicing science. 
+**Once the experimenter is not only explaining by observing a phenomenon under specific physics but can play "god" and change the rules of nature and observe the effect of the change on the phenomenon, he can obtain a deeper understanding of nature. **
 
 ## The Story of Project Origin
 
@@ -73,7 +75,6 @@ The creatures can move in the grid, eat, mate and fight.
 Their destiny is controlled by the universe's physics, but mainly by their intelligence which dictates their actions, interactions and skills.
 
 In addition to the thrill of developing intelligent creators, origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
-
 
 Answering these questions, by demonstrating how complicated skills can be developed by artificial agents in a simulation
 would shed some light and take us closer toward understanding the mechanics and the true nature of our intelligence.

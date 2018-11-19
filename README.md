@@ -119,3 +119,6 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 - Online control of nature to observe the effect of the population. 
 - Use dynamic graph deep learning framework such as TensorFlow 2.0 or Pytorch.
 - Use openAI baselines and/or Google dopamine projects as implementation of the creature brain. 
+
+## Updates:
+19.11.2018 - Added aiq (Artificial IQ) tests.

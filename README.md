@@ -2,7 +2,7 @@
 
 ## Introduction
 
-When thinking about Artificial Intelligence (AI). what most people in the field have in mind is machine learning models and 
+When thinking about Artificial Intelligence (AI), what most people in the field have in mind is machine learning models and 
 heuristics to solve problems that are complex enough that their solution cannot be written using an exact set of steps but 
 should be learned from data or from interaction with the environment.
 In this narrow view, AI is a collection of procedures that can be seen as a smart extension of functions (in classical computer programs) that we can employ to make our life easier.

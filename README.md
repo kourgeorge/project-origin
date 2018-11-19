@@ -19,7 +19,8 @@ complex behavior, social behavior, and survival skills.
 
 ## The Story of Project Origin
 
-Project Origin is the first attempt to create an environment that allows investigating how intelligence may be developed in different artificial universes.
+Project Origin is the first attempt to create an environment that allows investigating how intelligence may be developed in different artificial universes and under different rules.
+It blends both Nature and Nurture origins of intelligence. See [Nature versus nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
 It makes it possible to control both the physical environment and the learning mechanisms of the algorithm and show how organisms can learn to survive and react to signals from the environment using reinforcement learning.  
 
 *Universes* are environments that *creatures* live in, adapt to, flourish or extinct.

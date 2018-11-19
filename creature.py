@@ -23,6 +23,7 @@ class Creature:
         self._cell = None
         self._universe = universe
         parent = None
+        self.completed_action_in_current_cycle = False
 
         # sorounding(2*vrange+1)*2(food and creatures) + 2 (intenal state)
         state_size = (self.vision_range()*2 + 1) * 2 + 2
@@ -71,6 +72,8 @@ class Creature:
         self._cell = cell
 
     def coord(self):
+        if self._cell is None:
+            print(self)
         return self._cell.get_coord()
 
     def energy(self):
@@ -140,6 +143,9 @@ class Creature:
     def smarten(self):
         self._brain.train(self.obs, self.acts, self.rews)
         self.obs, self.acts, self.rews = [], [], []
+
+    def alive(self):
+        return self.cell() is not None
 
     def __str__(self):
         return str(self._id)

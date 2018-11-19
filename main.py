@@ -2,6 +2,7 @@ __author__ = 'gkour'
 
 from universe import Universe
 from creature import Creature
+from config import Config
 import numpy as np
 import log
 import aiq
@@ -20,20 +21,24 @@ def main():
 
         print(str(current_time) + ' - Population: ' + str(universe.num_creatures()), end='\t - ')
         print('IDs:' + str(Creature.counter), end=' | ')
-        print('Mean age: ' + str(np.round(np.mean([creature.age() for creature in universe.get_all_creatures()]))),
+        print('age: ' + str(np.round(np.mean([creature.age() for creature in universe.get_all_creatures()]))),
               end=' | ')
-        print('Mean Max age: ' + str(
+        print('Max age: ' + str(
             np.round(np.mean([creature.max_age() for creature in universe.get_all_creatures()]), 2)), end=' | ')
-        print('Mean Hidden Layer: ' + str(
+        print('Hidden Layer: ' + str(
             np.round(np.mean([creature.brain_hidden_layer() for creature in universe.get_all_creatures()]), 2)),
               end=' | ')
-        print('Mean Learn Freq: ' + str(
+        print('Learn Freq: ' + str(
             np.round(np.mean([creature.learning_frequency() for creature in universe.get_all_creatures()]), 2)),
               end=' | ')
-        print('Mean Vision range: ' + str(
+        print('Learn Rate: ' + str(
+            np.round(np.mean(
+                [creature.learning_rate() for creature in universe.get_all_creatures()]) * (
+                             1 / Config.ConfigBrain.LEARNING_RATE), 2)), end=' | ')
+
+        print('Vision range: ' + str(
             np.round(np.mean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)), end=' | ')
-        print('Mean Intelligence: ' + str(
-            np.round(np.mean([aiq.test_iq(creature) for creature in universe.get_all_creatures()]), 2)))
+        print('Artificial IQ: ' + str(aiq.population_aiq_dist(universe.get_all_creatures())))
 
         if current_time % 10 == 0 or universe.num_creatures() == 0:
             # print(universe.space(), end='\t')

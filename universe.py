@@ -30,8 +30,8 @@ class Universe:
     def pass_time(self):
         self._time += 1
         if self._time < Config.ConfigPhysics.ETERNITY:
-            for cell in self.space().grid():
-                for creature in cell.creatures():
+            for creature in self.get_all_creatures():
+                if creature.alive():
                     creature.act()
             return self._time
         else:
@@ -49,7 +49,8 @@ class Universe:
     # Creatures Control
     def create_creature(self, dna, coord, parent):
         descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), parent=parent)
-        self.space().grid()[coord].insert_creature(descendant)
+        cell = self.space().grid()[coord].insert_creature(descendant)
+        descendant.update_cell(cell)
 
     def get_all_creatures(self):
         return self.space().get_all_creatures()
@@ -80,12 +81,14 @@ class Universe:
             if current_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
                 return
             self.space().grid()[current_coord].remove_creature(creature)
-            self.space().grid()[current_coord + 1].insert_creature(creature)
+            new_cell = self.space().grid()[current_coord + 1].insert_creature(creature)
+            creature.update_cell(new_cell)
         if direction == -1:
             if current_coord == 0:
                 return
             self.space().grid()[current_coord].remove_creature(creature)
-            self.space().grid()[current_coord - 1].insert_creature(creature)
+            new_cell = self.space().grid()[current_coord - 1].insert_creature(creature)
+            creature.update_cell(new_cell)
 
     def mate_creature(self, creature):
         if creature.energy() < Config.ConfigBiology.MATE_ENERGY:
@@ -110,6 +113,7 @@ class Universe:
 
     def kill(self, creature, cause='fatigue'):
         cell = creature.cell()
+        creature.update_cell(None)
         cell.remove_creature(creature)
         if cause == 'fatigue':
             log.death_cause[0] += 1

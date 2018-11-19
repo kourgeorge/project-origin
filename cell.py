@@ -8,10 +8,9 @@ class Cell:
 
     def insert_creature(self, creature):
         self._creatures.append(creature)
-        creature.update_cell(self)
+        return self
 
     def remove_creature(self, creature):
-        creature.update_cell(None)
         self._creatures.remove(creature)
 
     def add_food(self, amount):

@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 from space import Space
 from creature import Creature
 from evolution import Evolution

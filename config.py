@@ -3,8 +3,8 @@ __author__ = 'gkour'
 
 class Config:
     class ConfigPhysics:
-        SPACE_SIZE = 11
-        NUM_FATHERS = 30
+        SPACE_SIZE = 20
+        NUM_FATHERS = 50
         ETERNITY = 100000
 
     class ConfigBiology:

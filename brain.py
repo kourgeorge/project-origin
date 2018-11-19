@@ -79,3 +79,6 @@ class Brain:
                      self.state_in: np.vstack(batch_obs)}
 
         Brain.sess.run([self.optimize], feed_dict=feed_dict)
+
+    def state_size(self):
+        return self._s_size

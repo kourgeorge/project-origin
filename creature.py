@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 from brain import Brain
 import log
 from config import Config
@@ -40,6 +42,9 @@ class Creature:
 
     def age(self):
         return self._age
+
+    def brain(self):
+        return self._brain
 
     def vision_range(self):
         return self._dna[0]

@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 class Cell:
     def __init__(self, i):
         self._coord = i

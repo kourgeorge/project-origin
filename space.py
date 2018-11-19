@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 from cell import Cell
 from config import Config
 

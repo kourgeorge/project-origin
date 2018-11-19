@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 import numpy as np
 import tensorflow as tf
 from scipy.signal import lfilter

@@ -94,7 +94,7 @@ class Universe:
             return
 
         creature.reduce_energy(Config.ConfigBiology.MATE_ENERGY)
-        mate_body = creature.cell().get_nearby_creature(creature)
+        mate_body = creature.cell().find_nearby_creature(creature)
         if mate_body is None:
             return
 
@@ -114,14 +114,14 @@ class Universe:
         if cause == 'fight':
             log.death_cause[1] += 1
         if cause == 'elderly':
-            log.death_cause[2] +=1
+            log.death_cause[2] += 1
 
     def fight(self, creature):
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
             self.kill(creature)
             return
         creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
-        opponent = creature.cell().get_nearby_creature(creature)
+        opponent = creature.cell().find_nearby_creature(creature)
         if opponent is None:
             return
         fight_res = utils.roll_fight(creature.energy(), opponent.energy())

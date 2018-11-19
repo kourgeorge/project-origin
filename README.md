@@ -33,7 +33,7 @@ Development and survival may be affected and controlled not only by the environm
 
 Project-origin simulator is made simple to allow fast training.
 It has no graphics, however, it is built and visioned to be easy to imagine.
-project-origin has all the aspect that any universe has: Space, time, physics and chance.
+project-origin has all the aspect that any universe has: Space, time, physics, evolution and chance.
 Space is called the *Grid* and is implemented as a matrix of *Cells*.
 Each cell can contain objects such as creatures, food, etc.
 The physics (rules), time and chance are controlled by the universe. The universe also reacts to the actions of the creatures under the laws of physics. 
@@ -45,7 +45,7 @@ For instance, "Mangolid", "Mangodo" and "Mangodino" are all valid names for mang
 While still have no morphology and form, mangos have a brain, sensors and set of actions.
 At each time step, they see their surrounding environment and select an action.
 The creatures can move in the grid, eat, mate and fight.
-Their destiny is controlled by the universe's physics, but mainly by their intelligence which dictates their actions, interactions and skills.
+Their destiny is controlled by the universe's physics, their genes and intelligence which dictates their actions, interactions and skills.
 
 In addition to the thrill of developing intelligent creators, project-origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
 
@@ -86,15 +86,15 @@ However, this phenomenon rarely happens in universes enforcing maturity age.
 This suggests that the minimal reproduction age is implemented in nature not only to make sure that anscestors are mature enough to be able to take care of their offsprings but also that the maturity age is an essential element of the developing intelligent and fit creatures. Namely, one should prove that it has some survival abilities before passing down its genes.
 This is a nice example showing how natural selection and intelligence are basically two mechanisms that work together to produce fit creatures.
 
-Talking with Dr. Joseph Fanous (a.k.a *"iljoe"*) - a pharmaceutical scientist and a close friend of mine; he mentioned that such simulation, not only can help giving alternative an interesting answers to long standing questions in biology but can be used to also to answer questions raised by recent observations about the behaviour of organisms. 
+Talking with Dr. Joseph Fanous (a.k.a *"iljoe"*) - a pharmaceutical scientist and a close friend of mine; he mentioned that such simulation, not only can help giving alternative an interesting answers to long standing questions in biology but can also assist answering questions raised by contemporary researches. 
 For instance in his field of study - bacterial sciences and antibiotics development, such simulation can help giving answers about the underlying mechanisms of bacterial developments including:
-- Why germs which develope more slowely show better survivals skills?
-- How persistors develope? persistors are germ individuals that develope superior survival abilitites in a hostile environment (e.g., an environment with antibiotics).
+- Why germs which develope more slowely show better survivals skills than their fast growing counterparts?
+- How persistors develope? Persistors are germ individuals that develope superior survival abilitites in a hostile environment (e.g., an environment with antibiotics).
 - Explain why pathogens behave differently in lab bacterial culture vs. in organismic hosts? How they learn to use different aspects of the environment to survive when they are in environments with different hostile agents. For instance, in lab bacterial culture the germs mostly eat the glucose provided in the Petric plate but in the organic host, they eat feces of their friends.
 
-Building a simulation which is close enough to reality by modeling the important aspects of nature could be a great tool and a new method for practicing science. 
-This field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
-***Once the experimenter is not only observing a phenomenon under specific physics but can play "god", change the rules of nature and observe the effect of the change on the phenomenon, his understanding of the phenomenon deepens.***
+Building a simulation which is close enough to reality by modeling the important aspects of nature could be a great tool and a new method for practicing science, especially in biology, in which this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
+
+***Once the experimenter is not only observing a phenomenon under specific physics but can change the rules of nature and observe the effect of the change on the phenomenon, his understanding of the phenomenon deepens.***
 
 
 ### Widening the horizons of Intelligence research

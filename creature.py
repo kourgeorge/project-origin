@@ -1,9 +1,8 @@
 __author__ = 'gkour'
 
 from brain import Brain
-import datacollector
+import stats
 from config import Config
-import utils
 
 
 class Creature:
@@ -23,9 +22,8 @@ class Creature:
         self._cell = None
         self._universe = universe
         parent = None
-        self.completed_action_in_current_cycle = False
 
-        # sorounding(2*vrange+1)*2(food and creatures) + 2 (intenal state)
+        # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
         state_size = (self.vision_range()*2 + 1) * 2 + 2
         self._brain = Brain(lr=self.learning_rate(), s_size=state_size,
                             action_size=Config.ConfigBrain.ACTION_SIZE, h_size=self.brain_hidden_layer(),
@@ -104,19 +102,19 @@ class Creature:
         self.obs.append(state)
         decision = self._brain.act(state)
         if decision == 0:
-            datacollector.action_log[0] += 1
+            stats.action_log[0] += 1
             self.move(-1)
         if decision == 1:
-            datacollector.action_log[1] += 1
+            stats.action_log[1] += 1
             self.move(1)
         if decision == 2:
-            datacollector.action_log[2] += 1
+            stats.action_log[2] += 1
             self.eat()
         if decision == 3:
-            datacollector.action_log[3] += 1
+            stats.action_log[3] += 1
             self.mate()
         if decision == 4:
-            datacollector.action_log[4] += 1
+            stats.action_log[4] += 1
             self.fight()
         # if decision == 5:
         #     log.action_log[5] += 1

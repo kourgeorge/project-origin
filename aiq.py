@@ -1,13 +1,15 @@
-import numpy as np
-
 __author__ = 'gkour'
+
+import numpy as np
+from config import Config
 
 
 def population_aiq_dist(creatures):
     repetitions = 18
-    young = [test_aiq(creature, repetitions) for creature in creatures if creature.age() <= 10]
-    adult = [test_aiq(creature, repetitions) for creature in creatures if 10 < creature.age() < 20]
-    old = [test_aiq(creature, repetitions) for creature in creatures if 20 < creature.age()]
+    bounds = [Config.ConfigBiology.BASE_DYING_AGE / 3, 2 * Config.ConfigBiology.BASE_DYING_AGE / 3]
+    young = [test_aiq(creature, repetitions) for creature in creatures if creature.age() <= bounds[0]]
+    adult = [test_aiq(creature, repetitions) for creature in creatures if bounds[0] < creature.age() <= bounds[1]]
+    old = [test_aiq(creature, repetitions) for creature in creatures if bounds[1] < creature.age()]
 
     return np.round([np.nanmean(young), np.nanmean(adult), np.nanmean(old)], 2)
 

@@ -6,7 +6,7 @@ from evolution import Evolution
 from config import Config
 import numpy as np
 import utils
-import datacollector
+import stats
 
 
 class Universe:
@@ -122,11 +122,11 @@ class Universe:
         creature.update_cell(None)
         cell.remove_creature(creature)
         if cause == 'fatigue':
-            datacollector.death_cause[0] += 1
+            stats.death_cause[0] += 1
         if cause == 'fight':
-            datacollector.death_cause[1] += 1
+            stats.death_cause[1] += 1
         if cause == 'elderly':
-            datacollector.death_cause[2] += 1
+            stats.death_cause[2] += 1
 
     def fight(self, creature):
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
@@ -145,3 +145,7 @@ class Universe:
             creature.add_energy(opponent.energy())
             # creature.add_energy(5)
             self.kill(opponent, 'fight')
+
+    @staticmethod
+    def get_creatures_counter():
+        return Creature.counter

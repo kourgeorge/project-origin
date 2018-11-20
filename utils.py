@@ -68,14 +68,6 @@ def update_target_graph(from_scope, to_scope):
     return op_holder
 
 
-def log(logdir, episode, accuracy, training_reward, episode_length, update_frequency, time):
-    file_path = os.path.join(logdir, 'log4_EL{}_UF{}_DT{}.csv'.format(episode_length, update_frequency, time))
-    with open(file_path, 'a', newline='') as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        wr.writerow([episode, accuracy, training_reward])
-        myfile.close()
-
-
 def softmax(x):
     """
     Compute softmax values for each sets of scores in x.
@@ -93,3 +85,17 @@ def softmax(x):
 def roll_fight(energy1, energy2):
     dist = softmax([energy1, energy2])
     return np.random.choice(a=[-1, 1], p=dist)
+
+
+def log(file_path, params_dict):
+    exists = os.path.isfile(file_path)
+    if not exists:
+        with open(file_path, 'a', newline='') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
+            wr.writerow(list(params_dict.keys()))
+            myfile.close()
+
+    with open(file_path, 'a', newline='') as myfile:
+        wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
+        wr.writerow(params_dict.values())
+        myfile.close()

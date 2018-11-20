@@ -36,6 +36,9 @@ class Space:
     def get_food_distribution(self):
         return [cell.get_food() for cell in self._grid]
 
+    def get_creatures_distribution(self):
+        return [cell.num_creatures() for cell in self._grid]
+
     def __str__(self):
         string = ''
         for cell in self._grid:

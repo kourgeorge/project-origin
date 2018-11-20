@@ -6,7 +6,7 @@ from evolution import Evolution
 from config import Config
 import numpy as np
 import utils
-import log
+import datacollector
 
 
 class Universe:
@@ -58,6 +58,9 @@ class Universe:
     def get_food_distribution(self):
         return self.space().get_food_distribution()
 
+    def get_creatures_distribution(self):
+        return self.space().get_creatures_distribution()
+
     def num_creatures(self):
         return len(self.get_all_creatures())
 
@@ -91,11 +94,14 @@ class Universe:
             creature.update_cell(new_cell)
 
     def mate_creature(self, creature):
+        if creature.age() < Config.ConfigBiology.MATURITY_AGE:
+            if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
+                self.kill(creature)
+            creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
+            return
+
         if creature.energy() < Config.ConfigBiology.MATE_ENERGY:
             self.kill(creature)
-            return
-        if creature.age() < Config.ConfigBiology.MATURITY_AGE:
-            creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
             return
 
         creature.reduce_energy(Config.ConfigBiology.MATE_ENERGY)
@@ -116,11 +122,11 @@ class Universe:
         creature.update_cell(None)
         cell.remove_creature(creature)
         if cause == 'fatigue':
-            log.death_cause[0] += 1
+            datacollector.death_cause[0] += 1
         if cause == 'fight':
-            log.death_cause[1] += 1
+            datacollector.death_cause[1] += 1
         if cause == 'elderly':
-            log.death_cause[2] += 1
+            datacollector.death_cause[2] += 1
 
     def fight(self, creature):
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:

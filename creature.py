@@ -1,7 +1,7 @@
 __author__ = 'gkour'
 
 from brain import Brain
-import log
+import datacollector
 from config import Config
 import utils
 
@@ -104,19 +104,19 @@ class Creature:
         self.obs.append(state)
         decision = self._brain.act(state)
         if decision == 0:
-            log.action_log[0] += 1
+            datacollector.action_log[0] += 1
             self.move(-1)
         if decision == 1:
-            log.action_log[1] += 1
+            datacollector.action_log[1] += 1
             self.move(1)
         if decision == 2:
-            log.action_log[2] += 1
+            datacollector.action_log[2] += 1
             self.eat()
         if decision == 3:
-            log.action_log[3] += 1
+            datacollector.action_log[3] += 1
             self.mate()
         if decision == 4:
-            log.action_log[4] += 1
+            datacollector.action_log[4] += 1
             self.fight()
         # if decision == 5:
         #     log.action_log[5] += 1

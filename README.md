@@ -122,3 +122,5 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 
 ## Updates:
 19.11.2018 - Added aiq file implementing Artificial IQ tests.
+TBI - experience heritage
+TBI - special relation between individuals

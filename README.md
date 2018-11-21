@@ -120,7 +120,15 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 - Use dynamic graph deep learning framework such as TensorFlow 2.0 or Pytorch.
 - Use openAI baselines and/or Google dopamine projects as implementation of the creature brain. 
 
+## Far reaching plans and directions
+- Experience or intelligence heritage not through dna.
+- Model selection and hyperparameter tunning. Show that Convolutional can better survive than fully connected layers.
+- Special relation between individuals based on graph networks to process the relationship between individuals.
+- Develope a game platform which allow training of a race and then allow it compete over resources with different race.
+
+
 ## Updates:
 * 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.
 * 20.11.2018 - Added DQN based brain.
-* TBI - experience heritage/special relation between individuals
+* TBI - Different kinds of food and reorganization of the state vector.
+

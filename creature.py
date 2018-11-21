@@ -1,7 +1,7 @@
 __author__ = 'gkour'
 
-from brain import Brain
-import stats
+from brain_dqn import Brain
+from stats import Stats
 from config import Config
 import numpy as np
 
@@ -108,19 +108,19 @@ class Creature:
         self.obs.append(state)
         decision = self._brain.act(state)
         if decision == 0:
-            stats.action_log[0] += 1
+            Stats.action_dist[0] += 1
             self.move(-1)
         if decision == 1:
-            stats.action_log[1] += 1
+            Stats.action_dist[1] += 1
             self.move(1)
         if decision == 2:
-            stats.action_log[2] += 1
+            Stats.action_dist[2] += 1
             self.eat()
         if decision == 3:
-            stats.action_log[3] += 1
+            Stats.action_dist[3] += 1
             self.mate()
         if decision == 4:
-            stats.action_log[4] += 1
+            stats.action_dist[4] += 1
             self.fight()
         # if decision == 5:
         #     log.action_log[5] += 1

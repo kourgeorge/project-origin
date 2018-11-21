@@ -5,7 +5,7 @@ import tensorflow as tf
 from scipy.signal import lfilter
 import csv
 import os
-import stats
+from stats import Stats
 
 
 def discount_rewards(r, gamma):
@@ -86,13 +86,15 @@ def roll_fight(energy1, energy2):
     return np.random.choice(a=[-1, 1], p=dist)
 
 
-def print_step_stats(step_stats):
+def print_step_stats(universe):
+    step_stats = Stats.collect_step_stats(universe)
     for (key, value) in step_stats.items():
         print('{}: {}'.format(key, value), end=' | ')
     print()
 
 
-def log_step_stats(file_path, step_stats):
+def log_step_stats(file_path, universe):
+    step_stats = Stats.collect_step_stats(universe)
     exists = os.path.isfile(file_path)
     if not exists:
         with open(file_path, 'a', newline='') as myfile:
@@ -107,12 +109,6 @@ def log_step_stats(file_path, step_stats):
 
 
 def print_epoch_stats(universe):
-    # print(universe.space(), end='\t')
-    print('Death Cause [Fa Fi E]: ' + str(stats.death_cause))
-    stats.death_cause = np.zeros_like(stats.death_cause)
-
-    print('Food Supply: ' + str(universe.get_food_distribution()))
-    print('Creatures: ' + str(universe.get_creatures_distribution()))
-    print('Action Dist [LREMF]: ' + str(np.round(np.array(stats.action_log) / sum(stats.action_log), 2)))
-    # energy = [creature.energy() for creature in universe.get_all_creatures()]
-    # print(np.histogram(energy))
+    epoch_stats = Stats.collect_epoch_states(universe)
+    for (key, value) in epoch_stats.items():
+        print('{}: {}'.format(key, value))

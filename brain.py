@@ -73,7 +73,7 @@ class Brain:
         action_dist = sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})
         return action_dist[0]
 
-    def train(self, batch_obs, batch_acts, batch_rews):
+    def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
         feed_dict = {self.reward_holder: batch_rews,
                      self.action_holder: batch_acts,
                      self.state_in: np.vstack(batch_obs)}

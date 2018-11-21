@@ -3,6 +3,7 @@ __author__ = 'gkour'
 from brain import Brain
 import stats
 from config import Config
+import numpy as np
 
 
 class Creature:
@@ -31,6 +32,7 @@ class Creature:
         self.obs = []
         self.acts = []
         self.rews = []
+        self.newState = []
 
     # Identity
     def id(self):
@@ -89,6 +91,11 @@ class Creature:
     def internal_state(self):
         return [self._energy, self._age]
 
+    def get_state(self):
+        space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
+        state = space_state + self.internal_state()
+        return state
+
     # Actions
     def act(self):
         if self._age > self.max_age():
@@ -97,8 +104,7 @@ class Creature:
 
         self._age += 1
         previous_energy = self._energy
-        space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
-        state = space_state + self.internal_state()
+        state = self.get_state()
         self.obs.append(state)
         decision = self._brain.act(state)
         if decision == 0:
@@ -123,6 +129,11 @@ class Creature:
         self.acts.append(decision)
         self.rews.append(self.energy() - previous_energy)
 
+        if self.alive():
+            self.newState.append(self.get_state())
+        else:
+            self.newState.append(np.zeros_like(self.obs[-1]))
+
         if self._age % self.learning_frequency() == 0:
             self.smarten()
 
@@ -139,8 +150,8 @@ class Creature:
         self._universe.fight(self)
 
     def smarten(self):
-        self._brain.train(self.obs, self.acts, self.rews)
-        self.obs, self.acts, self.rews = [], [], []
+        self._brain.train(self.obs, self.acts, self.rews, self.newState)
+        self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
     def alive(self):
         return self.cell() is not None

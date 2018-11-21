@@ -23,7 +23,7 @@ class Config:
 
     class ConfigBrain:
         GAMMA = 1
-        BASE_LEARNING_RATE = 17 * 1e-4
+        BASE_LEARNING_RATE = 1e-3
         BASE_HIDDEN_LAYER_SIZE = 3
-        ACTION_SIZE = 5
+        ACTION_SIZE = 4
 

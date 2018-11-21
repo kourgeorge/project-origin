@@ -121,6 +121,6 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 - Use openAI baselines and/or Google dopamine projects as implementation of the creature brain. 
 
 ## Updates:
-19.11.2018 - Added aiq file implementing Artificial IQ tests.
-TBI - experience heritage
-TBI - special relation between individuals
+* 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.
+* 20.11.2018 - Added DQN based brain.
+* TBI - experience heritage/special relation between individuals

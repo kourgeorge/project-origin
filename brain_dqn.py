@@ -12,9 +12,9 @@ from collections import deque
 class Brain:
     tf.reset_default_graph()
     sess = tf.Session()
-    BATCH_SIZE = 10
+    BATCH_SIZE = 20
 
-    def __init__(self, lr, s_size, action_size, h_size, scope, copy_from_scope):
+    def __init__(self, lr, s_size, action_size, h_size, scope, copy_from_scope=None):
         self._s_size = s_size
         self._action_size = action_size
         self._h_size = h_size
@@ -38,8 +38,8 @@ class Brain:
 
         # Initialize Variables
         self._create_training_method()
-        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.VARIABLES, scope)))
-        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'T' + scope)))
+        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, 'T' + scope)))
+        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope)))
 
     def act(self, obs):
         q_value = Brain.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
@@ -49,7 +49,7 @@ class Brain:
     def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
         # insert new experience to memory
         for i in range(len(batch_rews)):
-            dec_1hot = np.zeros(Config.ConfigBrain.ACTION_SIZE)
+            dec_1hot = np.zeros(self._action_size)
             dec_1hot[batch_acts[i]] = 1
             self.replayMemory.append((batch_obs[i], dec_1hot, batch_rews[i], batch_newstate[i], False))
 

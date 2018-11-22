@@ -23,16 +23,15 @@ def main():
             # utils.print_epoch_stats(universe)
             return
 
-        universe.give_food(round(universe.num_creatures() * 0.7))
+        universe.give_food(round(universe.num_creatures() * 0.5))
         utils.print_step_stats(universe)
         utils.log_step_stats(config.Config.LOG_FILE_PATH, universe)
         #dash.update(universe.get_time())
 
         if universe.get_time() % 10 == 0:
             utils.print_epoch_stats(universe)
-
-        Stats.action_dist = np.zeros_like(Stats.action_dist)
-        Stats.death_cause = np.zeros_like(Stats.death_cause)
+            Stats.action_dist = np.zeros_like(Stats.action_dist)
+            Stats.death_cause = np.zeros_like(Stats.death_cause)
 
 
 if __name__ == '__main__':

@@ -4,7 +4,6 @@ import tensorflow as tf
 import utils as utils
 import numpy as np
 import tensorflow.contrib.slim as slim
-from config import Config
 import random
 from collections import deque
 
@@ -14,12 +13,13 @@ class Brain:
     sess = tf.Session()
     BATCH_SIZE = 20
 
-    def __init__(self, lr, s_size, action_size, h_size, scope, copy_from_scope=None):
+    def __init__(self, lr, s_size, action_size, h_size, scope, gamma, copy_from_scope=None):
         self._s_size = s_size
         self._action_size = action_size
         self._h_size = h_size
         self._regularization_param = 0.001
         self.lr = lr
+        self._gamma = gamma
         self.replayMemory = deque()
 
         # Implementing F(state)=action
@@ -68,7 +68,7 @@ class Brain:
             if terminal:
                 y_batch.append(reward_batch[i])
             else:
-                y_batch.append(reward_batch[i] + Config.ConfigBrain.GAMMA * np.max(qvalue_batch[i]))
+                y_batch.append(reward_batch[i] + self._gamma * np.max(qvalue_batch[i]))
 
         Brain.sess.run(self.trainStep, feed_dict={
             self.y_input: y_batch,

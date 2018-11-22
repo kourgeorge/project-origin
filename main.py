@@ -4,12 +4,12 @@ from universe import Universe
 import numpy as np
 from stats import Stats
 import utils
-from dashboard import Dashborad
+#from dash_dash import Dashboard
 import config
 
 
 def main():
-    #dash = Dashborad(config.Config.LOG_FILE_PATH)
+    #dash = Dashboard()
     universe = Universe()
     utils.print_step_stats(universe)
     utils.print_epoch_stats(universe)
@@ -26,7 +26,8 @@ def main():
         universe.give_food(round(universe.num_creatures() * 0.5))
         utils.print_step_stats(universe)
         utils.log_step_stats(config.Config.LOG_FILE_PATH, universe)
-        #dash.update(universe.get_time())
+        #step_stats = Stats.collect_step_stats(universe)
+        #dash.update(universe.get_time(), step_stats[])
 
         if universe.get_time() % 10 == 0:
             utils.print_epoch_stats(universe)

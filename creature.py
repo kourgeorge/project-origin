@@ -3,7 +3,9 @@ __author__ = 'gkour'
 from brain_dqn import Brain
 from stats import Stats
 from config import Config
-import numpy as np
+
+# bb = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE, s_size=(2 * 2 + 1) * 2 + 2,
+#               action_size=Config.ConfigBrain.ACTION_SIZE, h_size=8, gamma = Config.ConfigBrain.GAMMA, scope='master')
 
 
 class Creature:
@@ -25,10 +27,12 @@ class Creature:
         parent = None
 
         # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
-        state_size = (self.vision_range()*2 + 1) * 2 + 2
-        self._brain = Brain(lr=self.learning_rate(), s_size=state_size,
+        self._state_size = (self.vision_range()*2 + 1) * 2 + 2
+        self._brain = Brain(lr=self.learning_rate(), s_size=self._state_size,
                             action_size=Config.ConfigBrain.ACTION_SIZE, h_size=self.brain_hidden_layer(),
-                            scope=self._name, copy_from_scope=None if parent is None else parent.name())
+                            scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
+
+        #self._brain = bb
         self.obs = []
         self.acts = []
         self.rews = []
@@ -61,6 +65,9 @@ class Creature:
 
     def max_age(self):
         return self._dna[4]
+
+    def gamma(self):
+        return self._dna[5]
 
     def dna(self):
         return self._dna
@@ -105,7 +112,7 @@ class Creature:
         self._age += 1
         previous_energy = self._energy
         state = self.get_state()
-        self.obs.append(state)
+
         decision = self._brain.act(state)
         if decision == 0:
             Stats.action_dist[0] += 1
@@ -120,19 +127,20 @@ class Creature:
             Stats.action_dist[3] += 1
             self.mate()
         if decision == 4:
-            stats.action_dist[4] += 1
+            Stats.action_dist[4] += 1
             self.fight()
         # if decision == 5:
         #     log.action_log[5] += 1
         #     self.smarten()
-
+        self.obs.append(state)
         self.acts.append(decision)
         self.rews.append(self.energy() - previous_energy)
 
         if self.alive():
             self.newState.append(self.get_state())
         else:
-            self.newState.append(np.zeros_like(self.obs[-1]))
+            self.newState.append([-1]*self.state_size())
+            self.smarten()
 
         if self._age % self.learning_frequency() == 0:
             self.smarten()
@@ -152,6 +160,9 @@ class Creature:
     def smarten(self):
         self._brain.train(self.obs, self.acts, self.rews, self.newState)
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
+
+    def state_size(self):
+        return self._state_size
 
     def alive(self):
         return self.cell() is not None

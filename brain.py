@@ -10,10 +10,11 @@ class Brain:
     tf.reset_default_graph()
     sess = tf.Session()
 
-    def __init__(self, lr, s_size, action_size, h_size, scope, copy_from_scope=None):
+    def __init__(self, lr, s_size, action_size, h_size, scope, gamma, copy_from_scope=None):
         self._s_size = s_size
         self._action_size = action_size
         self._h_size = h_size
+        self._gamma = gamma
         self._regularization_param = 0.001
 
         # Implementing F(state)=action

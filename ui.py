@@ -1,16 +1,21 @@
-# The code for changing pages was derived from: http://stackoverflow.com/questions/7546050/switch-between-two-frames-in-tkinter
-# License: http://creativecommons.org/licenses/by-sa/3.0/
+__author__ = 'gkour'
 
 import matplotlib
 import sim_runner
 from dashboard import Dashboard
 from stats import Stats
-matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Scale
+import matplotlib.pyplot as plt
+
+# s = ttk.Style()
+# s.theme_use('alt')
+
+plt.style.use('seaborn-paper')
 
 LARGE_FONT = ("Verdana", 12)
+UI_UPDATE_INTERVAL = 1000
 
 
 class OriginApp(tk.Tk):
@@ -25,72 +30,58 @@ class OriginApp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {}
+        self._simulation_page = SimulationPage(container, self)
+        self._simulation_page.grid(row=0, column=0, sticky="nsew")
+        self._simulation_page.tkraise()
 
-        for F in (StartPage, SimulationPage):
-            frame = F(container, self)
+        # self.show_frame(SimulationPage)
 
-            self.frames[F] = frame
+    # def show_frame(self, cont):
+    #     frame = self.frames[cont]
+    #     frame.tkraise()
 
-            frame.grid(row=0, column=0, sticky="nsew")
+    def refresh_data(self):
+        self._simulation_page.refresh_data()
+        self.after(UI_UPDATE_INTERVAL, self.refresh_data)
 
-        self.show_frame(StartPage)
-
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
-
-
-class StartPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
-
-        button3 = ttk.Button(self, text="Graph Page",
-                             command=lambda: controller.show_frame(SimulationPage))
-        button3.pack()
 
 
 class SimulationPage(tk.Frame):
-    dash = None
 
     def __init__(self, parent, controller):
+        self._dashboard = Dashboard()
+
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Graph Page!", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+        title_label = tk.Label(self, text="Project Origin Dashboard", font=LARGE_FONT, foreground='blue')
+        title_label.pack(pady=10, padx=10)
 
-        button1 = ttk.Button(self, text="Back to Home",
-                             command=lambda: controller.show_frame(StartPage))
-        button1.pack()
+        self.status_label = tk.Label(self, text="Simulator ready")
+        self.status_label.pack(pady=10, padx=10)
 
-        start_sim = ttk.Button(self, text="Start Simulation",
-                               command=lambda: sim_runner.run_in_thread())
-        start_sim.pack()
+        self.start_sim_btn = ttk.Button(self, text="Start Simulation",
+                               command=lambda: self.start_simulation())
 
-        # f = Figure(figsize=(5, 5), dpi=100)
-        # a = f.add_subplot(111)
-        # a.plot([1, 2, 3, 4, 5, 6, 7, 8], [5, 6, 1, 3, 8, 9, 3, 5])
+        self.start_sim_btn.pack()
 
-        SimulationPage.dash = Dashboard()
-        dash_fig = SimulationPage.dash.get_figure()
+        w = Scale(self, from_=0, to=1, orient=tk.HORIZONTAL, resolution=0.1)
+        w.pack()
+
+        dash_fig = self._dashboard.get_figure()
 
         canvas = FigureCanvasTkAgg(dash_fig, self)
         canvas.show()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
-        toolbar = NavigationToolbar2TkAgg(canvas, self)
-        toolbar.update()
-        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-
-    @staticmethod
-    def update_dash():
-        print("In Update Dashhhhhhhhhhhhh")
+    def refresh_data(self):
         if Stats.ready_for_ui:
-            SimulationPage.dash.update_step_dash(Stats.step_stats_df)
-        app.after(1000, SimulationPage.update_dash)
+            self._dashboard.update_step_dash(Stats.step_stats_df)
+            self._dashboard.update_epoch_dash(Stats.epoch_stats_df)
+
+    def start_simulation(self):
+        self.status_label['text'] = "Simulation Started!"
+        self.start_sim_btn['state'] = tk.DISABLED
+        sim_runner.run_in_thread()
 
 app = OriginApp()
-app.after(1000, SimulationPage.update_dash)
+app.after(UI_UPDATE_INTERVAL, app.refresh_data)
 app.mainloop()

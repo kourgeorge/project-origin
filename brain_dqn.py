@@ -9,9 +9,14 @@ from collections import deque
 
 
 class Brain:
-    tf.reset_default_graph()
-    sess = tf.Session()
     BATCH_SIZE = 20
+    sess = None
+
+    @staticmethod
+    def init_session():
+        if Brain.sess is None:
+            tf.reset_default_graph()
+            Brain.sess = tf.Session()
 
     def __init__(self, lr, s_size, action_size, h_size, scope, gamma, copy_from_scope=None):
         self._s_size = s_size
@@ -21,6 +26,8 @@ class Brain:
         self.lr = lr
         self._gamma = gamma
         self.replayMemory = deque()
+
+        Brain.init_session()
 
         # Implementing F(state)=action
         self.state_in = tf.placeholder(shape=[None, self._s_size], dtype=tf.float32)

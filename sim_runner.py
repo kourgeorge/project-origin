@@ -28,7 +28,7 @@ def run():
 
 
 def run_in_thread():
-    t = threading.Thread(target=run())  # < Note that I did not actually call the function, but instead sent it as a parameter
+    t = threading.Thread(target=run)
     t.daemon = True
     t.start()
 

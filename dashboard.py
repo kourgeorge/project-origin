@@ -3,17 +3,12 @@ __author__ = 'gkour'
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.widgets import RadioButtons, Button, Slider
-
-plt.style.use(['seaborn-paper'])
 
 
 class Dashboard:
     def __init__(self):
-        #plt.ion()
 
-        #mpl.rcParams['toolbar'] = 'None'
-        self._fig_step = plt.figure(figsize=(9, 6), dpi=120, facecolor='w')
+        self._fig_step = plt.figure(figsize=(9, 5), dpi=120, facecolor='w')
         self._fig_step.canvas.set_window_title('Origin Dashboard')
         self._fig_step_pop = self._fig_step.add_subplot(221)
         self._fig_step_pop.set_ylabel('Population Size')
@@ -24,11 +19,6 @@ class Dashboard:
         self._fig_step_creat_loc = self._fig_step.add_axes([0.1, 0.1, 0.4, 0.05])
         self._fig_step_food_loc = self._fig_step.add_axes([0.1, 0.25, 0.4, 0.05])
         self._fig_step_action = self._fig_step.add_subplot(224)
-
-        axSlider = plt.axes([0.1, 0.4, 0.4, 0.05])
-        aSlider = Slider(axSlider, 'A slider', 0, 1, valinit=0.5)
-
-        #plt.show()
 
     def update_epoch_dash(self, epoch_stats_df):
         creatures_dist = np.asarray(epoch_stats_df['Creatures'].iloc[-1])

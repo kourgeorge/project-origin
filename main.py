@@ -3,7 +3,6 @@ __author__ = 'gkour'
 from universe import Universe
 import numpy as np
 from stats import Stats
-import utils
 from dashboard import Dashboard
 import printing
 

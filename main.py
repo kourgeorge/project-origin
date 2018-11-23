@@ -25,7 +25,6 @@ def main():
             Stats.action_dist = np.zeros_like(Stats.action_dist)
             Stats.death_cause = np.zeros_like(Stats.death_cause)
 
-    # write to log file
 
 
 if __name__ == '__main__':

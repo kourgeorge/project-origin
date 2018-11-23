@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,6 +23,8 @@ class Dashboard:
         self._fig_step_creat_loc = self._fig_step.add_axes([0.1, 0.1, 0.4, 0.05])
         self._fig_step_food_loc = self._fig_step.add_axes([0.1, 0.25, 0.4, 0.05])
         self._fig_step_action = self._fig_step.add_subplot(224)
+
+        plt.show()
 
     def update_epoch_dash(self, epoch_stats_df):
         creatures_dist = np.asarray(epoch_stats_df['Creatures'].iloc[-1])

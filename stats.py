@@ -29,13 +29,13 @@ class Stats:
             ('MaxAge',
              np.round(utils.emptynanmean([creature.max_age() for creature in universe.get_all_creatures()]), 2)),
             ('HLayer',
-             np.round(np.mean([creature.brain_hidden_layer() for creature in universe.get_all_creatures()]), 2)),
+             np.round(utils.emptynanmean([creature.brain_hidden_layer() for creature in universe.get_all_creatures()]), 2)),
             ('LFreq',
-             np.round(np.mean([creature.learning_frequency() for creature in universe.get_all_creatures()]), 2)),
-            ('LRate', np.round(np.mean([creature.learning_rate() for creature in universe.get_all_creatures()]) *
+             np.round(utils.emptynanmean([creature.learning_frequency() for creature in universe.get_all_creatures()]), 2)),
+            ('LRate', np.round(utils.emptynanmean([creature.learning_rate() for creature in universe.get_all_creatures()]) *
                                (1 / Config.ConfigBrain.BASE_LEARNING_RATE), 2)),
-            ('gamma', np.round(np.mean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
-            ('VRange', np.round(np.mean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
+            ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
+            ('VRange', np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
             ('AIQ', aiq.population_aiq(universe.get_all_creatures()))
         ])
 
@@ -57,5 +57,3 @@ class Stats:
             ('Creatures', universe.get_creatures_distribution()),
             ('Action Dist [LREMF]', np.round(np.array(Stats.action_dist) / sum(Stats.action_dist), 2))
         ])
-
-

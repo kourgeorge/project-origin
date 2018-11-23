@@ -1,3 +1,5 @@
+__author__ = 'gkour'
+
 from stats import Stats
 
 

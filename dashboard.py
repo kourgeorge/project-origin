@@ -35,7 +35,6 @@ class Dashboard:
         self._fig_step_action.clear()
         self._fig_step_action.pie(actions_dist, labels=['Left', 'Right', 'Eat', 'Mate', 'Fight'],
                                   startangle=90, autopct='%1.1f%%')
-        self._fig_step_action.set_title('Action Distribution')
 
     def update_step_dash(self, step_stats_df):
         self._line_pop.set_xdata(step_stats_df.index.values)

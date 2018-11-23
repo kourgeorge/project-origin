@@ -140,22 +140,18 @@ class Universe:
             return
         creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
 
-        # if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
-        #     self.kill(creature, 'fight')
-        #     return
-        # creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
-        # opponent = creature.cell().find_nearby_creature(creature)
-        # if opponent is None:
-        #     return
-        # fight_res = utils.roll_fight(creature.energy(), opponent.energy())
-        # if fight_res > 0:
-        #     opponent.add_energy(creature.energy())
-        #     # opponent.add_energy(5)
-        #     self.kill(creature, 'fight')
-        # else:
-        #     creature.add_energy(opponent.energy())
-        #     # creature.add_energy(5)
-        #     self.kill(opponent, 'fight')
+        opponent = creature.cell().find_nearby_creature(creature)
+        if opponent is None:
+            return
+        fight_res = utils.roll_fight(creature.energy(), opponent.energy())
+        if fight_res == -1:
+            energy_trans = int(opponent.energy() / 2)
+            creature.add_energy(energy_trans)
+            opponent.reduce_energy(energy_trans)
+        else:
+            energy_trans = int(creature.energy() / 2)
+            opponent.add_energy(energy_trans)
+            creature.reduce_energy(energy_trans)
 
     @staticmethod
     def get_creatures_counter():

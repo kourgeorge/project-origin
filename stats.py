@@ -13,13 +13,14 @@ class Stats:
     death_cause = [0, 0, 0]  # [Fatigue Fight Elderly]
     step_stats_df = pd.DataFrame()
     epoch_stats_df = pd.DataFrame()
-    ready_for_ui = False
+    step_ready_for_ui = False
+    epoch_ready_for_ui = False
 
     @staticmethod
     def accumulate_step_stats(step_stats_dict):
         temp_df = pd.DataFrame([step_stats_dict], columns=step_stats_dict.keys())
         Stats.step_stats_df = pd.concat([Stats.step_stats_df, temp_df], axis=0).reset_index(drop=True)
-        Stats.ready_for_ui = True
+        Stats.step_ready_for_ui = True
 
     @staticmethod
     def collect_step_stats(universe):
@@ -45,6 +46,7 @@ class Stats:
     def accumulate_epoch_stats(epoch_stats_dict):
         temp_df = pd.DataFrame([epoch_stats_dict], columns=epoch_stats_dict.keys())
         Stats.epoch_stats_df = pd.concat([Stats.epoch_stats_df, temp_df], axis=0).reset_index(drop=True)
+        Stats.epoch_ready_for_ui = True
 
     @staticmethod
     def collect_epoch_states(universe):

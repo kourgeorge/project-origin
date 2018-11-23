@@ -32,5 +32,6 @@ def run_in_thread():
     t.daemon = True
     t.start()
 
-#if __name__ == '__main__':
-#    run()
+
+if __name__ == '__main__':
+    run()

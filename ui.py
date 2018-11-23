@@ -73,8 +73,9 @@ class SimulationPage(tk.Frame):
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
     def refresh_data(self):
-        if Stats.ready_for_ui:
+        if Stats.step_ready_for_ui:
             self._dashboard.update_step_dash(Stats.step_stats_df)
+        if Stats.epoch_ready_for_ui:
             self._dashboard.update_epoch_dash(Stats.epoch_stats_df)
 
     def start_simulation(self):

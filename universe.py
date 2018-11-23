@@ -8,6 +8,8 @@ import numpy as np
 import utils
 from stats import Stats
 
+FOOD_CREATURE_RATIO = 0.5
+
 
 class Universe:
 
@@ -29,7 +31,8 @@ class Universe:
     # Time Management
     def pass_time(self):
         self._time += 1
-        if self._time < Config.ConfigPhysics.ETERNITY:
+        if self._time < Config.ConfigPhysics.ETERNITY and self.num_creatures() > 0:
+            self.give_food(round(self.num_creatures() * FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     creature.act()
@@ -70,8 +73,9 @@ class Universe:
             return
         creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
         available_food = creature.cell().get_food()
-        creature.add_energy(available_food)
-        creature.cell().remove_food(available_food)
+        meal = min(5, available_food)
+        creature.add_energy(meal)
+        creature.cell().remove_food(meal)
 
     def move_creature(self, creature, direction):
         if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
@@ -97,6 +101,7 @@ class Universe:
         if creature.age() < Config.ConfigBiology.MATURITY_AGE:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
                 self.kill(creature)
+                return
             creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
             return
 
@@ -118,6 +123,7 @@ class Universe:
         self.create_creature(new_dna, creature.coord(), dominant_parent)
 
     def kill(self, creature, cause='fatigue'):
+        creature.reduce_energy(creature.energy())
         cell = creature.cell()
         creature.update_cell(None)
         cell.remove_creature(creature)
@@ -130,21 +136,26 @@ class Universe:
 
     def fight(self, creature):
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
-            self.kill(creature)
+            self.kill(creature, 'fight')
             return
         creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
-        opponent = creature.cell().find_nearby_creature(creature)
-        if opponent is None:
-            return
-        fight_res = utils.roll_fight(creature.energy(), opponent.energy())
-        if fight_res > 0:
-            opponent.add_energy(creature.energy())
-            # opponent.add_energy(5)
-            self.kill(creature, 'fight')
-        else:
-            creature.add_energy(opponent.energy())
-            # creature.add_energy(5)
-            self.kill(opponent, 'fight')
+
+        # if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
+        #     self.kill(creature, 'fight')
+        #     return
+        # creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
+        # opponent = creature.cell().find_nearby_creature(creature)
+        # if opponent is None:
+        #     return
+        # fight_res = utils.roll_fight(creature.energy(), opponent.energy())
+        # if fight_res > 0:
+        #     opponent.add_energy(creature.energy())
+        #     # opponent.add_energy(5)
+        #     self.kill(creature, 'fight')
+        # else:
+        #     creature.add_energy(opponent.energy())
+        #     # creature.add_energy(5)
+        #     self.kill(opponent, 'fight')
 
     @staticmethod
     def get_creatures_counter():

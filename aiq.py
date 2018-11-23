@@ -2,16 +2,23 @@ __author__ = 'gkour'
 
 import numpy as np
 from config import Config
+import utils
+
+repetitions = 3
+
+
+def population_aiq(creatures):
+    all_aiq = [test_aiq(creature, repetitions) for creature in creatures]
+    return np.round(utils.emptynanmean(all_aiq), 2)
 
 
 def population_aiq_dist(creatures):
-    repetitions = 18
     bounds = [Config.ConfigBiology.BASE_DYING_AGE / 3, 2 * Config.ConfigBiology.BASE_DYING_AGE / 3]
     young = [test_aiq(creature, repetitions) for creature in creatures if creature.age() <= bounds[0]]
     adult = [test_aiq(creature, repetitions) for creature in creatures if bounds[0] < creature.age() <= bounds[1]]
     old = [test_aiq(creature, repetitions) for creature in creatures if bounds[1] < creature.age()]
 
-    return np.round([np.nanmean(young), np.nanmean(adult), np.nanmean(old)], 2)
+    return np.round([utils.emptynanmean(young), utils.emptynanmean(adult), utils.emptynanmean(old)], 2)
 
 
 def test_aiq(creature, test_size=3):

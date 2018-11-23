@@ -5,7 +5,6 @@ import tensorflow as tf
 from scipy.signal import lfilter
 import csv
 import os
-from stats import Stats
 
 
 def discount_rewards(r, gamma):
@@ -86,29 +85,7 @@ def roll_fight(energy1, energy2):
     return np.random.choice(a=[-1, 1], p=dist)
 
 
-def print_step_stats(universe):
-    step_stats = Stats.collect_step_stats(universe)
-    for (key, value) in step_stats.items():
-        print('{}: {}'.format(key, value), end=' | ')
-    print()
-
-
-def log_step_stats(file_path, universe):
-    step_stats = Stats.collect_step_stats(universe)
-    exists = os.path.isfile(file_path)
-    if not exists:
-        with open(file_path, 'a', newline='') as myfile:
-            wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
-            wr.writerow(list(step_stats.keys()))
-            myfile.close()
-
-    with open(file_path, 'a', newline='') as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
-        wr.writerow(step_stats.values())
-        myfile.close()
-
-
-def print_epoch_stats(universe):
-    epoch_stats = Stats.collect_epoch_states(universe)
-    for (key, value) in epoch_stats.items():
-        print('{}: {}'.format(key, value))
+def emptynanmean(array):
+    if array is not None and len(array) > 0:
+        return np.nanmean(array)
+    return 0

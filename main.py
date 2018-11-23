@@ -4,35 +4,29 @@ from universe import Universe
 import numpy as np
 from stats import Stats
 import utils
-#from dash_dash import Dashboard
-import config
+from dashboard import Dashboard
+import printing
 
 
 def main():
-    #dash = Dashboard()
+    dash = Dashboard()
     universe = Universe()
-    utils.print_step_stats(universe)
-    utils.print_epoch_stats(universe)
-    utils.log_step_stats(config.Config.LOG_FILE_PATH, universe)
 
     while universe.pass_time():
-        if universe.num_creatures() == 0:
-            # step_stats = stats.collect_step_stats(universe)
-            # utils.print_step_stats(step_stats)
-            # utils.log_step_stats(config.Config.LOG_FILE_PATH, step_stats)
-            # utils.print_epoch_stats(universe)
-            return
-
-        universe.give_food(round(universe.num_creatures() * 0.5))
-        utils.print_step_stats(universe)
-        utils.log_step_stats(config.Config.LOG_FILE_PATH, universe)
-        #step_stats = Stats.collect_step_stats(universe)
-        #dash.update(universe.get_time(), step_stats[])
+        step_stats = Stats.collect_step_stats(universe)
+        Stats.accumulate_step_stats(step_stats)
+        printing.print_step_stats(step_stats)
+        dash.update_step_dash(Stats.step_stats_df)
 
         if universe.get_time() % 10 == 0:
-            utils.print_epoch_stats(universe)
+            epoch_stats = Stats.collect_epoch_states(universe)
+            Stats.accumulate_epoch_stats(epoch_stats)
+            dash.update_epoch_dash(Stats.epoch_stats_df)
+            printing.print_epoch_stats(universe)
             Stats.action_dist = np.zeros_like(Stats.action_dist)
             Stats.death_cause = np.zeros_like(Stats.death_cause)
+
+    # write to log file
 
 
 if __name__ == '__main__':

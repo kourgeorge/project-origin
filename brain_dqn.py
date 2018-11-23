@@ -11,6 +11,7 @@ from collections import deque
 class Brain:
     BATCH_SIZE = 20
     sess = None
+    eps = 0.2
 
     @staticmethod
     def init_session():
@@ -50,7 +51,7 @@ class Brain:
 
     def act(self, obs):
         q_value = Brain.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
-        action = utils.epsilon_greedy(eps=0.1, dist=q_value)
+        action = utils.epsilon_greedy(eps=Brain.eps, dist=q_value)
         return action
 
     def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):

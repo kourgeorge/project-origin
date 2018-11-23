@@ -8,8 +8,6 @@ import numpy as np
 import utils
 from stats import Stats
 
-FOOD_CREATURE_RATIO = 0.5
-
 
 class Universe:
 
@@ -32,7 +30,7 @@ class Universe:
     def pass_time(self):
         self._time += 1
         if self._time < Config.ConfigPhysics.ETERNITY and self.num_creatures() > 0:
-            self.give_food(round(self.num_creatures() * FOOD_CREATURE_RATIO))
+            self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     creature.act()
@@ -73,7 +71,7 @@ class Universe:
             return
         creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
         available_food = creature.cell().get_food()
-        meal = min(5, available_food)
+        meal = min(Config.ConfigBiology.MEAL_SIZE, available_food)
         creature.add_energy(meal)
         creature.cell().remove_food(meal)
 

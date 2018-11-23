@@ -8,6 +8,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 import tkinter as tk
 from tkinter import ttk, Scale
 import matplotlib.pyplot as plt
+from config import Config
 
 # s = ttk.Style()
 # s.theme_use('alt')
@@ -25,6 +26,8 @@ class OriginApp(tk.Tk):
 
         tk.Tk.wm_title(self, "Project Origin")
 
+        # tk.Tk.iconbitmap(self,default="")
+
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
@@ -34,16 +37,9 @@ class OriginApp(tk.Tk):
         self._simulation_page.grid(row=0, column=0, sticky="nsew")
         self._simulation_page.tkraise()
 
-        # self.show_frame(SimulationPage)
-
-    # def show_frame(self, cont):
-    #     frame = self.frames[cont]
-    #     frame.tkraise()
-
     def refresh_data(self):
         self._simulation_page.refresh_data()
         self.after(UI_UPDATE_INTERVAL, self.refresh_data)
-
 
 
 class SimulationPage(tk.Frame):
@@ -55,16 +51,21 @@ class SimulationPage(tk.Frame):
         title_label = tk.Label(self, text="Project Origin Dashboard", font=LARGE_FONT, foreground='blue')
         title_label.pack(pady=10, padx=10)
 
+        self.s = ttk.Style()
+        self.s.theme_use('vista')
+
         self.status_label = tk.Label(self, text="Simulator ready")
         self.status_label.pack(pady=10, padx=10)
 
         self.start_sim_btn = ttk.Button(self, text="Start Simulation",
-                               command=lambda: self.start_simulation())
+                                        command=lambda: self.start_simulation())
 
         self.start_sim_btn.pack()
 
-        w = Scale(self, from_=0, to=1, orient=tk.HORIZONTAL, resolution=0.1)
-        w.pack()
+        self.food_creature_scale = Scale(self, from_=0, to=1, orient=tk.HORIZONTAL, resolution=0.1,
+                                         command=lambda x: self.set_food_creature_ratio(x))
+        self.food_creature_scale.set(Config.ConfigPhysics.FOOD_CREATURE_RATIO)
+        self.food_creature_scale.pack()
 
         dash_fig = self._dashboard.get_figure()
 
@@ -82,6 +83,11 @@ class SimulationPage(tk.Frame):
         self.status_label['text'] = "Simulation Started!"
         self.start_sim_btn['state'] = tk.DISABLED
         sim_runner.run_in_thread()
+
+    @staticmethod
+    def set_food_creature_ratio(new):
+        Config.ConfigPhysics.FOOD_CREATURE_RATIO = float(new)
+
 
 app = OriginApp()
 app.after(UI_UPDATE_INTERVAL, app.refresh_data)

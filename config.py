@@ -6,8 +6,9 @@ class Config:
 
     class ConfigPhysics:
         SPACE_SIZE = 50
-        NUM_FATHERS = 20
+        NUM_FATHERS = 50
         ETERNITY = 100000
+        FOOD_CREATURE_RATIO = 0.5
 
     class ConfigBiology:
         RACE_NAME = 'mango'
@@ -20,6 +21,7 @@ class Config:
         MATURITY_AGE = int(BASE_DYING_AGE / 5)
         BASE_LEARN_FREQ = 20
         BASE_VISION_RANGE = 3
+        MEAL_SIZE = 6
 
     class ConfigBrain:
         BASE_GAMMA = 0.9

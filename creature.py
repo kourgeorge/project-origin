@@ -1,7 +1,6 @@
 __author__ = 'gkour'
 
 from brain_dqn import Brain
-from stats import Stats
 from config import Config
 
 

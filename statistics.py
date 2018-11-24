@@ -55,3 +55,8 @@ class Stats:
             ('Creatures', universe.get_creatures_distribution()),
             ('Action Dist [LREMF]', np.round(np.array(self.action_dist) / sum(self.action_dist), 2))
         ])
+
+    def initialize_inter_epoch_stats(self):
+        self.action_dist = np.zeros_like(self.action_dist)
+        self.death_cause = np.zeros_like(self.death_cause)
+

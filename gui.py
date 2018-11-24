@@ -2,7 +2,6 @@ __author__ = 'gkour'
 
 import sim_runner
 from dashboard import Dashboard
-from stats import Stats
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import tkinter as tk
 from tkinter import ttk, Scale

@@ -3,12 +3,10 @@ __author__ = 'gkour'
 from universe import Universe
 import numpy as np
 from stats import Stats
-from dashboard import Dashboard
 import printing
-import threading
 
 
-def run():
+def run(msg_queue=None):
     # dash = Dashboard()
     universe = Universe()
 
@@ -25,12 +23,6 @@ def run():
             printing.print_epoch_stats(universe)
             Stats.action_dist = np.zeros_like(Stats.action_dist)
             Stats.death_cause = np.zeros_like(Stats.death_cause)
-
-
-def run_in_thread():
-    t = threading.Thread(target=run)
-    t.daemon = True
-    t.start()
 
 
 if __name__ == '__main__':

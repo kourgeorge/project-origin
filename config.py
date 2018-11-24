@@ -3,10 +3,11 @@ __author__ = 'gkour'
 
 class Config:
     LOG_FILE_PATH = './log/log.csv'
+    UI_UPDATE_INTERVAL = 200 #ms
 
     class ConfigPhysics:
         SPACE_SIZE = 50
-        NUM_FATHERS = 50
+        NUM_FATHERS = 30
         ETERNITY = 100000
         FOOD_CREATURE_RATIO = 0.5
 

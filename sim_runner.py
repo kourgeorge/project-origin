@@ -7,22 +7,21 @@ import printing
 
 
 def run(msg_queue=None):
-    # dash = Dashboard()
-    universe = Universe()
+    statistics = Stats()
+    universe = Universe(statistics)
 
     while universe.pass_time():
-        step_stats = Stats.collect_step_stats(universe)
-        Stats.accumulate_step_stats(step_stats)
+        step_stats = statistics.collect_step_stats(universe)
+        statistics.accumulate_step_stats(step_stats)
         printing.print_step_stats(step_stats)
-        # dash.update_step_dash(Stats.step_stats_df)
+        msg_queue.put(statistics)
 
         if universe.get_time() % 10 == 0:
-            epoch_stats = Stats.collect_epoch_states(universe)
-            Stats.accumulate_epoch_stats(epoch_stats)
-            #dash.update_epoch_dash(Stats.epoch_stats_df)
-            printing.print_epoch_stats(universe)
-            Stats.action_dist = np.zeros_like(Stats.action_dist)
-            Stats.death_cause = np.zeros_like(Stats.death_cause)
+            epoch_stats = statistics.collect_epoch_states(universe)
+            statistics.accumulate_epoch_stats(epoch_stats)
+            #printing.print_epoch_stats(statistics)
+            statistics.action_dist = np.zeros_like(statistics.action_dist)
+            statistics.death_cause = np.zeros_like(statistics.death_cause)
 
 
 if __name__ == '__main__':

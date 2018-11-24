@@ -8,17 +8,12 @@ import tkinter as tk
 from tkinter import ttk, Scale
 import matplotlib.pyplot as plt
 from config import Config
-from queue import Queue
 import threading
 
-# s = ttk.Style()
-# s.theme_use('alt')
 
 plt.style.use('seaborn-paper')
 
 LARGE_FONT = ("Verdana", 12)
-UI_UPDATE_INTERVAL = 1000
-
 
 class OriginGUI:
 
@@ -37,21 +32,15 @@ class OriginGUI:
         self._simulation_page.grid(row=0, column=0, sticky="nsew")
         self._simulation_page.tkraise()
 
-    def refresh_data(self):
-        self._simulation_page.refresh_data()
-        # self.after(UI_UPDATE_INTERVAL, self.refresh_data)
+    def refresh_data(self, msg):
+        self._simulation_page.refresh_data(msg)
 
     def processIncoming(self):
         """Handle all messages currently in the queue, if any."""
-        self._simulation_page.refresh_data()
         while self.queue.qsize():
             try:
-                msg = self.queue.get(0)
-                # Check contents of message and do whatever is needed. As a
-                # simple test, print it (in real life, you would
-                # suitably update the GUI's display in a richer fashion).
-                print(msg)
-            except Queue.Empty:
+                self.refresh_data(self.queue.get(0))
+            except self.queue.empty:
                 # just on general principles, although we don't
                 # expect this branch to be taken in this case
                 pass
@@ -88,18 +77,15 @@ class SimulationPage(tk.Frame):
         canvas.show()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
-    def refresh_data(self):
-        if Stats.step_ready_for_ui:
-            self._dashboard.update_step_dash(Stats.step_stats_df)
-        if Stats.epoch_ready_for_ui:
-            self._dashboard.update_epoch_dash(Stats.epoch_stats_df)
+    def refresh_data(self, statistics):
+        self._dashboard.update_step_dash(statistics.step_stats_df)
+        self._dashboard.update_epoch_dash(statistics.epoch_stats_df)
 
     def start_simulation(self):
         self.status_label['text'] = "Simulation Started!"
         self.start_sim_btn['state'] = tk.DISABLED
 
         t = threading.Thread(target=sim_runner.run, args=[self.queue])
-        t.daemon = True
         t.start()
 
     @staticmethod

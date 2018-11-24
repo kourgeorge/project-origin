@@ -3,6 +3,7 @@ __author__ = 'gkour'
 import tkinter as tk
 from queue import Queue
 from gui import OriginGUI
+from config import Config
 
 
 class OriginApp:
@@ -22,32 +23,13 @@ class OriginApp:
         self.msg_queue = Queue()
 
         # Set up the GUI part
-        self.gui = OriginGUI(master, self.msg_queue, self.endApplication)
+        self.gui = OriginGUI(master, self.msg_queue)
 
-        # Set up the thread to do asynchronous I/O
-        # More threads can also be created and used, if necessary
-        self.running = 1
-        #self.thread1 = threading.Thread(target=run)
-        #self.thread1.start()
-
-        # Start the periodic call in the GUI to check if the queue contains
-        # anything
         self.periodic_call()
 
     def periodic_call(self):
-        """
-        Check every 200 ms if there is something new in the queue.
-        """
         self.gui.processIncoming()
-        # if not self.running:
-        #     # This is the brutal stop of the system. You may want to do
-        #     # some cleanup before actually shutting it down.
-        #     import sys
-        #     sys.exit(1)
-        self.master.after(200, self.periodic_call)
-
-    def endApplication(self):
-        self.running = 0
+        self.master.after(Config.UI_UPDATE_INTERVAL, self.periodic_call)
 
 
 if __name__ == '__main__':

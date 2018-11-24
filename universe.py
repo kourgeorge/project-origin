@@ -6,18 +6,18 @@ from evolution import Evolution
 from config import Config
 import numpy as np
 import utils
-from stats import Stats
 
 
 class Universe:
 
-    def __init__(self):
+    def __init__(self, statistics=None):
         self._space = Space(Config.ConfigPhysics.SPACE_SIZE)
         self._time = 0
         fathers_locations = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
         for i in range(Config.ConfigPhysics.NUM_FATHERS):
             dna = Evolution.random_dna()
-            self.create_creature(dna, fathers_locations[i], None)
+            self.create_creature(dna, fathers_locations[i], Config.ConfigBiology.MATURITY_AGE, None)
+        self.statistics = statistics
 
     # Space Management
     def space(self):
@@ -48,8 +48,8 @@ class Universe:
             self.space().grid()[food_cells[i]].add_food(1)
 
     # Creatures Control
-    def create_creature(self, dna, coord, parent):
-        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), parent=parent)
+    def create_creature(self, dna, coord, age=0, parent=None):
+        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), age=age, parent=parent)
         cell = self.space().grid()[coord].insert_creature(descendant)
         descendant.update_cell(cell)
 
@@ -66,8 +66,9 @@ class Universe:
         return len(self.get_all_creatures())
 
     def feed(self, creature):
+        self.statistics.action_dist[2] += 1
         if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
-            self.kill(creature)
+            self.kill_creature(creature)
             return
         creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
         available_food = creature.cell().get_food()
@@ -75,9 +76,17 @@ class Universe:
         creature.add_energy(meal)
         creature.cell().remove_food(meal)
 
+    def creature_move_left(self, creature):
+        self.statistics.action_dist[0] += 1
+        self.move_creature(creature, -1)
+
+    def creature_move_right(self, creature):
+        self.statistics.action_dist[1] += 1
+        self.move_creature(creature, 1)
+
     def move_creature(self, creature, direction):
         if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
-            self.kill(creature)
+            self.kill_creature(creature)
             return
         creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
 
@@ -95,16 +104,17 @@ class Universe:
             new_cell = self.space().grid()[current_coord - 1].insert_creature(creature)
             creature.update_cell(new_cell)
 
-    def mate_creature(self, creature):
+    def creature_mate(self, creature):
+        self.statistics.action_dist[3] += 1
         if creature.age() < Config.ConfigBiology.MATURITY_AGE:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
-                self.kill(creature)
+                self.kill_creature(creature)
                 return
             creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
             return
 
         if creature.energy() < Config.ConfigBiology.MATE_ENERGY:
-            self.kill(creature)
+            self.kill_creature(creature)
             return
 
         creature.reduce_energy(Config.ConfigBiology.MATE_ENERGY)
@@ -118,23 +128,25 @@ class Universe:
             dominant_parent = mate_body
 
         new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
-        self.create_creature(new_dna, creature.coord(), dominant_parent)
+        self.create_creature(new_dna, creature.coord(), parent=dominant_parent)
 
-    def kill(self, creature, cause='fatigue'):
+    def kill_creature(self, creature, cause='fatigue'):
         creature.reduce_energy(creature.energy())
         cell = creature.cell()
         creature.update_cell(None)
         cell.remove_creature(creature)
-        if cause == 'fatigue':
-            Stats.death_cause[0] += 1
-        if cause == 'fight':
-            Stats.death_cause[1] += 1
-        if cause == 'elderly':
-            Stats.death_cause[2] += 1
+        if self.statistics is not None:
+            if cause == 'fatigue':
+                self.statistics.death_cause[0] += 1
+            if cause == 'creature_fight':
+                self.statistics.death_cause[1] += 1
+            if cause == 'elderly':
+                self.statistics.death_cause[2] += 1
 
-    def fight(self, creature):
+    def creature_fight(self, creature):
+        self.statistics.action_dist[4] += 1
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
-            self.kill(creature, 'fight')
+            self.kill_creature(creature, 'fight')
             return
         creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
 

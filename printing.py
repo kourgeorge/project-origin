@@ -24,7 +24,6 @@ def print_step_stats(step_stats_dict):
 #         myfile.close()
 
 
-def print_epoch_stats(universe):
-    epoch_stats = Stats.collect_epoch_states(universe)
-    for (key, value) in epoch_stats.items():
+def print_epoch_stats(statistics):
+    for (key, value) in statistics.epoch_stats_df.tail(1):
         print('{}: {}'.format(key, value))

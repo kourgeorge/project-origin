@@ -9,21 +9,18 @@ import utils
 
 
 class Stats:
-    action_dist = np.zeros(Config.ConfigBrain.ACTION_SIZE)  # [Left Right Eat Mate Fight]
-    death_cause = [0, 0, 0]  # [Fatigue Fight Elderly]
-    step_stats_df = pd.DataFrame()
-    epoch_stats_df = pd.DataFrame()
-    step_ready_for_ui = False
-    epoch_ready_for_ui = False
 
-    @staticmethod
-    def accumulate_step_stats(step_stats_dict):
+    def __init__(self):
+        self.action_dist = np.zeros(Config.ConfigBrain.ACTION_SIZE)  # [Left Right Eat Mate Fight]
+        self.death_cause = [0, 0, 0]  # [Fatigue Fight Elderly]
+        self.step_stats_df = pd.DataFrame()
+        self.epoch_stats_df = pd.DataFrame()
+
+    def accumulate_step_stats(self, step_stats_dict):
         temp_df = pd.DataFrame([step_stats_dict], columns=step_stats_dict.keys())
-        Stats.step_stats_df = pd.concat([Stats.step_stats_df, temp_df], axis=0).reset_index(drop=True)
-        Stats.step_ready_for_ui = True
+        self.step_stats_df = pd.concat([self.step_stats_df, temp_df], axis=0).reset_index(drop=True)
 
-    @staticmethod
-    def collect_step_stats(universe):
+    def collect_step_stats(self, universe):
         return OrderedDict([
             ('Time', universe.get_time()),
             ('Population', universe.num_creatures()),
@@ -42,22 +39,19 @@ class Stats:
             ('AIQ', aiq.population_aiq(universe.get_all_creatures()))
         ])
 
-    @staticmethod
-    def accumulate_epoch_stats(epoch_stats_dict):
+    def accumulate_epoch_stats(self, epoch_stats_dict):
         temp_df = pd.DataFrame([epoch_stats_dict], columns=epoch_stats_dict.keys())
-        Stats.epoch_stats_df = pd.concat([Stats.epoch_stats_df, temp_df], axis=0).reset_index(drop=True)
-        Stats.epoch_ready_for_ui = True
+        self.epoch_stats_df = pd.concat([self.epoch_stats_df, temp_df], axis=0).reset_index(drop=True)
 
-    @staticmethod
-    def collect_epoch_states(universe):
+    def collect_epoch_states(self, universe):
         return OrderedDict([
             ('Time', universe.get_time()),
             ('Population dist', np.histogram([creature.age() for creature in universe.get_all_creatures()],
                                              bins=[0, Config.ConfigBiology.MATURITY_AGE,
                                                    2 * Config.ConfigBiology.MATURITY_AGE, 200])[0]),
             ('Population aiq dist', aiq.population_aiq_dist(universe.get_all_creatures())),
-            ('Death Cause [FVE]', Stats.death_cause),
+            ('Death Cause [FVE]', self.death_cause),
             ('Food Supply', universe.get_food_distribution()),
             ('Creatures', universe.get_creatures_distribution()),
-            ('Action Dist [LREMF]', np.round(np.array(Stats.action_dist) / sum(Stats.action_dist), 2))
+            ('Action Dist [LREMF]', np.round(np.array(self.action_dist) / sum(self.action_dist), 2))
         ])

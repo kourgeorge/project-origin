@@ -1,6 +1,5 @@
 __author__ = 'gkour'
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -26,6 +25,8 @@ class Dashboard:
         self._fig.tight_layout()
 
     def update_epoch_dash(self, epoch_stats_df):
+        if epoch_stats_df is None or epoch_stats_df.empty:
+            return
         creatures_dist = np.asarray(epoch_stats_df['Creatures'].iloc[-1])
         self._fig_creatures_loc.clear()
         self._fig_creatures_loc.imshow(creatures_dist[np.newaxis, :], cmap="Purples", aspect="auto", vmin=0, vmax=10)
@@ -42,6 +43,8 @@ class Dashboard:
                              startangle=90, autopct='%1.1f%%')
 
     def update_step_dash(self, step_stats_df):
+        if step_stats_df is None or step_stats_df.empty:
+            return
         self._line_pop.set_xdata(step_stats_df.index.values)
         self._line_pop.set_ydata(step_stats_df['Population'])
 

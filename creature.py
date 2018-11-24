@@ -4,6 +4,7 @@ from brain_dqn import Brain
 from stats import Stats
 from config import Config
 
+
 # bb = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE, s_size=(2 * 2 + 1) * 2 + 2,
 #               action_size=Config.ConfigBrain.ACTION_SIZE, h_size=8, gamma = Config.ConfigBrain.GAMMA, scope='master')
 
@@ -16,23 +17,23 @@ class Creature:
         Creature.counter += 1
         return Creature.counter
 
-    def __init__(self, universe, dna, id, parent):
+    def __init__(self, universe, dna, id, age=0, parent=None):
         self._id = id
         self._name = str(id) + Config.ConfigBiology.RACE_NAME
         self._dna = dna
-        self._age = 0
+        self._age = age
         self._energy = Config.ConfigBiology.INITIAL_ENERGY
         self._cell = None
         self._universe = universe
-        parent = None
+        parent = parent
 
         # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
-        self._state_size = (self.vision_range()*2 + 1) * 2 + 2
+        self._state_size = (self.vision_range() * 2 + 1) * 2 + 2
         self._brain = Brain(lr=self.learning_rate(), s_size=self._state_size,
                             action_size=Config.ConfigBrain.ACTION_SIZE, h_size=self.brain_hidden_layer(),
                             scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
 
-        #self._brain = bb
+        # self._brain = bb
         self.obs = []
         self.acts = []
         self.rews = []
@@ -106,7 +107,7 @@ class Creature:
     # Actions
     def act(self):
         if self._age > self.max_age():
-            self._universe.kill(self, cause='elderly')
+            self._universe.kill_creature(self, cause='elderly')
             return
 
         self._age += 1
@@ -115,20 +116,15 @@ class Creature:
 
         decision = self._brain.act(state)
         if decision == 0:
-            Stats.action_dist[0] += 1
-            self.move(-1)
+            self._universe.creature_move_left(self)
         if decision == 1:
-            Stats.action_dist[1] += 1
-            self.move(1)
+            self._universe.creature_move_right(self)
         if decision == 2:
-            Stats.action_dist[2] += 1
-            self.eat()
+            self._universe.feed(self)
         if decision == 3:
-            Stats.action_dist[3] += 1
-            self.mate()
+            self._universe.creature_mate(self)
         if decision == 4:
-            Stats.action_dist[4] += 1
-            self.fight()
+            self._universe.creature_fight(self)
         # if decision == 5:
         #     log.action_log[5] += 1
         #     self.smarten()
@@ -139,23 +135,11 @@ class Creature:
         if self.alive():
             self.newState.append(self.get_state())
         else:
-            self.newState.append([-1]*self.state_size())
+            self.newState.append([-1] * self.state_size())
             self.smarten()
 
         if self._age % self.learning_frequency() == 0:
             self.smarten()
-
-    def move(self, direction):
-        self._universe.move_creature(self, direction)
-
-    def eat(self):
-        self._universe.feed(self)
-
-    def mate(self):
-        self._universe.mate_creature(self)
-
-    def fight(self):
-        self._universe.fight(self)
 
     def smarten(self):
         self._brain.train(self.obs, self.acts, self.rews, self.newState)

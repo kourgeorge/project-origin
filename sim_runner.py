@@ -10,15 +10,13 @@ def run(msg_queue=None):
     universe = Universe(stats)
 
     while universe.pass_time():
-        step_stats = stats.collect_step_stats(universe)
-        stats.accumulate_step_stats(step_stats)
-        printing.print_step_stats(step_stats)
+        stats.accumulate_step_stats(universe)
+        printing.print_step_stats(stats)
         msg_queue.put(stats)
 
         if universe.get_time() % 10 == 0:
-            epoch_stats = stats.collect_epoch_states(universe)
-            stats.accumulate_epoch_stats(epoch_stats)
-            #printing.print_epoch_stats(statistics)
+            stats.accumulate_epoch_stats(universe)
+            printing.print_epoch_stats(stats)
             stats.initialize_inter_epoch_stats()
 
 

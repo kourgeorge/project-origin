@@ -39,9 +39,8 @@ class OriginGUI:
         while self.queue.qsize():
             try:
                 self.refresh_data(self.queue.get(0))
-            except self.queue.empty:
-                # just on general principles, although we don't
-                # expect this branch to be taken in this case
+            except Exception as exp:
+                print(str(exp))
                 pass
 
 

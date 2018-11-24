@@ -1,10 +1,11 @@
 __author__ = 'gkour'
 
+import numpy as np
 
-def print_step_stats(step_stats_dict):
-    for (key, value) in step_stats_dict.items():
-        print('{}: {}'.format(key, value), end=' | ')
-    print()
+
+def print_step_stats(stats):
+    last_update = stats.step_stats_df.tail(1)
+    print(last_update.to_json(orient='records'))
 
 
 # def log_step_stats(file_path, universe):
@@ -23,5 +24,6 @@ def print_step_stats(step_stats_dict):
 
 
 def print_epoch_stats(stats):
-    for (key, value) in stats.epoch_stats_df.tail(1):
+    last_update = stats.epoch_stats_df.tail(1).to_dict()
+    for (key, value) in last_update.items():
         print('{}: {}'.format(key, value))

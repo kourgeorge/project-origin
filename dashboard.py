@@ -17,27 +17,16 @@ class Dashboard:
         self._line_age, = self._fig_age.plot([], [], '-')
 
         self._fig_creatures_loc = self._fig.add_axes([0.1, 0.1, 0.4, 0.05])
+        self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_food_loc = self._fig.add_axes([0.1, 0.25, 0.4, 0.05])
         self._fig_food_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_action = self._fig.add_subplot(224)
-        self._fig_action.yaxis.set_major_locator(plt.NullLocator())
-
-        self._fig.tight_layout()
 
     def update_epoch_dash(self, epoch_stats_df):
         if epoch_stats_df is None or epoch_stats_df.empty:
             return
-        creatures_dist = np.asarray(epoch_stats_df['Creatures'].iloc[-1])
-        self._fig_creatures_loc.clear()
-        self._fig_creatures_loc.imshow(creatures_dist[np.newaxis, :], cmap="Purples", aspect="auto", vmin=0, vmax=10)
-        self._fig_creatures_loc.set_title('Creatures Location')
 
-        food_supply = np.asarray(epoch_stats_df['Food Supply'].iloc[-1])
-        self._fig_food_loc.clear()
-        self._fig_food_loc.imshow(food_supply[np.newaxis, :], cmap="Blues", aspect="auto", vmin=0, vmax=100)
-        self._fig_food_loc.set_title('Food Supply')
-
-        actions_dist = epoch_stats_df['Action Dist [LREMF]'].iloc[-1]
+        actions_dist = epoch_stats_df['ActionDist'].iloc[-1]
         self._fig_action.clear()
         self._fig_action.pie(actions_dist, labels=['Left', 'Right', 'Eat', 'Mate', 'Fight'],
                              startangle=90, autopct='%1.1f%%')
@@ -57,6 +46,16 @@ class Dashboard:
         self._fig_pop.autoscale_view()
         self._fig_age.relim()
         self._fig_age.autoscale_view()
+
+        creatures_dist = np.asarray(step_stats_df['CreaturesDist'].iloc[-1])
+        self._fig_creatures_loc.clear()
+        self._fig_creatures_loc.imshow(creatures_dist[np.newaxis, :], cmap="Purples", aspect="auto", vmin=0, vmax=10)
+        self._fig_creatures_loc.set_title('Creatures Location')
+
+        food_supply = np.asarray(step_stats_df['FoodDist'].iloc[-1])
+        self._fig_food_loc.clear()
+        self._fig_food_loc.imshow(food_supply[np.newaxis, :], cmap="Blues", aspect="auto", vmin=0, vmax=100)
+        self._fig_food_loc.set_title('Food Dist')
 
     def get_figure(self):
         return self._fig

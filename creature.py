@@ -2,6 +2,7 @@ __author__ = 'gkour'
 
 from brain_dqn import Brain
 from config import Config
+from creature_actions import Actions
 
 
 # bb = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE, s_size=(2 * 2 + 1) * 2 + 2,
@@ -29,7 +30,7 @@ class Creature:
         # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
         self._state_size = (self.vision_range() * 2 + 1) * 2 + 2
         self._brain = Brain(lr=self.learning_rate(), s_size=self._state_size,
-                            action_size=Config.ConfigBrain.ACTION_SIZE, h_size=self.brain_hidden_layer(),
+                            action_size=Actions.num_actions(), h_size=self.brain_hidden_layer(),
                             scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
 
         # self._brain = bb
@@ -114,17 +115,18 @@ class Creature:
         state = self.get_state()
 
         decision = self._brain.act(state)
-        if decision == 0:
+        action = Actions.get_action_from_available(decision)
+        if action == Actions.LEFT:
             self._universe.creature_move_left(self)
-        if decision == 1:
+        if action == Actions.RIGHT:
             self._universe.creature_move_right(self)
-        if decision == 2:
+        if action == Actions.EAT:
             self._universe.feed(self)
-        if decision == 3:
+        if action == Actions.MATE:
             self._universe.creature_mate(self)
-        if decision == 4:
+        if action == Actions.FIGHT:
             self._universe.creature_fight(self)
-        if decision == 5:
+        if action == Actions.WORK:
             self._universe.creature_work(self)
         # if decision == 6:
         #     log.action_log[6] += 1

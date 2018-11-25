@@ -2,6 +2,7 @@ __author__ = 'gkour'
 
 import matplotlib.pyplot as plt
 import numpy as np
+from creature_actions import Actions
 
 
 class Dashboard:
@@ -28,7 +29,7 @@ class Dashboard:
 
         actions_dist = epoch_stats_df['ActionDist'].iloc[-1]
         self._fig_action.clear()
-        self._fig_action.pie(actions_dist, labels=['Left', 'Right', 'Eat', 'Mate', 'Fight', 'Work'],
+        self._fig_action.pie(actions_dist, labels=Actions.get_available_action_str(),
                              startangle=90, autopct='%1.1f%%')
 
     def update_step_dash(self, step_stats_df):

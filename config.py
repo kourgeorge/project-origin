@@ -28,7 +28,6 @@ class Config:
     class ConfigBrain:
         BASE_GAMMA = 0.9
         BASE_LEARNING_RATE = 1e-4
-        ACTION_SIZE = 6
-        BASE_HIDDEN_LAYER_SIZE = ACTION_SIZE
+        BASE_HIDDEN_LAYER_SIZE = 6
 
 

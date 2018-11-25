@@ -6,12 +6,13 @@ from collections import OrderedDict
 import aiq
 import pandas as pd
 import utils
+from creature_actions import Actions
 
 
 class Stats:
 
     def __init__(self):
-        self.action_dist = np.zeros(Config.ConfigBrain.ACTION_SIZE)  # [Left Right Eat Mate Fight]
+        self.action_dist = np.zeros(Actions.num_actions())  # [Left Right Eat Mate Fight]
         self.death_cause = [0, 0, 0]  # [Fatigue Fight Elderly]
         self.step_stats_df = pd.DataFrame()
         self.epoch_stats_df = pd.DataFrame()

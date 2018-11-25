@@ -6,6 +6,7 @@ from evolution import Evolution
 from config import Config
 import numpy as np
 import utils
+from creature_actions import Actions
 
 
 class Universe:
@@ -77,11 +78,11 @@ class Universe:
         creature.cell().remove_food(meal)
 
     def creature_move_left(self, creature):
-        self.statistics.action_dist[0] += 1
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.LEFT)] += 1
         self.move_creature(creature, -1)
 
     def creature_move_right(self, creature):
-        self.statistics.action_dist[1] += 1
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.RIGHT)] += 1
         self.move_creature(creature, 1)
 
     def move_creature(self, creature, direction):
@@ -105,7 +106,7 @@ class Universe:
             creature.update_cell(new_cell)
 
     def creature_mate(self, creature):
-        self.statistics.action_dist[3] += 1
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.MATE)] += 1
         if creature.age() < Config.ConfigBiology.MATURITY_AGE:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
@@ -144,7 +145,7 @@ class Universe:
                  self.statistics.death_cause[0] += 1
 
     def creature_fight(self, creature):
-        self.statistics.action_dist[4] += 1
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.FIGHT)] += 1
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
             self.kill_creature(creature, 'fight')
             return
@@ -164,7 +165,7 @@ class Universe:
             creature.reduce_energy(energy_trans)
 
     def creature_work(self, creature):
-        self.statistics.action_dist[5] += 1
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.WORK)] += 1
         if creature.energy() < Config.ConfigBiology.WORK_ENERGY:
             self.kill_creature(creature, 'work')
             return

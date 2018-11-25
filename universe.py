@@ -136,12 +136,12 @@ class Universe:
         creature.update_cell(None)
         cell.remove_creature(creature)
         if self.statistics is not None:
-            if cause == 'fatigue':
-                self.statistics.death_cause[0] += 1
-            if cause == 'creature_fight':
+            if cause == 'fight':
                 self.statistics.death_cause[1] += 1
-            if cause == 'elderly':
+            elif cause == 'elderly':
                 self.statistics.death_cause[2] += 1
+            else:
+                 self.statistics.death_cause[0] += 1
 
     def creature_fight(self, creature):
         self.statistics.action_dist[4] += 1
@@ -162,6 +162,14 @@ class Universe:
             energy_trans = int(creature.energy() / 2)
             opponent.add_energy(energy_trans)
             creature.reduce_energy(energy_trans)
+
+    def creature_work(self, creature):
+        self.statistics.action_dist[5] += 1
+        if creature.energy() < Config.ConfigBiology.WORK_ENERGY:
+            self.kill_creature(creature, 'work')
+            return
+        creature.reduce_energy(Config.ConfigBiology.WORK_ENERGY)
+        creature.cell().add_food(Config.ConfigBiology.MEAL_SIZE)
 
     @staticmethod
     def get_creatures_counter():

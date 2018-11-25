@@ -124,8 +124,10 @@ class Creature:
             self._universe.creature_mate(self)
         if decision == 4:
             self._universe.creature_fight(self)
-        # if decision == 5:
-        #     log.action_log[5] += 1
+        if decision == 5:
+            self._universe.creature_work(self)
+        # if decision == 6:
+        #     log.action_log[6] += 1
         #     self.smarten()
         self.obs.append(state)
         self.acts.append(decision)

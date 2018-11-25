@@ -4,9 +4,9 @@ from brain_dqn import Brain
 from config import Config
 from creature_actions import Actions
 
-
-# bb = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE, s_size=(2 * 2 + 1) * 2 + 2,
-#               action_size=Config.ConfigBrain.ACTION_SIZE, h_size=8, gamma = Config.ConfigBrain.GAMMA, scope='master')
+master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE, s_size=(2 * 2 + 1) * 2 + 2,
+                     action_size=Actions.num_actions(), h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                     gamma=Config.ConfigBrain.BASE_GAMMA, scope='master')
 
 
 class Creature:
@@ -17,23 +17,21 @@ class Creature:
         Creature.counter += 1
         return Creature.counter
 
-    def __init__(self, universe, dna, id, age=0, parent=None):
+    def __init__(self, universe, dna, id, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None):
         self._id = id
         self._name = str(id) + Config.ConfigBiology.RACE_NAME
         self._dna = dna
         self._age = age
-        self._energy = Config.ConfigBiology.INITIAL_ENERGY
+        self._energy = energy
         self._cell = None
         self._universe = universe
         parent = parent
 
-        # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
-        self._state_size = (self.vision_range() * 2 + 1) * 2 + 2
-        self._brain = Brain(lr=self.learning_rate(), s_size=self._state_size,
-                            action_size=Actions.num_actions(), h_size=self.brain_hidden_layer(),
-                            scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
+        # self._brain = Brain(lr=self.learning_rate(), s_size=self.state_size(),
+        #                     action_size=Actions.num_actions(), h_size=self.brain_hidden_layer(),
+        #                     scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
 
-        # self._brain = bb
+        self._brain = master_brain
         self.obs = []
         self.acts = []
         self.rews = []
@@ -128,6 +126,8 @@ class Creature:
             self._universe.creature_fight(self)
         if action == Actions.WORK:
             self._universe.creature_work(self)
+        if action == Actions.DEVIDE:
+            self._universe.creature_divide(self)
         # if decision == 6:
         #     log.action_log[6] += 1
         #     self.smarten()
@@ -149,7 +149,8 @@ class Creature:
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
     def state_size(self):
-        return self._state_size
+        # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
+        return (self.vision_range() * 2 + 1) * 2 + 2
 
     def alive(self):
         return self.cell() is not None

@@ -16,6 +16,7 @@ class Actions(AutoNumber):
     MATE = ()
     FIGHT = ()
     WORK = ()
+    DEVIDE = ()
 
     def __str__(self):
         return str(self.name)
@@ -32,11 +33,11 @@ class Actions(AutoNumber):
 
     @staticmethod
     def get_available_list():
-        return [Actions.LEFT, Actions.RIGHT, Actions.EAT, Actions.MATE, Actions.FIGHT, Actions.WORK]
+        return [Actions.LEFT, Actions.RIGHT, Actions.EAT, Actions.DEVIDE]
 
     @staticmethod
-    def get_action_from_available(indx):
-        return Actions.get_available_list()[indx]
+    def get_action_from_available(index):
+        return Actions.get_available_list()[index]
 
     @staticmethod
     def get_available_action_indx(action):

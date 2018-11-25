@@ -17,7 +17,7 @@ class Universe:
         fathers_locations = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
         for i in range(Config.ConfigPhysics.NUM_FATHERS):
             dna = Evolution.random_dna()
-            self.create_creature(dna, fathers_locations[i], Config.ConfigBiology.MATURITY_AGE, None)
+            self.create_creature(dna=dna, coord=fathers_locations[i], age=Config.ConfigBiology.MATURITY_AGE, parent=None)
         self.statistics = statistics
 
     # Space Management
@@ -49,8 +49,8 @@ class Universe:
             self.space().grid()[food_cells[i]].add_food(1)
 
     # Creatures Control
-    def create_creature(self, dna, coord, age=0, parent=None):
-        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), age=age, parent=parent)
+    def create_creature(self, dna, coord, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None):
+        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), age=age, energy=energy, parent=parent)
         cell = self.space().grid()[coord].insert_creature(descendant)
         descendant.update_cell(cell)
 
@@ -94,12 +94,14 @@ class Universe:
         current_coord = creature.coord()
         if direction == 1:
             if current_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
+                #self.kill_creature(creature) #Slippery edges physics
                 return
             self.space().grid()[current_coord].remove_creature(creature)
             new_cell = self.space().grid()[current_coord + 1].insert_creature(creature)
             creature.update_cell(new_cell)
         if direction == -1:
             if current_coord == 0:
+                #self.kill_creature(creature) Slippery edges physics
                 return
             self.space().grid()[current_coord].remove_creature(creature)
             new_cell = self.space().grid()[current_coord - 1].insert_creature(creature)
@@ -131,6 +133,19 @@ class Universe:
         new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
         self.create_creature(new_dna, creature.coord(), parent=dominant_parent)
 
+    def creature_divide(self, creature):
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.DEVIDE)] += 1
+        if creature.age() < Config.ConfigBiology.MATURITY_AGE and creature.energy()<30:
+            if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
+                self.kill_creature(creature)
+                return
+            creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
+            return
+
+        self.create_creature(dna=creature.dna(), coord=creature.coord(), energy=int(creature.energy() / 2), parent=creature)
+        creature.reduce_energy(amount=int(creature.energy()/4))
+        creature._age = 0
+
     def kill_creature(self, creature, cause='fatigue'):
         creature.reduce_energy(creature.energy())
         cell = creature.cell()
@@ -142,7 +157,7 @@ class Universe:
             elif cause == 'elderly':
                 self.statistics.death_cause[2] += 1
             else:
-                 self.statistics.death_cause[0] += 1
+                self.statistics.death_cause[0] += 1
 
     def creature_fight(self, creature):
         self.statistics.action_dist[Actions.get_available_action_indx(Actions.FIGHT)] += 1

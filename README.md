@@ -132,6 +132,7 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 * 20.11.2018 - Added DQN based brain.
 * 22.11.2018 - Adding Dashboard to visualize simulation progress.
 * 23.11.2019 - Added App to allow dynamic control of simulation parameters.
-* TBI - Different kinds of food and reorganization of the state vector.
+* 24.11.2019 - Supporting Both human like creatures(Work, Mate) and germs (EAT, DIVIDE, MOVE)
+* TBI - Different kinds of food and Dopamine implementation for DQN
 
 

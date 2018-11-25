@@ -3,6 +3,7 @@ __author__ = 'gkour'
 import matplotlib.pyplot as plt
 import numpy as np
 from creature_actions import Actions
+from config import Config
 
 
 class Dashboard:
@@ -27,18 +28,13 @@ class Dashboard:
         if epoch_stats_df is None or epoch_stats_df.empty:
             return
 
-        actions_dist = epoch_stats_df['ActionDist'].iloc[-1]
-        self._fig_action.clear()
-        self._fig_action.pie(actions_dist, labels=Actions.get_available_action_str(),
-                             startangle=90, autopct='%1.1f%%')
-
     def update_step_dash(self, step_stats_df):
         if step_stats_df is None or step_stats_df.empty:
             return
-        self._line_pop.set_xdata(step_stats_df.index.values)
+        self._line_pop.set_xdata(step_stats_df['Time'])
         self._line_pop.set_ydata(step_stats_df['Population'])
 
-        self._line_age.set_xdata(step_stats_df.index.values)
+        self._line_age.set_xdata(step_stats_df['Time'])
         self._line_age.set_ydata(step_stats_df['Age'])
 
         self._fig.canvas.draw()
@@ -48,15 +44,23 @@ class Dashboard:
         self._fig_age.relim()
         self._fig_age.autoscale_view()
 
+        ## Creatures Dist
         creatures_dist = np.asarray(step_stats_df['CreaturesDist'].iloc[-1])
         self._fig_creatures_loc.clear()
         self._fig_creatures_loc.imshow(creatures_dist[np.newaxis, :], cmap="Purples", aspect="auto", vmin=0, vmax=10)
         self._fig_creatures_loc.set_title('Creatures Location')
 
+        ## Food Supply
         food_supply = np.asarray(step_stats_df['FoodDist'].iloc[-1])
         self._fig_food_loc.clear()
         self._fig_food_loc.imshow(food_supply[np.newaxis, :], cmap="Blues", aspect="auto", vmin=0, vmax=100)
         self._fig_food_loc.set_title('Food Dist')
+
+        ## Action Dist Pie
+        actions_dist = np.mean(step_stats_df['ActionDist'].tail(Config.Batch_SIZE).values, axis=0)
+        self._fig_action.clear()
+        self._fig_action.pie(actions_dist, labels=Actions.get_available_action_str(),
+                             startangle=90, autopct='%1.1f%%')
 
     def get_figure(self):
         return self._fig

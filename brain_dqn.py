@@ -26,7 +26,7 @@ class Brain:
         self._regularization_param = 0.001
         self.lr = lr
         self._gamma = gamma
-        self.replayMemory = deque()
+        self.replayMemory = deque(maxlen=Brain.BATCH_SIZE*10)
 
         Brain.init_session()
 

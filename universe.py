@@ -184,8 +184,8 @@ class Universe:
 
         self.create_creature(dna=creature.dna(), coord=creature.coord(), energy=int(creature.energy() / 2),
                              parent=creature)
-        creature.reduce_energy(amount=int(creature.energy() / 4))
-        creature._age = 0
+        creature.reduce_energy(amount=int(creature.energy() / 2))
+        creature._age = 1
 
     def kill_creature(self, creature, cause='fatigue'):
         creature.reduce_energy(creature.energy())

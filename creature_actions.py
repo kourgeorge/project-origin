@@ -33,7 +33,7 @@ class Actions(AutoNumber):
 
     @staticmethod
     def get_available_list():
-        return [Actions.LEFT, Actions.RIGHT, Actions.EAT, Actions.DEVIDE]
+        return [Actions.LEFT, Actions.RIGHT, Actions.EAT, Actions.MATE, Actions.FIGHT]
 
     @staticmethod
     def get_action_from_available(index):

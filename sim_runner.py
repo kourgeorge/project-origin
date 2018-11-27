@@ -21,6 +21,5 @@ def run(msg_queue=None):
             printing.print_epoch_stats(stats)
 
 
-
 if __name__ == '__main__':
     run()

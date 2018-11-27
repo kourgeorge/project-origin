@@ -94,14 +94,14 @@ class Universe:
         current_coord = creature.coord()
         if direction == 1:
             if current_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
-                #self.kill_creature(creature) #Slippery edges physics
+                self.kill_creature(creature) #Slippery edges physics
                 return
             self.space().grid()[current_coord].remove_creature(creature)
             new_cell = self.space().grid()[current_coord + 1].insert_creature(creature)
             creature.update_cell(new_cell)
         if direction == -1:
             if current_coord == 0:
-                #self.kill_creature(creature) Slippery edges physics
+                self.kill_creature(creature) #Slippery edges physics
                 return
             self.space().grid()[current_coord].remove_creature(creature)
             new_cell = self.space().grid()[current_coord - 1].insert_creature(creature)

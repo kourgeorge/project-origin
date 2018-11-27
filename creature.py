@@ -149,7 +149,7 @@ class Creature:
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
     def state_size(self):
-        # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
+        #surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
         return (self.vision_range() * 2 + 1) * 2 + 2
 
     def alive(self):

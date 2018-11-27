@@ -3,6 +3,7 @@ __author__ = 'gkour'
 from brain_dqn import Brain
 from config import Config
 from creature_actions import Actions
+import os
 
 master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
                      s_size=(2*Config.ConfigBiology.BASE_VISION_RANGE + 1) ** 2 * 2 + 2,
@@ -18,7 +19,7 @@ class Creature:
         Creature.counter += 1
         return Creature.counter
 
-    def __init__(self, universe, dna, id, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None):
+    def __init__(self, universe, dna, id, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None, model_path=None):
         self._id = id
         self._name = str(id) + Config.ConfigBiology.RACE_NAME
         self._dna = dna
@@ -27,6 +28,7 @@ class Creature:
         self._cell = None
         self._universe = universe
         parent = parent
+        self._model_path = model_path
 
         # self._brain = Brain(lr=self.learning_rate(), s_size=self.state_size(),
         #                     action_size=Actions.num_actions(), h_size=self.brain_hidden_layer(),
@@ -37,6 +39,9 @@ class Creature:
         self.acts = []
         self.rews = []
         self.newState = []
+
+        if model_path is not None and os.path.exists(model_path):
+            self._brain.load_model(model_path)
 
     # Identity
     def id(self):
@@ -114,7 +119,7 @@ class Creature:
         state = self.get_state()
 
         decision = self._brain.act(state)
-        action = Actions.get_action_from_available(decision)
+        action = Actions.index_to_enum(decision)
         if action == Actions.LEFT:
             self._universe.creature_move_left(self)
         if action == Actions.RIGHT:
@@ -159,6 +164,11 @@ class Creature:
 
     def alive(self):
         return self.cell() is not None
+
+    def die(self):
+        # write the model of the last survivor.
+        if self._universe.num_creatures == 1 and self._model_path is not None:
+            self._brain.save_model(self._model_path)
 
     def __str__(self):
         return str(self._id)

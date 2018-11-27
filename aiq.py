@@ -3,6 +3,8 @@ __author__ = 'gkour'
 import numpy as np
 from config import Config
 import utils
+from creature_actions import Actions
+from itertools import chain
 
 repetitions = 3
 
@@ -23,69 +25,84 @@ def population_aiq_dist(creatures):
 
 def test_aiq(creature, test_size=3):
     score = 0
-    scenarios = [food_left, food_right, food_inplace]
+    scenarios = [haven_left, haven_right, haven_inplace, haven_up, haven_down]
     for i in range(test_size):
-        test_state, optimal_action = scenarios[i%3](creature.vision_range())
-        decision = creature.brain().act(test_state)
+        test_state, optimal_action = scenarios[i % 3](creature.vision_range())
+        decision = Actions.index_to_enum(creature.brain().act(test_state))
         score += 1 if decision == optimal_action else 0
     return score / test_size
 
 
-def food_left(vision_range):
+def haven_inplace(vision_range):
+    ''' Haven cell in current location.'''
     energy = 3
     age = 3
     internal_state = [energy, age]
 
-    #       (f c) (f c) (f c)
-    #       (5 0) (0 0) (0 5)
-    left_state = [0] * (vision_range * 2)
-    left_state[-2] = 5
-    left_state[-1] = 0
+    food = np.zeros(shape=(2*vision_range + 1, 2*vision_range + 1))
+    creatures = np.ones(shape=(2*vision_range + 1, 2*vision_range + 1)) * 20
 
-    right_state = [0] * (vision_range * 2)
-    right_state[0] = 0
-    right_state[1] = 0
+    food[vision_range][vision_range] = 20
+    creatures[vision_range][vision_range] = 0
 
-    current_cell = [0, 0]
-
-    return left_state + current_cell + right_state + internal_state, 0
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, Actions.EAT
 
 
-def food_right(vision_range):
+def haven_right(vision_range):
+    ''' Haven cell on the right'''
     energy = 3
     age = 3
     internal_state = [energy, age]
 
-    #       (f c) (f c) (f c)
-    #       (0 5) (0 0) (5 0)
-    left_state = [0] * (vision_range * 2)
-    left_state[-2] = 0
-    left_state[-1] = 0
+    food = np.zeros(shape=(2*vision_range + 1, 2*vision_range + 1))
+    creatures = np.ones(shape=(2*vision_range + 1, 2*vision_range + 1)) * 20
 
-    right_state = [0] * (vision_range * 2)
-    right_state[0] = 5
-    right_state[1] = 0
+    food[vision_range][vision_range + 1] = 20
+    creatures[vision_range][vision_range + 1] = 0
 
-    current_cell = [0, 0]
-
-    return left_state + current_cell + right_state + internal_state, 1
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, Actions.RIGHT
 
 
-def food_inplace(vision_range):
+def haven_left(vision_range):
+    ''' Haven cell in current location.'''
     energy = 3
     age = 3
     internal_state = [energy, age]
 
-    #       (f c) (f c) (f c)
-    #       (0 0) (0 0) (0 0)
-    left_state = [0] * (vision_range * 2)
-    left_state[-2] = 0
-    left_state[-1] = 5
+    food = np.zeros(shape=(2*vision_range + 1, 2*vision_range + 1))
+    creatures = np.ones(shape=(2*vision_range + 1, 2*vision_range + 1)) * 20
 
-    right_state = [0] * (vision_range * 2)
-    right_state[0] = 0
-    right_state[1] = 5
+    food[vision_range][vision_range - 1] = 20
+    creatures[vision_range][vision_range - 1] = 0
 
-    current_cell = [10, 0]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, Actions.LEFT
 
-    return left_state + current_cell + right_state + internal_state, 2
+
+def haven_up(vision_range):
+    ''' Haven cell up.'''
+    energy = 3
+    age = 3
+    internal_state = [energy, age]
+
+    food = np.zeros(shape=(2*vision_range + 1, 2*vision_range + 1))
+    creatures = np.ones(shape=(2*vision_range + 1, 2*vision_range + 1)) * 20
+
+    food[vision_range - 1][vision_range] = 20
+    creatures[vision_range - 1][vision_range] = 0
+
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, Actions.UP
+
+
+def haven_down(vision_range):
+    ''' Haven cell down.'''
+    energy = 3
+    age = 3
+    internal_state = [energy, age]
+
+    food = np.zeros(shape=(2*vision_range + 1, 2*vision_range + 1))
+    creatures = np.ones(shape=(2*vision_range + 1, 2*vision_range + 1)) * 20
+
+    food[vision_range + 1][vision_range] = 20
+    creatures[vision_range + 1][vision_range] = 0
+
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, Actions.DOWN

@@ -49,6 +49,8 @@ class Brain:
         Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, 'T' + scope)))
         Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope)))
 
+        self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope))
+
     def act(self, obs):
         q_value = Brain.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
         action = utils.epsilon_greedy(eps=Brain.eps, dist=q_value)
@@ -88,6 +90,12 @@ class Brain:
 
     def state_size(self):
         return self._s_size
+
+    def save_model(self, path):
+        self.saver.save(Brain.sess, path)
+
+    def load_model(self, path):
+        self.saver.restore(Brain.sess, path)
 
     def _create_qnetwork(self, scope, input_ph):
         with tf.variable_scope(scope):

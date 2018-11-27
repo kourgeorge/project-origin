@@ -19,7 +19,7 @@ class Universe:
         for n in range(Config.ConfigPhysics.NUM_FATHERS):
             dna = Evolution.random_dna()
             self.create_creature(dna=dna, coord=(fathers_locations_i[n], fathers_locations_j[n]),
-                                 age=Config.ConfigBiology.MATURITY_AGE, parent=None)
+                                 age=0, parent=None)
 
         self.give_food(round(Config.ConfigPhysics.NUM_FATHERS * 10 ** 4))
         self.statistics = statistics
@@ -55,7 +55,8 @@ class Universe:
 
     # Creatures Control
     def create_creature(self, dna, coord, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None):
-        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), age=age, energy=energy, parent=parent)
+        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), age=age, energy=energy, parent=parent,
+                              model_path=Config.ConfigBrain.MODEL_PATH)
         cell = self.space().insert_creature(descendant, coord)
         descendant.update_cell(cell)
 
@@ -71,8 +72,23 @@ class Universe:
     def num_creatures(self):
         return len(self.get_all_creatures())
 
+    def kill_creature(self, creature, cause='fatigue'):
+        creature.die()
+        creature.reduce_energy(creature.energy())
+        cell = creature.cell()
+        creature.update_cell(None)
+        cell.remove_creature(creature)
+        if self.statistics is not None:
+            if cause == 'fight':
+                self.statistics.death_cause[1] += 1
+            elif cause == 'elderly':
+                self.statistics.death_cause[2] += 1
+            else:
+                self.statistics.death_cause[0] += 1
+
+    ## Creature Actions
     def creature_eat(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.EAT)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.EAT)] += 1
         if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
             self.kill_creature(creature)
             return
@@ -83,19 +99,19 @@ class Universe:
         creature.cell().remove_food(meal)
 
     def creature_move_left(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.LEFT)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.LEFT)] += 1
         self.move_creature(creature, Actions.LEFT)
 
     def creature_move_right(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.RIGHT)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.RIGHT)] += 1
         self.move_creature(creature, Actions.RIGHT)
 
     def creature_move_up(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.UP)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.UP)] += 1
         self.move_creature(creature, Actions.UP)
 
     def creature_move_down(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.DOWN)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.DOWN)] += 1
         self.move_creature(creature, Actions.DOWN)
 
     def move_creature(self, creature, direction):
@@ -150,7 +166,7 @@ class Universe:
             creature.update_cell(new_cell)
 
     def creature_mate(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.MATE)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.MATE)] += 1
         if creature.age() < Config.ConfigBiology.MATURITY_AGE:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
@@ -176,8 +192,8 @@ class Universe:
         self.create_creature(new_dna, creature.coord(), parent=dominant_parent)
 
     def creature_divide(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.DEVIDE)] += 1
-        if creature.age() < Config.ConfigBiology.MATURITY_AGE and creature.energy() < 30:
+        self.statistics.action_dist[Actions.enum_to_index(Actions.DEVIDE)] += 1
+        if creature.age() < Config.ConfigBiology.MATURITY_AGE or creature.energy() < 30:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
                 return
@@ -189,21 +205,8 @@ class Universe:
         creature.reduce_energy(amount=int(creature.energy() / 2))
         creature._age = 1
 
-    def kill_creature(self, creature, cause='fatigue'):
-        creature.reduce_energy(creature.energy())
-        cell = creature.cell()
-        creature.update_cell(None)
-        cell.remove_creature(creature)
-        if self.statistics is not None:
-            if cause == 'fight':
-                self.statistics.death_cause[1] += 1
-            elif cause == 'elderly':
-                self.statistics.death_cause[2] += 1
-            else:
-                self.statistics.death_cause[0] += 1
-
     def creature_fight(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.FIGHT)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.FIGHT)] += 1
         if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
             self.kill_creature(creature, 'fight')
             return
@@ -223,7 +226,7 @@ class Universe:
             creature.reduce_energy(energy_trans)
 
     def creature_work(self, creature):
-        self.statistics.action_dist[Actions.get_available_action_indx(Actions.WORK)] += 1
+        self.statistics.action_dist[Actions.enum_to_index(Actions.WORK)] += 1
         if creature.energy() < Config.ConfigBiology.WORK_ENERGY:
             self.kill_creature(creature, 'work')
             return

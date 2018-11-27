@@ -37,12 +37,13 @@ class Brain:
         # Initialize Variables
         Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.VARIABLES, scope)))
 
+        self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.VARIABLES, scope))
+
         if copy_from_scope is not None:
             Brain.sess.run(utils.update_target_graph(copy_from_scope, scope))
 
     def _construct_policy_model(self, scope):
         with tf.variable_scope(scope):
-
             net = slim.stack(self.state_in, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)
 
             action_output = slim.fully_connected(net, self._action_size, activation_fn=tf.nn.softmax,

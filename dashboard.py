@@ -11,7 +11,7 @@ class Dashboard:
 
         self._fig = plt.figure(figsize=(9, 5), dpi=120, facecolor='w')
         self._fig.canvas.set_window_title('Origin Dashboard')
-        self._axes_pop = self._fig.add_subplot(211)
+        self._axes_pop = self._fig.add_subplot(221)
         self._axes_pop.set_ylabel('Population Size')
         self._line_pop, = self._axes_pop.semilogy([], [], '-', label=self._axes_pop.yaxis.label.get_text())
         self._axes_age = self._axes_pop.twinx()
@@ -19,6 +19,10 @@ class Dashboard:
         self._line_age, = self._axes_age.plot([], [], 'y-', label=self._axes_age.yaxis.label.get_text())
         self._axes_pop.legend([self._line_pop, self._line_age],
                               [self._line_pop.get_label(), self._line_age.get_label()], loc=0)
+
+        self._axes_aiq = self._fig.add_subplot(222)
+        self._axes_aiq.set_ylabel('Population AIQ')
+        self._line_aiq, = self._axes_aiq.plot([], [], '-', label=self._axes_aiq.yaxis.label.get_text())
 
         self._fig_creatures_loc = self._fig.add_axes([0.1, 0.1, 0.2, 0.3])
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
@@ -41,12 +45,17 @@ class Dashboard:
         self._line_age.set_xdata(step_stats_df['Time'])
         self._line_age.set_ydata(step_stats_df['Age'])
 
+        self._line_aiq.set_xdata(step_stats_df['Time'])
+        self._line_aiq.set_ydata(step_stats_df['AIQ'])
+
         self._fig.canvas.draw()
         self._fig.canvas.flush_events()
         self._axes_pop.relim()
         self._axes_pop.autoscale_view()
         self._axes_age.relim()
         self._axes_age.autoscale_view()
+        self._axes_aiq.relim()
+        self._axes_aiq.autoscale_view()
 
         ## Creatures Dist
         creatures_dist = np.asarray(step_stats_df['CreaturesDist'].iloc[-1])

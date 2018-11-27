@@ -38,11 +38,11 @@ class Actions(AutoNumber):
         return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.DEVIDE]
 
     @staticmethod
-    def get_action_from_available(index):
+    def index_to_enum(index):
         return Actions.get_available_list()[index]
 
     @staticmethod
-    def get_available_action_indx(action):
+    def enum_to_index(action):
         return Actions.get_available_list().index(action)
 
     @staticmethod

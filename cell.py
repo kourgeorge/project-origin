@@ -39,6 +39,9 @@ class Cell:
     def creatures(self):
         return self._creatures
 
+    def energy_level(self):
+        return sum([creature.energy() for creature in self.creatures()])
+
     def num_creatures(self):
         return len(self._creatures)
 

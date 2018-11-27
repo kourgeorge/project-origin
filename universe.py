@@ -20,6 +20,8 @@ class Universe:
             dna = Evolution.random_dna()
             self.create_creature(dna=dna, coord=(fathers_locations_i[n], fathers_locations_j[n]),
                                  age=Config.ConfigBiology.MATURITY_AGE, parent=None)
+
+        self.give_food(round(Config.ConfigPhysics.NUM_FATHERS * 10 ** 4))
         self.statistics = statistics
 
     # Space Management
@@ -33,7 +35,7 @@ class Universe:
     def pass_time(self):
         self._time += 1
         if self._time < Config.ConfigPhysics.ETERNITY and self.num_creatures() > 0:
-            self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
+            # self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     creature.act()
@@ -106,7 +108,7 @@ class Universe:
         if direction == Actions.RIGHT:
             rel_dim_coord = j
             if rel_dim_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
-                if not Config.ConfigPhysics.SPACE_SLIPPERY:
+                if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature)
                 return
@@ -117,7 +119,7 @@ class Universe:
         if direction == Actions.LEFT:
             rel_dim_coord = j
             if rel_dim_coord == 0:
-                if not Config.ConfigPhysics.SPACE_SLIPPERY:
+                if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature)
                 return
@@ -128,7 +130,7 @@ class Universe:
         if direction == Actions.UP:
             rel_dim_coord = i
             if rel_dim_coord == 0:
-                if not Config.ConfigPhysics.SPACE_SLIPPERY:
+                if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature)
                 return
@@ -139,7 +141,7 @@ class Universe:
         if direction == Actions.DOWN:
             rel_dim_coord = i
             if rel_dim_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
-                if not Config.ConfigPhysics.SPACE_SLIPPERY:
+                if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature)
                 return

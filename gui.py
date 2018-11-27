@@ -11,8 +11,8 @@ import threading
 
 
 plt.style.use('seaborn-paper')
-
 LARGE_FONT = ("Verdana", 12)
+
 
 class OriginGUI:
 

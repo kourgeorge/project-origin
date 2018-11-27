@@ -48,7 +48,7 @@ class Space:
                 abs_j = coord[1] - vision_range + j
                 if 0 <= abs_i < self._space_size and 0 <= abs_j < self._space_size:
                     food_state[i, j] = self._grid[abs_i][abs_j].get_food()
-                    creature_state[i, j] = self._grid[abs_i][abs_j].num_creatures()
+                    creature_state[i, j] = self._grid[abs_i][abs_j].energy_level()
         # return list(chain.from_iterable(creature_state)) + list(chain.from_iterable(food_state))
         return np.stack([food_state, creature_state])
 

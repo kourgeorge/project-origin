@@ -18,9 +18,9 @@ class Dashboard:
         self._line_pop, = self._fig_pop.plot([], [], '-')
         self._line_age, = self._fig_age.plot([], [], '-')
 
-        self._fig_creatures_loc = self._fig.add_axes([0.1, 0.1, 0.4, 0.05])
+        self._fig_creatures_loc = self._fig.add_axes([0.1, 0.1, 0.2, 0.3])
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
-        self._fig_food_loc = self._fig.add_axes([0.1, 0.25, 0.4, 0.05])
+        self._fig_food_loc = self._fig.add_axes([0.31, 0.1, 0.2, 0.3])
         self._fig_food_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_action = self._fig.add_subplot(224)
 
@@ -47,14 +47,19 @@ class Dashboard:
         ## Creatures Dist
         creatures_dist = np.asarray(step_stats_df['CreaturesDist'].iloc[-1])
         self._fig_creatures_loc.clear()
-        self._fig_creatures_loc.imshow(creatures_dist[np.newaxis, :], cmap="Purples", aspect="auto", vmin=0, vmax=10)
+        self._fig_creatures_loc.imshow(creatures_dist, cmap="Purples", aspect="auto", vmin=0, vmax=10)
         self._fig_creatures_loc.set_title('Creatures Location')
+        self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
+        self._fig_creatures_loc.xaxis.set_major_locator(plt.NullLocator())
+
 
         ## Food Supply
         food_supply = np.asarray(step_stats_df['FoodDist'].iloc[-1])
         self._fig_food_loc.clear()
-        self._fig_food_loc.imshow(food_supply[np.newaxis, :], cmap="Blues", aspect="auto", vmin=0, vmax=100)
+        self._fig_food_loc.imshow(food_supply, cmap="Greens", aspect="auto", vmin=0, vmax=100)
         self._fig_food_loc.set_title('Food Dist')
+        self._fig_food_loc.yaxis.set_major_locator(plt.NullLocator())
+        self._fig_food_loc.xaxis.set_major_locator(plt.NullLocator())
 
         ## Action Dist Pie
         actions_dist = np.mean(step_stats_df['ActionDist'].tail(Config.Batch_SIZE).values, axis=0)

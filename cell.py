@@ -1,8 +1,9 @@
 __author__ = 'gkour'
 
+
 class Cell:
-    def __init__(self, i):
-        self._coord = i
+    def __init__(self, coord):
+        self._coord = coord
         self._creatures = []
         self._food = 0
 

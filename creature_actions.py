@@ -12,6 +12,8 @@ class AutoNumber(Enum):
 class Actions(AutoNumber):
     LEFT = ()
     RIGHT = ()
+    UP = ()
+    DOWN = ()
     EAT = ()
     MATE = ()
     FIGHT = ()
@@ -33,7 +35,7 @@ class Actions(AutoNumber):
 
     @staticmethod
     def get_available_list():
-        return [Actions.LEFT, Actions.RIGHT, Actions.EAT, Actions.MATE, Actions.FIGHT]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.DEVIDE]
 
     @staticmethod
     def get_action_from_available(index):

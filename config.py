@@ -7,10 +7,11 @@ class Config:
     UI_UPDATE_INTERVAL = 200 #ms
 
     class ConfigPhysics:
-        SPACE_SIZE = 50
-        NUM_FATHERS = 30
+        SPACE_SIZE = 10
+        NUM_FATHERS = 200
         ETERNITY = 100000
-        FOOD_CREATURE_RATIO = 2
+        SPACE_SLIPPERY = False
+        FOOD_CREATURE_RATIO = 1
 
     class ConfigBiology:
         RACE_NAME = 'mango'
@@ -22,7 +23,7 @@ class Config:
         MATE_ENERGY = int(INITIAL_ENERGY / 4)
         MATURITY_AGE = 5 #int(BASE_DYING_AGE / 5)
         BASE_LEARN_FREQ = 20
-        BASE_VISION_RANGE = 3
+        BASE_VISION_RANGE = 2
         MEAL_SIZE = 6
         WORK_ENERGY = 3
 

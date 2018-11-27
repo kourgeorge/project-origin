@@ -4,7 +4,8 @@ from brain_dqn import Brain
 from config import Config
 from creature_actions import Actions
 
-master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE, s_size=(2 * 2 + 1) * 2 + 2,
+master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
+                     s_size=(2*Config.ConfigBiology.BASE_VISION_RANGE + 1) ** 2 * 2 + 2,
                      action_size=Actions.num_actions(), h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                      gamma=Config.ConfigBrain.BASE_GAMMA, scope='master')
 
@@ -98,7 +99,7 @@ class Creature:
         return [self._energy, self._age]
 
     def get_state(self):
-        space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
+        space_state = (self._universe.get_surroundings(self.coord(), self.vision_range())).flatten().tolist()
         state = space_state + self.internal_state()
         return state
 
@@ -118,6 +119,10 @@ class Creature:
             self._universe.creature_move_left(self)
         if action == Actions.RIGHT:
             self._universe.creature_move_right(self)
+        if action == Actions.UP:
+            self._universe.creature_move_up(self)
+        if action == Actions.DOWN:
+            self._universe.creature_move_down(self)
         if action == Actions.EAT:
             self._universe.feed(self)
         if action == Actions.MATE:
@@ -149,8 +154,8 @@ class Creature:
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
     def state_size(self):
-        #surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
-        return (self.vision_range() * 2 + 1) * 2 + 2
+        # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
+        return (2*self.vision_range() + 1) ** 2 * 2 + 2
 
     def alive(self):
         return self.cell() is not None

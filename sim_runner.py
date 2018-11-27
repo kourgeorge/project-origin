@@ -14,7 +14,8 @@ def run(msg_queue=None):
         stats.initialize_inter_epoch_stats()
         stats.accumulate_step_stats(universe)
         printing.print_step_stats(stats)
-        msg_queue.put(stats)
+        if msg_queue is not None:
+            msg_queue.put(stats)
 
         if universe.get_time() % Config.Batch_SIZE == 0:
             stats.accumulate_epoch_stats(universe)

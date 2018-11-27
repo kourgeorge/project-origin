@@ -38,7 +38,7 @@ class Stats:
                                (1 / Config.ConfigBrain.BASE_LEARNING_RATE), 2)),
             ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
             ('VRange', np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
-            ('AIQ', aiq.population_aiq(universe.get_all_creatures())),
+#            ('AIQ', aiq.population_aiq(universe.get_all_creatures())),
             ('ActionDist', self.action_dist),
             ('CreaturesDist', universe.get_creatures_distribution()),
             ('FoodDist', universe.get_food_distribution()),
@@ -55,7 +55,7 @@ class Stats:
             ('PopulationAgeDist', np.histogram([creature.age() for creature in universe.get_all_creatures()],
                                              bins=[0, Config.ConfigBiology.MATURITY_AGE,
                                                    2 * Config.ConfigBiology.MATURITY_AGE, Config.ConfigBiology.BASE_DYING_AGE*2])[0]),
-            ('AiqDist', aiq.population_aiq_dist(universe.get_all_creatures())),
+#            ('AiqDist', aiq.population_aiq_dist(universe.get_all_creatures())),
             ('DeathCause', self.death_cause),
         ])
 

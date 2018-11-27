@@ -69,8 +69,8 @@ class Universe:
     def num_creatures(self):
         return len(self.get_all_creatures())
 
-    def feed(self, creature):
-        self.statistics.action_dist[2] += 1
+    def creature_eat(self, creature):
+        self.statistics.action_dist[Actions.get_available_action_indx(Actions.EAT)] += 1
         if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
             self.kill_creature(creature)
             return

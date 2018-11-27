@@ -20,8 +20,10 @@ class Dashboard:
 
         self._fig_creatures_loc = self._fig.add_axes([0.1, 0.1, 0.2, 0.3])
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
+        self._fig_creatures_loc.xaxis.set_major_locator(plt.NullLocator())
         self._fig_food_loc = self._fig.add_axes([0.31, 0.1, 0.2, 0.3])
         self._fig_food_loc.yaxis.set_major_locator(plt.NullLocator())
+        self._fig_food_loc.xaxis.set_major_locator(plt.NullLocator())
         self._fig_action = self._fig.add_subplot(224)
 
     def update_epoch_dash(self, epoch_stats_df):
@@ -47,7 +49,7 @@ class Dashboard:
         ## Creatures Dist
         creatures_dist = np.asarray(step_stats_df['CreaturesDist'].iloc[-1])
         self._fig_creatures_loc.clear()
-        self._fig_creatures_loc.imshow(creatures_dist, cmap="Purples", aspect="auto", vmin=0, vmax=10)
+        self._fig_creatures_loc.imshow(creatures_dist, cmap="Purples", aspect="auto", vmin=0, vmax=50)
         self._fig_creatures_loc.set_title('Creatures Location')
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_creatures_loc.xaxis.set_major_locator(plt.NullLocator())

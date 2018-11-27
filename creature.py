@@ -124,7 +124,7 @@ class Creature:
         if action == Actions.DOWN:
             self._universe.creature_move_down(self)
         if action == Actions.EAT:
-            self._universe.feed(self)
+            self._universe.creature_eat(self)
         if action == Actions.MATE:
             self._universe.creature_mate(self)
         if action == Actions.FIGHT:

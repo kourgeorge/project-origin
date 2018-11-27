@@ -133,6 +133,7 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 * 22.11.2018 - Adding Dashboard to visualize simulation progress.
 * 23.11.2019 - Added App to allow dynamic control of simulation parameters.
 * 24.11.2019 - Supporting Both human like creatures(Work, Mate) and germs (EAT, DIVIDE, MOVE)
+* 25.11.2019 - Supporting a 2-D Space and a better state representation + AIQ improvements
 * TBI - Different kinds of food and Dopamine implementation for DQN
 
 

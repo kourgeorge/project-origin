@@ -7,6 +7,7 @@ from config import Config
 
 
 class Dashboard:
+
     def __init__(self):
 
         self._fig = plt.figure(figsize=(9, 5), dpi=120, facecolor='w')
@@ -81,3 +82,5 @@ class Dashboard:
 
     def get_figure(self):
         return self._fig
+
+

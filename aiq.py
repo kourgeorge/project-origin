@@ -5,12 +5,14 @@ from config import Config
 import utils
 from creature_actions import Actions
 from itertools import chain
+import random
 
 repetitions = 3
 
 
 def population_aiq(creatures):
-    all_aiq = [test_aiq(creature, repetitions) for creature in creatures]
+    sample_creatures = random.sample(creatures, utils.safe_log(len(creatures)))
+    all_aiq = [test_aiq(creature, repetitions) for creature in sample_creatures]
     return np.round(utils.emptynanmean(all_aiq), 2)
 
 

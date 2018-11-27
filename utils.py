@@ -89,3 +89,9 @@ def emptynanmean(array):
     if array is not None and len(array) > 0:
         return np.nanmean(array)
     return 0
+
+
+def safe_log(number):
+    if number <= np.e:
+        return 0
+    return int(np.log(number))

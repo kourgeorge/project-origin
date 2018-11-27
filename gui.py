@@ -36,6 +36,7 @@ class OriginGUI:
 
     def processIncoming(self):
         """Handle all messages currently in the queue, if any."""
+        self._simulation_page.check_handle_sim_end()
         while self.queue.qsize():
             try:
                 self.refresh_data(self.queue.get(0))
@@ -50,6 +51,8 @@ class SimulationPage(tk.Frame):
         self._dashboard = Dashboard()
         self.controller = controller
         self.queue = queue
+        self.sim_thread = None
+
         tk.Frame.__init__(self, parent, bg='white')
         title_label = tk.Label(self, text="Project Origin Dashboard", font=LARGE_FONT, foreground='blue', bg='white')
         title_label.pack(pady=10, padx=10)
@@ -83,8 +86,15 @@ class SimulationPage(tk.Frame):
         self.status_label['text'] = "Simulation Started!"
         self.start_sim_btn['state'] = tk.DISABLED
 
-        t = threading.Thread(target=sim_runner.run, args=[self.queue])
-        t.start()
+        self.sim_thread = threading.Thread(target=sim_runner.run, args=[self.queue])
+        self.sim_thread.daemon = True
+        self.sim_thread.start()
+
+    def check_handle_sim_end(self):
+        if self.sim_thread is not None and not self.sim_thread.isAlive():
+            self.start_sim_btn['state'] = tk.ACTIVE
+            self.status_label['text'] = 'Simulation Ended'
+
 
     @staticmethod
     def set_food_creature_ratio(new):

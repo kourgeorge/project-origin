@@ -11,7 +11,8 @@ class Config:
         NUM_FATHERS = 200
         ETERNITY = 100000
         SLIPPERY_SPACE = False
-        FOOD_CREATURE_RATIO = 1
+        FOOD_CREATURE_RATIO = 0
+        INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10 ** 4
 
     class ConfigBiology:
         RACE_NAME = 'mango'

@@ -115,15 +115,15 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 - Controlling biological aspects of physics such as mating rule, evolution, and intelligence inheritance.
 - It should allow extending the creature's capabilities, such as adding vocal communication and even love, hate, and motivation.
 - It should allow defining dynamic natures, like periods of dearth and epidemics. 
-- Online visualization of the population and environment statistics such as creatures locations actions distribution and food location.
 - Online control of nature to observe the effect of the population. 
 - Use dynamic graph deep learning framework such as TensorFlow 2.0 or Pytorch.
 - Use openAI baselines and/or Google dopamine projects as implementation of the creature brain. 
 
 ## Far reaching plans and directions
-- Experience or intelligence heritage not through dna.
+- Oral tradition - Experience or intelligence heritage not through dna.
 - Model selection and hyperparameter tuning. Show that Convolutional can better survive than fully connected layers.
 - Special relation between individuals based on graph networks to process the relationship between individuals.
+- Hebbian Learning vs. Gradient based in survival environment. Which is better? 
 - Develop a game platform which allow training of a race and then allow it compete over resources with different race.
 
 
@@ -131,9 +131,10 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 * 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.
 * 20.11.2018 - Added DQN based brain.
 * 22.11.2018 - Adding Dashboard to visualize simulation progress.
-* 23.11.2019 - Added App to allow dynamic control of simulation parameters.
-* 24.11.2019 - Supporting Both human like creatures(Work, Mate) and germs (EAT, DIVIDE, MOVE)
-* 25.11.2019 - Supporting a 2-D Space and a better state representation + AIQ improvements
+* 23.11.2018 - Added App to allow dynamic control of simulation parameters.
+* 24.11.2018 - Supporting Both human like creatures (WORK, MATE) and germs (EAT, DIVIDE, MOVE)
+* 27.11.2018 - Supporting a 2-D Space and a better state representation + AIQ improvements
+* 28.11.2018 - Tensor states (3D states) and Using Convnet in brain DQN. Defining Base Class for brain. 
 * TBI - Different kinds of food and Dopamine implementation for DQN
 
 

@@ -21,7 +21,7 @@ class Universe:
             self.create_creature(dna=dna, coord=(fathers_locations_i[n], fathers_locations_j[n]),
                                  age=0, parent=None)
 
-        self.give_food(round(Config.ConfigPhysics.NUM_FATHERS * 10 ** 4))
+        self.give_food(Config.ConfigPhysics.INITIAL_FOOD_AMOUNT)
         self.statistics = statistics
 
     # Space Management
@@ -35,7 +35,7 @@ class Universe:
     def pass_time(self):
         self._time += 1
         if self._time < Config.ConfigPhysics.ETERNITY and self.num_creatures() > 0:
-            # self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
+            self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     creature.act()

@@ -53,13 +53,7 @@ class Space:
         return np.stack([food_state, creature_state])
 
     def get_all_creatures(self):
-        all_creatures = [cell.creatures() for cell in list(chain.from_iterable(self._grid))]
-        flat_list = []
-        for sublist in all_creatures:
-            for item in sublist:
-                flat_list.append(item)
-
-        return flat_list
+        return [creature for cell in list(chain.from_iterable(self._grid)) for creature in cell.creatures()]
 
     def get_food_distribution(self):
         return [[self._grid[i][j].get_food() for j in range(self._space_size)] for i in range(self._space_size)]

@@ -25,17 +25,23 @@ class Dashboard:
         self._axes_aiq.set_ylabel('Population AIQ')
         self._line_aiq, = self._axes_aiq.plot([], [], '-', label=self._axes_aiq.yaxis.label.get_text())
 
-        self._fig_creatures_loc = self._fig.add_axes([0.1, 0.1, 0.2, 0.3])
+        self._fig_creatures_loc = self._fig.add_axes([0.05, 0.1, 0.2, 0.3])
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_creatures_loc.xaxis.set_major_locator(plt.NullLocator())
-        self._fig_food_loc = self._fig.add_axes([0.31, 0.1, 0.2, 0.3])
+        self._fig_food_loc = self._fig.add_axes([0.26, 0.1, 0.2, 0.3])
         self._fig_food_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_food_loc.xaxis.set_major_locator(plt.NullLocator())
-        self._fig_action = self._fig.add_subplot(224)
+        self._fig_action = self._fig.add_subplot(236)
+        self._fig_death = self._fig.add_subplot(2, 6, 10)
 
     def update_epoch_dash(self, epoch_stats_df):
         if epoch_stats_df is None or epoch_stats_df.empty:
             return
+        ## Action Dist Pie
+        death_cause = np.mean(epoch_stats_df['DeathCause'], axis=0)
+        self._fig_death.clear()
+        self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly'],
+                             startangle=90, autopct='%1.1f%%')
 
     def update_step_dash(self, step_stats_df):
         if step_stats_df is None or step_stats_df.empty:

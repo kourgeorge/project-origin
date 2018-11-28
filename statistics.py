@@ -16,6 +16,7 @@ class Stats:
         self.death_cause = [0, 0, 0]  # [Fatigue Fight Elderly]
         self.step_stats_df = pd.DataFrame()
         self.epoch_stats_df = pd.DataFrame()
+        self.initialize_inter_epoch_stats()
 
     def accumulate_step_stats(self, universe):
         step_stats_dict = self.collect_last_step_stats(universe)

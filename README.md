@@ -121,10 +121,11 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 
 ## Far reaching plans and directions
 - Oral tradition - Experience or intelligence heritage not through dna.
-- Model selection and hyperparameter tuning. Show that Convolutional can better survive than fully connected layers.
+- Model selection and hyper-parameter tuning. Show that Convolutional can better survive than fully connected layers.
 - Special relation between individuals based on graph networks to process the relationship between individuals.
 - Hebbian Learning vs. Gradient based in survival environment. Which is better? 
 - Develop a game platform which allow training of a race and then allow it compete over resources with different race.
+- Make a context between different implementation of Rl algorithms, model-based and model free, policy gradient and TD learning.
 
 
 ## Updates:

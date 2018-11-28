@@ -25,16 +25,19 @@ def population_aiq_dist(creatures):
 
 def test_aiq(creature):
     score = 0
-    scenarios = [haven_left, haven_right, haven_inplace, haven_up, haven_down, border_awareness_up, border_awareness_down,
-                 border_awareness_left, border_awareness_right]
+    scenarios = [haven_left, haven_right, haven_inplace, haven_up, haven_down,
+                 border_awareness_up, border_awareness_down, border_awareness_left, border_awareness_right]
+    w = 0
     for i in range(len(scenarios)):
-        test_state, positive_test_type, expected_actions = scenarios[i](creature.vision_range())
+        test_state, positive_test_type, expected_actions, weight = scenarios[i](creature.vision_range())
+        w+=weight
         decision = Actions.index_to_enum(creature.brain().act(test_state))
         if positive_test_type:
-            score += 1 if decision in expected_actions else 0
+            score += weight if decision in expected_actions else 0
         else:
-            score += 1 if decision not in expected_actions else 0
-    return score / len(scenarios)
+            score += weight if decision not in expected_actions else 0
+
+    return score / w
 
 
 def haven_inplace(vision_range):
@@ -49,7 +52,7 @@ def haven_inplace(vision_range):
     food[vision_range][vision_range] = 20
     creatures[vision_range][vision_range] = 0
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.EAT]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.EAT], 1
 
 
 def haven_right(vision_range):
@@ -64,8 +67,7 @@ def haven_right(vision_range):
     food[vision_range][vision_range + 1] = 20
     creatures[vision_range][vision_range + 1] = 0
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [
-        Actions.RIGHT]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.RIGHT], 1
 
 
 def haven_left(vision_range):
@@ -80,7 +82,7 @@ def haven_left(vision_range):
     food[vision_range][vision_range - 1] = 20
     creatures[vision_range][vision_range - 1] = 0
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.LEFT]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.LEFT], 1
 
 
 def haven_up(vision_range):
@@ -95,7 +97,7 @@ def haven_up(vision_range):
     food[vision_range - 1][vision_range] = 20
     creatures[vision_range - 1][vision_range] = 0
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.UP]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.UP], 1
 
 
 def haven_down(vision_range):
@@ -110,7 +112,7 @@ def haven_down(vision_range):
     food[vision_range + 1][vision_range] = 20
     creatures[vision_range + 1][vision_range] = 0
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.DOWN]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.DOWN], 1
 
 
 def border_awareness(vision_range, direction):
@@ -139,7 +141,7 @@ def border_awareness(vision_range, direction):
         creatures[:][vision_range + 1:] = -1
         bad_action = Actions.RIGHT
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, False, [bad_action]
+    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, False, [bad_action], 0.25
 
 
 def border_awareness_up(vision_range):

@@ -123,7 +123,8 @@ class Creature:
         previous_energy = self._energy
         state = self.get_state()
 
-        decision = self._brain.act(state)
+        eps = max(Config.ConfigBrain.EPSILON, 1-(self._age/Config.ConfigBiology.MATURITY_AGE))
+        decision = self._brain.act(state, eps)
         action = Actions.index_to_enum(decision)
         if action == Actions.LEFT:
             self._universe.creature_move_left(self)

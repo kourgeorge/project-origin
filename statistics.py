@@ -56,7 +56,6 @@ class Stats:
             ('PopulationAgeDist', np.histogram([creature.age() for creature in universe.get_all_creatures()],
                                              bins=[0, Config.ConfigBiology.MATURITY_AGE,
                                                    2 * Config.ConfigBiology.MATURITY_AGE, Config.ConfigBiology.BASE_DYING_AGE*2])[0]),
-#            ('AiqDist', aiq.population_aiq_dist(universe.get_all_creatures())),
             ('DeathCause', self.death_cause),
         ])
 

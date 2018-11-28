@@ -4,9 +4,10 @@ from brain_dqn import Brain
 from config import Config
 from creature_actions import Actions
 import os
+import numpy as np
 
 master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
-                     s_size=(2*Config.ConfigBiology.BASE_VISION_RANGE + 1) ** 2 * 2 + 2,
+                     state_dims=(4, 2*Config.ConfigBiology.BASE_VISION_RANGE+1, 2*Config.ConfigBiology.BASE_VISION_RANGE+1),
                      action_size=Actions.num_actions(), h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                      gamma=Config.ConfigBrain.BASE_GAMMA, scope='master')
 
@@ -19,7 +20,8 @@ class Creature:
         Creature.counter += 1
         return Creature.counter
 
-    def __init__(self, universe, dna, id, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None, model_path=None):
+    def __init__(self, universe, dna, id, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None,
+                 model_path=None):
         self._id = id
         self._name = str(id) + Config.ConfigBiology.RACE_NAME
         self._dna = dna
@@ -30,7 +32,7 @@ class Creature:
         parent = parent
         self._model_path = model_path
 
-        # self._brain = Brain(lr=self.learning_rate(), s_size=self.state_size(),
+        # self._brain = Brain(lr=self.learning_rate(), s_size=self.surroundings_size(),
         #                     action_size=Actions.num_actions(), h_size=self.brain_hidden_layer(),
         #                     scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
 
@@ -101,11 +103,14 @@ class Creature:
         self._energy -= amount
 
     def internal_state(self):
-        return [self._energy, self._age]
+        dim_size = (2 * self.vision_range() + 1)
+        energy = np.ones(shape=(dim_size, dim_size)) * self._energy
+        age = np.ones(shape=(dim_size, dim_size)) * self._age
+        return np.stack((energy, age))
 
     def get_state(self):
-        space_state = (self._universe.get_surroundings(self.coord(), self.vision_range())).flatten().tolist()
-        state = space_state + self.internal_state()
+        space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
+        state = np.append(space_state, self.internal_state(), 0)
         return state
 
     # Actions
@@ -148,7 +153,7 @@ class Creature:
         if self.alive():
             self.newState.append(self.get_state())
         else:
-            self.newState.append([-1] * self.state_size())
+            self.newState.append(self._dead_state() * self.surroundings_size())
             self.smarten()
 
         if self._age % self.learning_frequency() == 0:
@@ -158,9 +163,13 @@ class Creature:
         self._brain.train(self.obs, self.acts, self.rews, self.newState)
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
-    def state_size(self):
+    def surroundings_size(self):
         # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
-        return (2*self.vision_range() + 1) ** 2 * 2 + 2
+        return (2 * self.vision_range() + 1) ** 2
+
+    def state_dims(self):
+        # Creatures, Food, Eergy, age
+        return (4, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1)
 
     def alive(self):
         return self.cell() is not None
@@ -169,6 +178,9 @@ class Creature:
         # write the model of the last survivor.
         if self._universe.num_creatures == 1 and self._model_path is not None:
             self._brain.save_model(self._model_path)
+
+    def _dead_state(self):
+        return np.ones(shape=self.state_dims())*-1
 
     def __str__(self):
         return str(self._id)

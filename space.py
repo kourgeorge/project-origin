@@ -50,7 +50,7 @@ class Space:
                     food_state[i, j] = self._grid[abs_i][abs_j].get_food()
                     creature_state[i, j] = self._grid[abs_i][abs_j].energy_level()
         # return list(chain.from_iterable(creature_state)) + list(chain.from_iterable(food_state))
-        return np.stack([food_state, creature_state])
+        return np.stack((food_state, creature_state))
 
     def get_all_creatures(self):
         return [creature for cell in list(chain.from_iterable(self._grid)) for creature in cell.creatures()]

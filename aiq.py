@@ -30,7 +30,7 @@ def test_aiq(creature):
     w = 0
     for i in range(len(scenarios)):
         test_state, positive_test_type, expected_actions, weight = scenarios[i](creature.vision_range())
-        w+=weight
+        w += weight
         decision = Actions.index_to_enum(creature.brain().act(test_state))
         if positive_test_type:
             score += weight if decision in expected_actions else 0
@@ -40,89 +40,67 @@ def test_aiq(creature):
     return score / w
 
 
-def haven_inplace(vision_range):
+def _haven(vision_range, where):
     ''' Haven cell in current location.'''
     energy = 3
     age = 3
-    internal_state = [energy, age]
 
     food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
     creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
+    energy = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * energy
+    age = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * age
+    if where == 'INPLACE':
+        food[vision_range][vision_range] = 20
+        creatures[vision_range][vision_range] = 0
+        optimal_action = Actions.EAT
+    if where == 'UP':
+        food[vision_range - 1][vision_range] = 20
+        creatures[vision_range - 1][vision_range] = 0
+        optimal_action = Actions.UP
+    if where == 'DOWN':
+        food[vision_range + 1][vision_range] = 20
+        creatures[vision_range + 1][vision_range] = 0
+        optimal_action = Actions.DOWN
+    if where == 'LEFT':
+        food[vision_range][vision_range - 1] = 20
+        creatures[vision_range][vision_range - 1] = 0
+        optimal_action = Actions.LEFT
+    if where == 'RIGHT':
+        food[vision_range][vision_range + 1] = 20
+        creatures[vision_range][vision_range + 1] = 0
+        optimal_action = Actions.RIGHT
 
-    food[vision_range][vision_range] = 20
-    creatures[vision_range][vision_range] = 0
+    return np.stack((creatures, food, energy, age)), True, [optimal_action], 1
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.EAT], 1
+
+def haven_inplace(vision_range):
+    return _haven(vision_range, 'INPLACE')
 
 
 def haven_right(vision_range):
-    ''' Haven cell on the right'''
-    energy = 3
-    age = 3
-    internal_state = [energy, age]
-
-    food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
-    creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
-
-    food[vision_range][vision_range + 1] = 20
-    creatures[vision_range][vision_range + 1] = 0
-
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.RIGHT], 1
+    return _haven(vision_range, 'RIGHT')
 
 
 def haven_left(vision_range):
-    ''' Haven cell in current location.'''
-    energy = 3
-    age = 3
-    internal_state = [energy, age]
-
-    food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
-    creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
-
-    food[vision_range][vision_range - 1] = 20
-    creatures[vision_range][vision_range - 1] = 0
-
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.LEFT], 1
+    return _haven(vision_range, 'LEFT')
 
 
 def haven_up(vision_range):
-    ''' Haven cell up.'''
-    energy = 3
-    age = 3
-    internal_state = [energy, age]
-
-    food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
-    creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
-
-    food[vision_range - 1][vision_range] = 20
-    creatures[vision_range - 1][vision_range] = 0
-
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.UP], 1
+    return _haven(vision_range, 'UP')
 
 
 def haven_down(vision_range):
-    ''' Haven cell down.'''
+    return _haven(vision_range, 'DOWN')
+
+
+def _border_awareness(vision_range, direction):
     energy = 3
     age = 3
-    internal_state = [energy, age]
-
-    food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
-    creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
-
-    food[vision_range + 1][vision_range] = 20
-    creatures[vision_range + 1][vision_range] = 0
-
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, True, [Actions.DOWN], 1
-
-
-def border_awareness(vision_range, direction):
-    ''' Haven cell down.'''
-    energy = 3
-    age = 3
-    internal_state = [energy, age]
 
     food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
     creatures = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
+    energy = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * energy
+    age = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * age
 
     if direction == 'DOWN':
         food[vision_range + 1:][:] = -1
@@ -141,20 +119,20 @@ def border_awareness(vision_range, direction):
         creatures[:][vision_range + 1:] = -1
         bad_action = Actions.RIGHT
 
-    return list(chain.from_iterable(creatures)) + list(chain.from_iterable(food)) + internal_state, False, [bad_action], 0.25
+    return np.stack((creatures, food, energy, age)), False, [bad_action], 0.25
 
 
 def border_awareness_up(vision_range):
-    return border_awareness(vision_range, 'UP')
+    return _border_awareness(vision_range, 'UP')
 
 
 def border_awareness_down(vision_range):
-    return border_awareness(vision_range, 'DOWN')
+    return _border_awareness(vision_range, 'DOWN')
 
 
 def border_awareness_left(vision_range):
-    return border_awareness(vision_range, 'LEFT')
+    return _border_awareness(vision_range, 'LEFT')
 
 
 def border_awareness_right(vision_range):
-    return border_awareness(vision_range, 'RIGHT')
+    return _border_awareness(vision_range, 'RIGHT')

@@ -19,8 +19,8 @@ class Brain:
             tf.reset_default_graph()
             Brain.sess = tf.Session()
 
-    def __init__(self, lr, s_size, action_size, h_size, scope, gamma, copy_from_scope=None):
-        self._s_size = s_size
+    def __init__(self, lr, state_dims, action_size, h_size, scope, gamma, copy_from_scope=None):
+        self._state_dims = state_dims
         self._action_size = action_size
         self._h_size = h_size
         self._regularization_param = 0.001
@@ -31,7 +31,7 @@ class Brain:
         Brain.init_session()
 
         # Implementing F(state)=action
-        self.state_in = tf.placeholder(shape=[None, self._s_size], dtype=tf.float32)
+        self.state_in = tf.placeholder(shape=[None, self._state_dims[0], self._state_dims[1], self._state_dims[2]], dtype=tf.float32)
         self.reward_holder = tf.placeholder(shape=[None], dtype=tf.float32)
         self.action_holder = tf.placeholder(shape=[None], dtype=tf.int32)
 
@@ -39,7 +39,7 @@ class Brain:
         self.QValue = self._create_qnetwork(scope, self.state_in)
 
         # init Target Q Network
-        self.state_inT = tf.placeholder(shape=[None, self._s_size], dtype=tf.float32)
+        self.state_inT = tf.placeholder(shape=[None, self._state_dims[0], self._state_dims[1], self._state_dims[2]], dtype=tf.float32)
         self.QValueT = self._create_qnetwork('T' + scope, self.state_inT)
 
         self.copyTargetQNetworkOperation = utils.update_target_graph(scope, 'T' + scope)
@@ -71,7 +71,7 @@ class Brain:
         nextstate_batch = [data[3] for data in minibatch]
 
         y_batch = []
-        qvalue_batch = Brain.sess.run(self.QValueT, feed_dict={self.state_inT: np.vstack(nextstate_batch)})
+        qvalue_batch = Brain.sess.run(self.QValueT, feed_dict={self.state_inT: np.stack(nextstate_batch)})
 
         for i in range(0, minibatch_size):
             terminal = minibatch[i][4]
@@ -89,7 +89,7 @@ class Brain:
         self._copy_target_qnetwork()
 
     def state_size(self):
-        return self._s_size
+        return self._state_dims
 
     def save_model(self, path):
         self.saver.save(Brain.sess, path)
@@ -99,9 +99,11 @@ class Brain:
 
     def _create_qnetwork(self, scope, input_ph):
         with tf.variable_scope(scope):
-            net = slim.stack(input_ph, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)
-
-            action_output = slim.fully_connected(net, self._action_size, activation_fn=tf.nn.softmax,
+            state = slim.convolution2d(input_ph, 10, [2, 2], scope='conv2_1', padding='VALID')
+            state = slim.max_pool2d(state, [2, 2])
+            state = slim.flatten(state)
+            state = slim.stack(state, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)
+            action_output = slim.fully_connected(state, self._action_size, activation_fn=tf.nn.softmax,
                                                  weights_regularizer=slim.l2_regularizer(
                                                      self._regularization_param))
 

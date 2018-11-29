@@ -6,24 +6,14 @@ from creature_actions import Actions
 import os
 import numpy as np
 
-master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
-                     state_dims=(4, 2*Config.ConfigBiology.BASE_VISION_RANGE+1, 2*Config.ConfigBiology.BASE_VISION_RANGE+1),
-                     action_size=Actions.num_actions(), h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
-                     gamma=Config.ConfigBrain.BASE_GAMMA, scope='master')
-
 
 class Creature:
-    counter = 0
+    RACE_NAME = 'mango'
 
-    @staticmethod
-    def allocate_id():
-        Creature.counter += 1
-        return Creature.counter
-
-    def __init__(self, universe, dna, id, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None,
+    def __init__(self, universe, id,dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None,
                  model_path=None):
         self._id = id
-        self._name = str(id) + Config.ConfigBiology.RACE_NAME
+        self._name = str(id) + Creature.RACE_NAME
         self._dna = dna
         self._age = age
         self._energy = energy
@@ -32,11 +22,7 @@ class Creature:
         parent = parent
         self._model_path = model_path
 
-        # self._brain = Brain(lr=self.learning_rate(), s_size=self.surroundings_size(),
-        #                     action_size=Actions.num_actions(), h_size=self.brain_hidden_layer(),
-        #                     scope=self._name, gamma=self.gamma(), copy_from_scope=None if parent is None else parent.name())
-
-        self._brain = master_brain
+        self._brain = None
         self.obs = []
         self.acts = []
         self.rews = []
@@ -45,7 +31,17 @@ class Creature:
         if model_path is not None and os.path.exists(model_path):
             self._brain.load_model(model_path)
 
+    def get_actions(self):
+        return Actions.get_all_actions()
+
     # Identity
+
+    def race(self):
+        return None
+
+    def race_name(self):
+        return Exception('Creature is ab abstract class')
+
     def id(self):
         return self._id
 
@@ -125,7 +121,7 @@ class Creature:
 
         eps = max(Config.ConfigBrain.EPSILON, 1-(self._age/(self.learning_frequency()*Config.ConfigBiology.MATURITY_AGE)))
         decision = self._brain.act(state, eps)
-        action = Actions.index_to_enum(decision)
+        action = self.index_to_enum(decision)
         if action == Actions.LEFT:
             self._universe.creature_move_left(self)
         if action == Actions.RIGHT:
@@ -142,7 +138,7 @@ class Creature:
             self._universe.creature_fight(self)
         if action == Actions.WORK:
             self._universe.creature_work(self)
-        if action == Actions.DEVIDE:
+        if action == Actions.DIVIDE:
             self._universe.creature_divide(self)
         # if decision == 6:
         #     log.action_log[6] += 1
@@ -185,3 +181,15 @@ class Creature:
 
     def __str__(self):
         return str(self._id)
+
+    def num_actions(self):
+        return len(self.get_actions())
+
+    def index_to_enum(self, index):
+        return self.get_actions()[index]
+
+    def enum_to_index(self, action):
+        return self.get_actions().index(action)
+
+    def get_actions_str(self):
+        return [str(action) for action in self.get_actions()]

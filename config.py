@@ -12,10 +12,9 @@ class Config:
         ETERNITY = 100000
         SLIPPERY_SPACE = True
         FOOD_CREATURE_RATIO = 0
-        INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10 ** 4
+        INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
 
     class ConfigBiology:
-        RACE_NAME = 'mango'
         BASE_DYING_AGE = 800
         DNA_SIZE = 6
         MOVE_ENERGY = 1

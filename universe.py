@@ -1,7 +1,6 @@
 __author__ = 'gkour'
 
 from space import Space
-from creature import Creature
 from evolution import Evolution
 from config import Config
 import numpy as np
@@ -11,18 +10,32 @@ from creature_actions import Actions
 
 class Universe:
 
-    def __init__(self, statistics=None):
+    def __init__(self, races, statistics=None):
+        self._creature_counter = 0
+        self._races = races
         self._space = Space(Config.ConfigPhysics.SPACE_SIZE)
         self._time = 0
-        fathers_locations_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
-        fathers_locations_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
-        for n in range(Config.ConfigPhysics.NUM_FATHERS):
-            dna = Evolution.random_dna()
-            self.create_creature(dna=dna, coord=(fathers_locations_i[n], fathers_locations_j[n]),
-                                 age=0, parent=None)
+        for race in races:
+            fathers_locations_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
+            fathers_locations_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
+            for n in range(Config.ConfigPhysics.NUM_FATHERS):
+                dna = Evolution.random_dna()
+                self.create_creature(race, id=self.allocate_id(), dna=dna,
+                                     coord=(fathers_locations_i[n], fathers_locations_j[n]),
+                                     age=0, parent=None)
 
         self.give_food(Config.ConfigPhysics.INITIAL_FOOD_AMOUNT)
         self.statistics = statistics
+
+    def allocate_id(self):
+        self._creature_counter += 1
+        return self._creature_counter
+
+    def get_creatures_counter(self):
+        return self._creature_counter
+
+    def get_races(self):
+        return self._races
 
     # Space Management
     def space(self):
@@ -54,9 +67,9 @@ class Universe:
             self.space().add_food((food_cells_i[n], food_cells_j[n]), 1)
 
     # Creatures Control
-    def create_creature(self, dna, coord, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None):
-        descendant = Creature(universe=self, dna=dna, id=Creature.allocate_id(), age=age, energy=energy, parent=parent,
-                              model_path=Config.ConfigBrain.MODEL_PATH)
+    def create_creature(self, race, id, dna, coord, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None):
+        descendant = race(universe=self, id=id, dna=dna, age=age, energy=energy, parent=parent,
+                          model_path=Config.ConfigBrain.MODEL_PATH)
         cell = self.space().insert_creature(descendant, coord)
         descendant.update_cell(cell)
 
@@ -191,18 +204,19 @@ class Universe:
             dominant_parent = mate_body
 
         new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
-        self.create_creature(new_dna, creature.coord(), parent=dominant_parent)
+        self.create_creature(creature.race(), self.allocate_id(), new_dna, creature.coord(), parent=dominant_parent)
 
     def creature_divide(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.DEVIDE)] += 1
-        if creature.age() < Config.ConfigBiology.MATURITY_AGE or creature.energy() < 2*Config.ConfigBiology.INITIAL_ENERGY:
+        self.statistics.action_dist[Actions.enum_to_index(Actions.DIVIDE)] += 1
+        if creature.age() < Config.ConfigBiology.MATURITY_AGE or creature.energy() < 2 * Config.ConfigBiology.INITIAL_ENERGY:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
                 return
             creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
             return
 
-        self.create_creature(dna=creature.dna(), coord=creature.coord(), energy=int(creature.energy() / 2)+1,
+        self.create_creature(creature.race(), self.allocate_id(), dna=creature.dna(), coord=creature.coord(),
+                             energy=int(creature.energy() / 2) + 1,
                              parent=creature)
         creature.reduce_energy(amount=int(creature.energy() / 2))
         creature._age = 1
@@ -234,7 +248,3 @@ class Universe:
             return
         creature.reduce_energy(Config.ConfigBiology.WORK_ENERGY)
         creature.cell().add_food(Config.ConfigBiology.MEAL_SIZE)
-
-    @staticmethod
-    def get_creatures_counter():
-        return Creature.counter

@@ -78,15 +78,20 @@ class Dashboard:
         ## Action Dist Pie
         actions_dist = np.mean(step_stats_df['ActionDist'].tail(Config.Batch_SIZE).values, axis=0)
         self._fig_action.clear()
-        self._fig_action.pie(actions_dist, labels=Actions.get_available_action_str(),
-                             startangle=90, autopct='%1.1f%%')
+        self._fig_action.pie(actions_dist, labels=Actions.get_actions_str(),
+                             startangle=90, autopct=Dashboard.my_autopct)
 
-        ## Action Dist Pie
+        ## Death Dist Pie
         death_cause = np.mean(step_stats_df['DeathCause'].tail(Config.Batch_SIZE).values, axis=0)
         self._fig_death.clear()
         self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly', 'Fall'],
                             startangle=90, autopct='%1.1f%%')
+
     def get_figure(self):
         return self._fig
+
+    @staticmethod
+    def my_autopct(pct):
+        return ('%.2f' % pct) if pct > 1 else ''
 
 

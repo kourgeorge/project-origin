@@ -4,11 +4,14 @@ from universe import Universe
 from statistics import Stats
 import printing
 from config import Config
+from human import Human
+from bacteria import Bacteria
 
 
 def run(msg_queue=None):
     stats = Stats()
-    universe = Universe(stats)
+    races = [Bacteria, Human]
+    universe = Universe(races, stats)
 
     while universe.pass_time():
         stats.accumulate_step_stats(universe)

@@ -152,7 +152,7 @@ class Creature:
             self.smarten()
 
     def smarten(self):
-        #self._brain.train(self.obs, self.acts, self.rews, self.newState)
+        self._brain.train(self.obs, self.acts, self.rews, self.newState)
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
     def surroundings_size(self):

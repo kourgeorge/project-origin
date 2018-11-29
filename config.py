@@ -30,8 +30,8 @@ class Config:
     class ConfigBrain:
         BASE_GAMMA = 0.9
         BASE_LEARNING_RATE = 1e-4
-        BASE_HIDDEN_LAYER_SIZE = 15
-        EPSILON = 0.1
+        BASE_HIDDEN_LAYER_SIZE = 10
+        BASE_EPSILON = 0.1
         MODEL_PATH = './model/model'
 
 

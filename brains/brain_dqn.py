@@ -6,29 +6,29 @@ import numpy as np
 import tensorflow.contrib.slim as slim
 import random
 from collections import deque
+from brains.abstractbrain import AbstractBrain
 
 
-class Brain:
+class BrainDQN(AbstractBrain):
     BATCH_SIZE = 20
     sess = None
-    eps = 0.2
+    EPSILON = 0.1
 
     @staticmethod
     def init_session():
-        if Brain.sess is None:
+        if BrainDQN.sess is None:
             tf.reset_default_graph()
-            Brain.sess = tf.Session()
+            BrainDQN.sess = tf.Session()
 
     def __init__(self, lr, state_dims, action_size, h_size, scope, gamma, copy_from_scope=None):
-        self._state_dims = state_dims
-        self._action_size = action_size
+        super(BrainDQN, self).__init__(state_dims,action_size)
         self._h_size = h_size
         self._regularization_param = 0.001
         self.lr = lr
         self._gamma = gamma
-        self.replayMemory = deque(maxlen=Brain.BATCH_SIZE*10)
+        self.replayMemory = deque(maxlen=BrainDQN.BATCH_SIZE * 10)
 
-        Brain.init_session()
+        BrainDQN.init_session()
 
         # Implementing F(state)=action
         self.state_in = tf.placeholder(shape=[None, self._state_dims[0], self._state_dims[1], self._state_dims[2]], dtype=tf.float32)
@@ -46,13 +46,13 @@ class Brain:
 
         # Initialize Variables
         self._create_training_method()
-        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, 'T' + scope)))
-        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope)))
+        BrainDQN.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, 'T' + scope)))
+        BrainDQN.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope)))
 
         self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope))
 
     def think(self, obs, eps=0):
-        q_value = Brain.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
+        q_value = BrainDQN.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
         action = utils.epsilon_greedy(eps, dist=q_value)
         return action
 
@@ -63,7 +63,7 @@ class Brain:
             dec_1hot[batch_acts[i]] = 1
             self.replayMemory.append((batch_obs[i], dec_1hot, batch_rews[i], batch_newstate[i], False))
 
-        minibatch_size = min(Brain.BATCH_SIZE, len(self.replayMemory))
+        minibatch_size = min(BrainDQN.BATCH_SIZE, len(self.replayMemory))
         minibatch = random.sample(self.replayMemory, minibatch_size)
         state_batch = [data[0] for data in minibatch]
         action_batch = [data[1] for data in minibatch]
@@ -71,7 +71,7 @@ class Brain:
         nextstate_batch = [data[3] for data in minibatch]
 
         y_batch = []
-        qvalue_batch = Brain.sess.run(self.QValueT, feed_dict={self.state_inT: np.stack(nextstate_batch)})
+        qvalue_batch = BrainDQN.sess.run(self.QValueT, feed_dict={self.state_inT: np.stack(nextstate_batch)})
 
         for i in range(0, minibatch_size):
             terminal = minibatch[i][4]
@@ -80,7 +80,7 @@ class Brain:
             else:
                 y_batch.append(reward_batch[i] + self._gamma * np.max(qvalue_batch[i]))
 
-        Brain.sess.run(self.trainStep, feed_dict={
+        BrainDQN.sess.run(self.trainStep, feed_dict={
             self.y_input: y_batch,
             self.action_in: action_batch,
             self.state_in: state_batch
@@ -88,14 +88,14 @@ class Brain:
 
         self._copy_target_qnetwork()
 
-    def state_size(self):
+    def state_dims(self):
         return self._state_dims
 
     def save_model(self, path):
-        self.saver.save(Brain.sess, path)
+        self.saver.save(BrainDQN.sess, path)
 
     def load_model(self, path):
-        self.saver.restore(Brain.sess, path)
+        self.saver.restore(BrainDQN.sess, path)
 
     def _create_qnetwork(self, scope, input_ph):
         with tf.variable_scope(scope):
@@ -117,4 +117,4 @@ class Brain:
         self.trainStep = tf.train.RMSPropOptimizer(self.lr, 0.99, 0.0, 1e-6).minimize(cost)
 
     def _copy_target_qnetwork(self):
-        Brain.sess.run(self.copyTargetQNetworkOperation)
+        BrainDQN.sess.run(self.copyTargetQNetworkOperation)

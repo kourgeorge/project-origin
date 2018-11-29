@@ -17,4 +17,4 @@ class Zombie(Human):
         return 'Zombie'
 
     def decide(self, state):
-        return self._brain.decide_on_action(state)
+        return self._brain.think(state)

@@ -1,7 +1,7 @@
 from creatures.creature import Creature
 from creature_actions import Actions
 from config import Config
-from brains.brain_dqn import Brain
+from brains.brain_dqn import BrainDQN
 
 
 class Human(Creature):
@@ -14,13 +14,13 @@ class Human(Creature):
 
     def get_master_brain(self):
         if Human._master_brain is None:
-            Human._master_brain = Brain(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
-                                        state_dims=(4, 2 * Config.ConfigBiology.BASE_VISION_RANGE + 1,
+            Human._master_brain = BrainDQN(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
+                                                   state_dims=(4, 2 * Config.ConfigBiology.BASE_VISION_RANGE + 1,
                                                     2 * Config.ConfigBiology.BASE_VISION_RANGE + 1),
-                                        action_size=self.num_actions(),
-                                        h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
-                                        gamma=Config.ConfigBrain.BASE_GAMMA,
-                                        scope='master' + self.race_name())
+                                                   action_size=self.num_actions(),
+                                                   h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                                                   gamma=Config.ConfigBrain.BASE_GAMMA,
+                                                   scope='master' + self.race_name())
             return Human._master_brain
         return Human._master_brain
 

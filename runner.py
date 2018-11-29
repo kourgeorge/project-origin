@@ -5,11 +5,12 @@ from statistics import Stats
 import printing
 from config import Config
 from creatures.zombie import Zombie
+from creatures.human import Human
 
 
 def run(msg_queue=None):
     stats = Stats()
-    races = [Zombie]
+    races = [Human]
     universe = Universe(races, stats)
 
     while universe.pass_time():

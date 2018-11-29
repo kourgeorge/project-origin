@@ -135,7 +135,8 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 * 23.11.2018 - Added App to allow dynamic control of simulation parameters.
 * 24.11.2018 - Supporting Both human like creatures (WORK, MATE) and germs (EAT, DIVIDE, MOVE)
 * 27.11.2018 - Supporting a 2-D Space and a better state representation + AIQ improvements
-* 28.11.2018 - Tensor states (3D states) and Using Convnet in brain DQN. Defining Base Class for brain. 
+* 28.11.2018 - Tensor states (3D states) and Using Convnet in brain DQN. Defining Base Class for brain.
+* 29.11.2018 - Supporting several creature races in the universe. Made new races creation easy. 
 * TBI - Different kinds of food and Dopamine implementation for DQN
 
 

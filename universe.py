@@ -51,7 +51,7 @@ class Universe:
             self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
-                    creature.act()
+                    creature.execute_action()
             return self._time
         else:
             return None
@@ -194,7 +194,7 @@ class Universe:
             return
 
         creature.reduce_energy(Config.ConfigBiology.MATE_ENERGY)
-        mate_body = creature.cell().find_nearby_creature(creature)
+        mate_body = creature.cell().find_nearby_creature_from_same_race(creature)
         if mate_body is None:
             return
 
@@ -228,7 +228,7 @@ class Universe:
             return
         creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
 
-        opponent = creature.cell().find_nearby_creature(creature)
+        opponent = creature.cell().find_nearby_creature_from_different_race(creature)
         if opponent is None:
             return
         fight_res = utils.roll_fight(creature.energy(), opponent.energy())

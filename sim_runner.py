@@ -4,13 +4,12 @@ from universe import Universe
 from statistics import Stats
 import printing
 from config import Config
-from human import Human
-from bacteria import Bacteria
+from zombies import Zombie
 
 
 def run(msg_queue=None):
     stats = Stats()
-    races = [Bacteria, Human]
+    races = [Zombie]
     universe = Universe(races, stats)
 
     while universe.pass_time():

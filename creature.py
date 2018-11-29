@@ -1,6 +1,5 @@
 __author__ = 'gkour'
 
-from brain_dqn import Brain
 from config import Config
 from creature_actions import Actions
 import os
@@ -35,12 +34,11 @@ class Creature:
         return Actions.get_all_actions()
 
     # Identity
-
     def race(self):
-        return None
+        raise NotImplementedError()
 
     def race_name(self):
-        return Exception('Creature is ab abstract class')
+        raise NotImplementedError()
 
     def id(self):
         return self._id
@@ -110,17 +108,17 @@ class Creature:
         return state
 
     # Actions
-    def act(self):
+    def decide(self, state):
+        raise NotImplementedError()
+
+    def execute_action(self):
         if self._age > self.max_age():
             self._universe.kill_creature(self, cause='elderly')
             return
-
         self._age += 1
         previous_energy = self._energy
         state = self.get_state()
-
-        eps = max(Config.ConfigBrain.EPSILON, 1-(self._age/(self.learning_frequency()*Config.ConfigBiology.MATURITY_AGE)))
-        decision = self._brain.act(state, eps)
+        decision = self.decide(state)
         action = self.index_to_enum(decision)
         if action == Actions.LEFT:
             self._universe.creature_move_left(self)
@@ -140,9 +138,6 @@ class Creature:
             self._universe.creature_work(self)
         if action == Actions.DIVIDE:
             self._universe.creature_divide(self)
-        # if decision == 6:
-        #     log.action_log[6] += 1
-        #     self.smarten()
         self.obs.append(state)
         self.acts.append(decision)
         self.rews.append(self.energy() - previous_energy)

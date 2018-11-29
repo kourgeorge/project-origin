@@ -51,7 +51,7 @@ class Brain:
 
         self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope))
 
-    def act(self, obs, eps=0):
+    def think(self, obs, eps=0):
         q_value = Brain.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
         action = utils.epsilon_greedy(eps, dist=q_value)
         return action

@@ -36,6 +36,18 @@ class Cell:
             if self._creatures[i] != creature:
                 return self._creatures[i]
 
+    def find_nearby_creature_from_same_race(self, creature):
+        for i in range(len(self._creatures)):
+            if self._creatures[i].race_name() == creature.race_name() and self._creatures[i] != creature:
+                return self._creatures[i]
+        return None
+
+    def find_nearby_creature_from_different_race(self, creature):
+        for i in range(len(self._creatures)):
+            if self._creatures[i].race_name() != creature.race_name() and self._creatures[i] != creature:
+                return self._creatures[i]
+        return None
+
     def creatures(self):
         return self._creatures
 

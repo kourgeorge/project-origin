@@ -32,3 +32,8 @@ class Human(Creature):
 
     def race_name(self):
         return 'Human'
+
+    def decide(self, state):
+        eps = max(Config.ConfigBrain.EPSILON,
+                  1 - (self._age / (self.learning_frequency() * Config.ConfigBiology.MATURITY_AGE)))
+        return self._brain.think(state, eps)

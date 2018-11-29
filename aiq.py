@@ -31,7 +31,7 @@ def test_aiq(creature):
     for i in range(len(scenarios)):
         test_state, positive_test_type, expected_actions, weight = scenarios[i](creature.vision_range())
         w += weight
-        decision = Actions.index_to_enum(creature.brain().act(test_state, 0))
+        decision = Actions.index_to_enum(creature.decide(test_state))
         if positive_test_type:
             score += weight if decision in expected_actions else 0
         else:

@@ -123,7 +123,7 @@ class Creature:
         previous_energy = self._energy
         state = self.get_state()
 
-        eps = max(Config.ConfigBrain.EPSILON, 1-(self._age/Config.ConfigBiology.MATURITY_AGE))
+        eps = max(Config.ConfigBrain.EPSILON, 1-(self._age/(self.learning_frequency()*Config.ConfigBiology.MATURITY_AGE)))
         decision = self._brain.act(state, eps)
         action = Actions.index_to_enum(decision)
         if action == Actions.LEFT:
@@ -154,14 +154,14 @@ class Creature:
         if self.alive():
             self.newState.append(self.get_state())
         else:
-            self.newState.append(self._dead_state() * self.surroundings_size())
+            self.newState.append(self._dead_state())
             self.smarten()
 
         if self._age % self.learning_frequency() == 0:
             self.smarten()
 
     def smarten(self):
-        self._brain.train(self.obs, self.acts, self.rews, self.newState)
+        #self._brain.train(self.obs, self.acts, self.rews, self.newState)
         self.obs, self.acts, self.rews, self.newState = [], [], [], []
 
     def surroundings_size(self):

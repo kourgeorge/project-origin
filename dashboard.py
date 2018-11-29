@@ -37,11 +37,6 @@ class Dashboard:
     def update_epoch_dash(self, epoch_stats_df):
         if epoch_stats_df is None or epoch_stats_df.empty:
             return
-        ## Action Dist Pie
-        death_cause = np.mean(epoch_stats_df['DeathCause'], axis=0)
-        self._fig_death.clear()
-        self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly'],
-                             startangle=90, autopct='%1.1f%%')
 
     def update_step_dash(self, step_stats_df):
         if step_stats_df is None or step_stats_df.empty:
@@ -86,6 +81,11 @@ class Dashboard:
         self._fig_action.pie(actions_dist, labels=Actions.get_available_action_str(),
                              startangle=90, autopct='%1.1f%%')
 
+        ## Action Dist Pie
+        death_cause = np.mean(step_stats_df['DeathCause'].tail(Config.Batch_SIZE).values, axis=0)
+        self._fig_death.clear()
+        self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly', 'Fall'],
+                            startangle=90, autopct='%1.1f%%')
     def get_figure(self):
         return self._fig
 

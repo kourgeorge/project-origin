@@ -13,10 +13,9 @@ class Stats:
 
     def __init__(self):
         self.action_dist = np.zeros(Actions.num_actions())  # [Left Right Eat Mate Fight]
-        self.death_cause = [0, 0, 0]  # [Fatigue Fight Elderly]
+        self.death_cause = [0, 0, 0, 0]  # [Fatigue Fight Elderly Fall]
         self.step_stats_df = pd.DataFrame()
         self.epoch_stats_df = pd.DataFrame()
-        self.initialize_inter_epoch_stats()
 
     def accumulate_step_stats(self, universe):
         step_stats_dict = self.collect_last_step_stats(universe)
@@ -41,6 +40,7 @@ class Stats:
             ('VRange', np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
             ('AIQ', aiq.population_aiq(universe.get_all_creatures())),
             ('ActionDist', self.action_dist),
+            ('DeathCause', self.death_cause),
             ('CreaturesDist', universe.get_creatures_distribution()),
             ('FoodDist', universe.get_food_distribution()),
         ])
@@ -56,10 +56,11 @@ class Stats:
             ('PopulationAgeDist', np.histogram([creature.age() for creature in universe.get_all_creatures()],
                                              bins=[0, Config.ConfigBiology.MATURITY_AGE,
                                                    2 * Config.ConfigBiology.MATURITY_AGE, Config.ConfigBiology.BASE_DYING_AGE*2])[0]),
-            ('DeathCause', self.death_cause),
         ])
 
-    def initialize_inter_epoch_stats(self):
+
+    def initialize_inter_step_stats(self):
         self.action_dist = np.zeros_like(self.action_dist)
         self.death_cause = np.zeros_like(self.death_cause)
+
 

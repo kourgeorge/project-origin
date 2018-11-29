@@ -83,6 +83,8 @@ class Universe:
                 self.statistics.death_cause[1] += 1
             elif cause == 'elderly':
                 self.statistics.death_cause[2] += 1
+            elif cause == 'fall':
+                self.statistics.death_cause[3] += 1
             else:
                 self.statistics.death_cause[0] += 1
 
@@ -126,7 +128,7 @@ class Universe:
             if rel_dim_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
                 if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
-                self.kill_creature(creature)
+                self.kill_creature(creature, "fall")
                 return
             self.space().remove_creature(creature)
             new_cell = self.space().insert_creature(creature, (i, j + 1))
@@ -137,7 +139,7 @@ class Universe:
             if rel_dim_coord == 0:
                 if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
-                self.kill_creature(creature)
+                self.kill_creature(creature, "fall")
                 return
             self.space().remove_creature(creature)
             new_cell = self.space().insert_creature(creature, (i, j - 1))
@@ -148,7 +150,7 @@ class Universe:
             if rel_dim_coord == 0:
                 if not Config.ConfigPhysics.SLIPPERY_SPACE:
                     return
-                self.kill_creature(creature)
+                self.kill_creature(creature, "fall")
                 return
             self.space().remove_creature(creature)
             new_cell = self.space().insert_creature(creature, (i - 1, j))
@@ -193,14 +195,14 @@ class Universe:
 
     def creature_divide(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.DEVIDE)] += 1
-        if creature.age() < Config.ConfigBiology.MATURITY_AGE or creature.energy() < 30:
+        if creature.age() < Config.ConfigBiology.MATURITY_AGE or creature.energy() < 2*Config.ConfigBiology.INITIAL_ENERGY:
             if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
                 return
             creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
             return
 
-        self.create_creature(dna=creature.dna(), coord=creature.coord(), energy=int(creature.energy() / 2),
+        self.create_creature(dna=creature.dna(), coord=creature.coord(), energy=int(creature.energy() / 2)+1,
                              parent=creature)
         creature.reduce_energy(amount=int(creature.energy() / 2))
         creature._age = 1

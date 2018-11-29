@@ -4,7 +4,7 @@ from universe import Universe
 from statistics import Stats
 import printing
 from config import Config
-from zombies import Zombie
+from creatures.zombies import Zombie
 
 
 def run(msg_queue=None):

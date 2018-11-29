@@ -1,7 +1,7 @@
-from creature import Creature
+from creatures.creature import Creature
 from creature_actions import Actions
 from config import Config
-from brain_dqn import Brain
+from brains.brain_dqn import Brain
 
 
 class Bacteria(Creature):

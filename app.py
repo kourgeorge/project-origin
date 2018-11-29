@@ -2,7 +2,7 @@ __author__ = 'gkour'
 
 import tkinter as tk
 from queue import Queue
-from gui import OriginGUI
+from visualization.gui import OriginGUI
 from config import Config
 
 

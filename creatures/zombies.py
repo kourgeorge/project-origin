@@ -1,8 +1,6 @@
-from creature import Creature
-from creature_actions import Actions
 from config import Config
-from simple_brains import RandomBrain
-from human import Human
+from brains.simple_brains import RandomBrain
+from creatures.human import Human
 
 
 class Zombie(Human):

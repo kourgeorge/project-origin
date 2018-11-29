@@ -1,5 +1,5 @@
 from config import Config
-from brains.simple_brains import RandomBrain
+from brains.brain_simple import RandomBrain
 from creatures.human import Human
 
 

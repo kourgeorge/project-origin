@@ -11,7 +11,7 @@ class Human(Creature):
                  model_path=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parent, model_path)
         self._brain = self.get_master_brain()
-        self.new_born()
+        #self.new_born()
 
     def get_master_brain(self):
         if Human._master_brain is None:
@@ -42,4 +42,5 @@ class Human(Creature):
         if self.get_parent() is None:
             return
         self._memory = self.get_parent().get_memory()
+
 

@@ -39,6 +39,6 @@ For scientific motivation visit [**this page**](/docs/Scientific.md).
 * 28.11.2018 - Tensor states (3D states) and Using Convnet in brain DQN. Defining Base Class for brain.
 * 29.11.2018 - Supporting several creature races in the universe. Made new races creation easy.
 * 30.11.2018 - Developing Gamified GUI to watch how different races compete and survive the battle.
-* 1.12.2018 - Oral tradition implementation - supporting inheriting experience to descendants.
+* 30.11.2018 - Oral tradition implementation - supporting inheriting experience to descendants.
 * 2.12.2018 - Moving DNA to Race.
 * TBI - Different kinds of food and Dopamine implementation for DQN

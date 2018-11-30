@@ -12,5 +12,3 @@ The class [`abstractbrain.py`](/brains/abstractbrain.py) is an abstract class th
 Each creature may have a separate DNA, or alternatively, the entire race share the same brain which centralized the race knowledge.
 If every creature has a separate brain, it's inherited DNA may determine the structure of the brain.
 However, in this case, the brain is trained only by the experience of the individual creature.
-
-In the future, we will support  "Oral Tradition" in which ancestors will be able to pass experience to their offsprings. 

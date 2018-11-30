@@ -1,4 +1,7 @@
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
+<div align="center">
+  <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png"><br><br>
+</div>
 
 "project-origin" is the first attempt to create an artificial life environment that allows investigating how intelligence may be developed in different artificial universes and under different rules.
 It allows blending both Nature and Nurture, the two origins of intelligence, to build superior intelligence. 

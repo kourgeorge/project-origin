@@ -12,12 +12,12 @@ They can observe how different intelligence and behaviors can be developed under
 project-origin is made simple to allow fast training.
 It has no graphics, however, it is built and visioned to be easy to imagine.
 
-The simulator is build of a *Universe* which is an environment that *Creatures* live in, adapt to, flourish or extinct.
+The simulator is build of a [`Universe`](/docs/Universe.md) which is an environment that [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
 The universe in project-origin has all aspects that any universe has like Space, time, physics, evolution and chance.
 Different universes may have different rules which we call *physics*. 
-The *Space* is a grid of *Cells* that contain objects such as creatures, food, etc.
-The creatures may have different senses and a different set of actions depending on the *Race*.
-The most important aspect of the creature is its *Brain* which controls its actions given its internal and external state.
+The [`Space`](/docs/Space.md) is a grid of 'Cells' that contain objects such as creatures, food, etc.
+The creatures may have different senses and a different set of actions depending on the Race.
+The most important aspect of the creature is its [`Brain`](/docs/Brain.md) which controls its actions given its internal and external state.
 The universe reacts to the actions of the creatures under the laws of physics and biology.
 Development and survival may be affected and controlled not only by the environment physics but also by the creature biological features, such as structure, sensors, and actions.
  
@@ -25,16 +25,6 @@ While still have no morphology and form, creatures have a brain, sensors and set
 At each time step, they see their surrounding environment and select an action.
 The creatures can move in the grid, eat, mate and fight.
 Their destiny is controlled by the universe's physics, their genes and intelligence which dictates their actions, interactions and skills.
-
-In addition to the thrill of developing intelligent creators, project-origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
-Answering these questions, by demonstrating how complicated skills can be developed by artificial agents in a simulation
-would shed some light and take us closer toward understanding the mechanics and the true nature of our intelligence.
-It may even reveal some insights about more abstract nature and skills that animal and humans possess, like socializing, communication and even love. 
-
-To make these ideas more tangible consider the following examples: 
-- Assume that the physics of the simulation dictates that two creatures should be in specific place and perform 
-a specific operation simultaneously in order to both get reward, would they learn to do so?
-- If doing an action in a specific age or a specific time cycle of the universe, could result in a great reward, would make them "wait" to this age to do the action?
 
 
 

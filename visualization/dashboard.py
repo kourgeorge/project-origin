@@ -31,8 +31,9 @@ class Dashboard:
         self._fig_food_loc = self._fig.add_axes([0.26, 0.1, 0.2, 0.3])
         self._fig_food_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_food_loc.xaxis.set_major_locator(plt.NullLocator())
-        self._fig_action = self._fig.add_subplot(236)
-        self._fig_death = self._fig.add_subplot(2, 6, 10)
+        self._fig_action = self._fig.add_subplot(2, 3, 6)
+        self._fig_death = self._fig.add_subplot(4, 6, 16)
+        self._fig_races = self._fig.add_subplot(4, 6, 22)
 
     def update_epoch_dash(self, epoch_stats_df):
         if epoch_stats_df is None or epoch_stats_df.empty:
@@ -87,11 +88,15 @@ class Dashboard:
         self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly', 'Fall'],
                             startangle=90, autopct='%1.1f%%')
 
+        ## races Dist
+        races = np.mean(step_stats_df['RacesDist'].tail(Config.Batch_SIZE).values, axis=0)
+        self._fig_races.clear()
+        self._fig_races.pie(races, labels=['Zombie', 'Human'],
+                            startangle=90, autopct='%1.1f%%')
+
     def get_figure(self):
         return self._fig
 
     @staticmethod
     def my_autopct(pct):
         return ('%.2f' % pct) if pct > 1 else ''
-
-

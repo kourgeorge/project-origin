@@ -9,7 +9,7 @@ import random
 
 
 def population_aiq(creatures):
-    sample_creatures = random.sample(creatures, utils.safe_log(len(creatures)))
+    sample_creatures = random.sample(creatures, utils.safe_log2(len(creatures)))
     all_aiq = [test_aiq(creature) for creature in sample_creatures]
     return np.round(utils.emptynanmean(all_aiq), 2)
 

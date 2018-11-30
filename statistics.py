@@ -39,6 +39,7 @@ class Stats:
             ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
             ('VRange', np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
             ('AIQ', aiq.population_aiq(universe.get_all_creatures())),
+            ('RacesDist', universe.races_dist()),
             ('ActionDist', self.action_dist),
             ('DeathCause', self.death_cause),
             ('CreaturesDist', universe.get_creatures_distribution()),

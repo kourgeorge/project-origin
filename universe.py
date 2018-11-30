@@ -85,6 +85,13 @@ class Universe:
     def num_creatures(self):
         return len(self.get_all_creatures())
 
+    def races_dist(self):
+        dist = []
+        for race in self._races:
+            num_in_race = [creature for creature in self.get_all_creatures() if creature.race() == race]
+            dist.extend([len(num_in_race)])
+        return np.asarray(dist)
+
     def kill_creature(self, creature, cause='fatigue'):
         creature.die()
         creature.reduce_energy(creature.energy())

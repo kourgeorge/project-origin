@@ -25,7 +25,7 @@ class Human(Creature):
         return Human._master_brain
 
     def get_actions(self):
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.WORK]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE]
 
     def race(self):
         return Human
@@ -34,6 +34,6 @@ class Human(Creature):
         return 'Human'
 
     def decide(self, state):
-        eps = max(Config.ConfigBrain.EPSILON,
+        eps = max(Config.ConfigBrain.BASE_EPSILON,
                   1 - (self._age / (self.learning_frequency() * Config.ConfigBiology.MATURITY_AGE)))
         return self._brain.think(state, eps)

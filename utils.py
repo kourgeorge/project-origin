@@ -91,7 +91,7 @@ def emptynanmean(array):
     return 0
 
 
-def safe_log(number):
+def safe_log2(number):
     if number <= np.e:
         return 0
-    return int(np.log(number))
+    return int(np.log2(number))

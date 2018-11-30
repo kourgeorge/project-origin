@@ -8,19 +8,19 @@ class Config:
 
     class ConfigPhysics:
         SPACE_SIZE = 20
-        NUM_FATHERS = 1000
+        NUM_FATHERS = 200
         ETERNITY = 100000
         SLIPPERY_SPACE = True
         FOOD_CREATURE_RATIO = 0
         INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
 
     class ConfigBiology:
-        BASE_DYING_AGE = 800
+        BASE_DYING_AGE = 80
         DNA_SIZE = 6
         MOVE_ENERGY = 1
         FIGHT_ENERGY = 5
         INITIAL_ENERGY = 50
-        MATE_ENERGY = int(INITIAL_ENERGY / 4)
+        MATE_ENERGY = int(INITIAL_ENERGY / 2)
         MATURITY_AGE = 10 #int(BASE_DYING_AGE / 5)
         BASE_LEARN_FREQ = 5
         BASE_VISION_RANGE = 2

@@ -14,9 +14,17 @@ However, the limitation of game environments is that the actions of the agents a
 While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
 complex behavior, social behavior, and survival skills.
 
+In addition to the thrill of developing intelligent creators, project-origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
+Answering these questions, by demonstrating how complicated skills can be developed by artificial agents in a simulation
+would shed some light and take us closer toward understanding the mechanics and the true nature of our intelligence.
+It may even reveal some insights about more abstract nature and skills that animal and humans possess, like socializing, communication and even love. 
+
+To make these ideas more tangible consider the following examples: 
+- Assume that the physics of the simulation dictates that two creatures should be in specific place and perform a specific operation simultaneously in order to both get reward, would they learn to do so?
+- If doing an action in a specific age or a specific time cycle of the universe, could result in a great reward, would make them "wait" to this age to do the action?
+
 ## Scientific Motivation
 project-origin can be employed to get us closer to answering intriguing questions on **intelligence**, on the **behavior of intelligent creatures** and maybe help us **hypothesise on the reason underlying nature rules**.
-
 In the intelligence realm, first, it is a realistic environment for training intelligent creatures with various skills.
 Second, it may provide us with a deeper understanding of the development of complex skills from basic actions.
 Third, it can show us how intelligence and evolution, are two different mechanisms that affect each other and "cooperate" to build intelligence.

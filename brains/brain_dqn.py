@@ -5,7 +5,6 @@ import utils as utils
 import numpy as np
 import tensorflow.contrib.slim as slim
 import random
-from collections import deque
 from brains.abstractbrain import AbstractBrain
 
 
@@ -26,7 +25,6 @@ class BrainDQN(AbstractBrain):
         self._regularization_param = 0.001
         self.lr = lr
         self._gamma = gamma
-        self.replayMemory = deque(maxlen=BrainDQN.BATCH_SIZE * 10)
 
         BrainDQN.init_session()
 
@@ -56,15 +54,12 @@ class BrainDQN(AbstractBrain):
         action = utils.epsilon_greedy(eps, dist=q_value)
         return action
 
-    def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
-        # insert new experience to memory
-        for i in range(len(batch_rews)):
-            dec_1hot = np.zeros(self._action_size)
-            dec_1hot[batch_acts[i]] = 1
-            self.replayMemory.append((batch_obs[i], dec_1hot, batch_rews[i], batch_newstate[i], False))
+    def train(self, memory):
+        minibatch_size = min(BrainDQN.BATCH_SIZE, len(memory))
+        if minibatch_size == 0:
+            return
 
-        minibatch_size = min(BrainDQN.BATCH_SIZE, len(self.replayMemory))
-        minibatch = random.sample(self.replayMemory, minibatch_size)
+        minibatch = random.sample(memory, minibatch_size)
         state_batch = [data[0] for data in minibatch]
         action_batch = [data[1] for data in minibatch]
         reward_batch = [data[2] for data in minibatch]

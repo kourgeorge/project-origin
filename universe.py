@@ -88,12 +88,12 @@ class Universe:
     def races_dist(self):
         dist = []
         for race in self._races:
-            num_in_race = [creature for creature in self.get_all_creatures() if creature.race() == race]
+            num_in_race = [creature for creature in self.get_all_creatures() if creature.get_race() == race]
             dist.extend([len(num_in_race)])
         return np.asarray(dist)
 
     def kill_creature(self, creature, cause='fatigue'):
-        creature.die()
+        creature.dying()
         creature.reduce_energy(creature.energy())
         cell = creature.cell()
         creature.update_cell(None)
@@ -211,7 +211,7 @@ class Universe:
             dominant_parent = mate_body
 
         new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
-        self.create_creature(creature.race(), self.allocate_id(), new_dna, creature.coord(), parent=dominant_parent)
+        self.create_creature(creature.get_race(), self.allocate_id(), new_dna, creature.coord(), parent=dominant_parent)
 
     def creature_divide(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.DIVIDE)] += 1
@@ -222,7 +222,7 @@ class Universe:
             creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
             return
 
-        self.create_creature(creature.race(), self.allocate_id(), dna=creature.dna(), coord=creature.coord(),
+        self.create_creature(creature.get_race(), self.allocate_id(), dna=creature.dna(), coord=creature.coord(),
                              energy=int(creature.energy() / 2) + 1,
                              parent=creature)
         creature.reduce_energy(amount=int(creature.energy() / 2))

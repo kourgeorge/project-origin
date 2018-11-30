@@ -26,6 +26,7 @@ class Config:
         BASE_VISION_RANGE = 2
         MEAL_SIZE = 6
         WORK_ENERGY = 3
+        MEMORY_SIZE  = 30
 
     class ConfigBrain:
         BASE_GAMMA = 0.9

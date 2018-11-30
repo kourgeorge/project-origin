@@ -10,7 +10,7 @@ class Zombie(Human):
         super(Zombie, self).__init__(universe, id, dna, age, energy, parent, model_path)
         self._brain = RandomBrain(self.num_actions())
 
-    def race(self):
+    def get_race(self):
         return Zombie
 
     def race_name(self):
@@ -18,3 +18,9 @@ class Zombie(Human):
 
     def decide(self, state):
         return self._brain.think(state)
+
+    def dying(self):
+        pass
+
+    def smarten(self):
+        pass

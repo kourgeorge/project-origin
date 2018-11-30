@@ -4,6 +4,7 @@ from config import Config
 from creature_actions import Actions
 import os
 import numpy as np
+from collections import deque
 
 
 class Creature:
@@ -18,14 +19,10 @@ class Creature:
         self._energy = energy
         self._cell = None
         self._universe = universe
-        parent = parent
+        self._parent = parent
         self._model_path = model_path
-
+        self._memory = deque(maxlen=self.memory_size())
         self._brain = None
-        self.obs = []
-        self.acts = []
-        self.rews = []
-        self.newState = []
 
         if model_path is not None and os.path.exists(model_path):
             self._brain.load_model(model_path)
@@ -34,7 +31,7 @@ class Creature:
         return Actions.get_all_actions()
 
     # Identity
-    def race(self):
+    def get_race(self):
         raise NotImplementedError()
 
     def race_name(self):
@@ -53,6 +50,9 @@ class Creature:
         return self._brain
 
     def vision_range(self):
+        return 2
+
+    def memory_size(self):
         return self._dna[0]
 
     def learning_rate(self):
@@ -75,6 +75,12 @@ class Creature:
 
     def cell(self):
         return self._cell
+
+    def get_parent(self):
+        return self._parent
+
+    def get_memory(self):
+        return self._memory
 
     def update_cell(self, cell):
         self._cell = cell
@@ -138,22 +144,19 @@ class Creature:
             self._universe.creature_work(self)
         if action == Actions.DIVIDE:
             self._universe.creature_divide(self)
-        self.obs.append(state)
-        self.acts.append(decision)
-        self.rews.append(self.energy() - previous_energy)
 
-        if self.alive():
-            self.newState.append(self.get_state())
-        else:
-            self.newState.append(self._dead_state())
-            self.smarten()
+        dec_1hot = np.zeros(self.num_actions())
+        dec_1hot[decision] = 1
+        reward = self.energy() - previous_energy
+        new_state = self.get_state() if self.alive() else self._dead_state()
+        terminated = False if self.alive() else True
+        self._memory.append([state, dec_1hot, reward, new_state, terminated])
 
         if self._age % self.learning_frequency() == 0:
             self.smarten()
 
     def smarten(self):
-        self._brain.train(self.obs, self.acts, self.rews, self.newState)
-        self.obs, self.acts, self.rews, self.newState = [], [], [], []
+        self._brain.train(self._memory)
 
     def surroundings_size(self):
         # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
@@ -166,7 +169,10 @@ class Creature:
     def alive(self):
         return self.cell() is not None
 
-    def die(self):
+    def dying(self):
+        """ Give a last will before dying"""
+        # get smarter before dying. useful in the case of a single get_race brain
+        self.smarten()
         # write the model of the last survivor.
         if self._universe.num_creatures == 1 and self._model_path is not None:
             self._brain.save_model(self._model_path)

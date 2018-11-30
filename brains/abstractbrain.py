@@ -10,7 +10,7 @@ class AbstractBrain:
     def think(self, obs, eps):
         raise NotImplementedError()
 
-    def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
+    def train(self, experience):
         raise NotImplementedError()
 
     def state_dims(self):

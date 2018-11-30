@@ -13,7 +13,7 @@ class DNABrain(AbstractBrain):
     def think(self, obs, eps=0):
         return np.random.choice(len(self._dna), 1, p=self._dna)
 
-    def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
+    def train(self,experience):
         pass
 
     def save_model(self, path):
@@ -31,7 +31,7 @@ class RandomBrain(AbstractBrain):
     def think(self, obs, eps=0):
         return random.randint(0,self._action_size-1)
 
-    def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
+    def train(self, experience):
         pass
 
     def save_model(self, path):

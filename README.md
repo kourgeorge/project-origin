@@ -3,7 +3,7 @@
   <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png"><br><br>
 </div>
 
-"project-origin" is the first attempt to create an artificial life environment that allows investigating how intelligence may be developed in different artificial universes and under different rules.
+**project-origin** is the first attempt to create an artificial life environment that allows investigating how intelligence may be developed in different universes and under different rules.
 It allows blending both Nature and Nurture, the two origins of intelligence, to build superior intelligence. 
 See [Nature versus nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
 Researchers using project-origin can control and manipulate the physical environment, the biological rules and the learning mechanisms of the algorithm.  
@@ -49,5 +49,3 @@ a specific operation simultaneously in order to both get reward, would they lear
 * 29.11.2018 - Supporting several creature races in the universe. Made new races creation easy.
 * 30.11.2018 - Developing Gamified GUI to watch how different races compete and survive the battle.
 * TBI - Different kinds of food and Dopamine implementation for DQN
-
-

@@ -75,7 +75,7 @@ class SimulationPage(tk.Frame):
         dash_fig = self._dashboard.get_figure()
 
         canvas = FigureCanvasTkAgg(dash_fig, self)
-        canvas.show()
+        canvas.draw()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
     def refresh_data(self, statistics):

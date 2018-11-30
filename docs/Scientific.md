@@ -9,7 +9,7 @@ For instance, it may refer to Intelligent creatures or subjects that live in som
 Depending on the universe rules and physics they live in, these creatures may develop complicated skills such as collaboration and communication.
 
 In the last few years, with the emerging interest in deep learning and reinforcement learning, there has been a great effort to develop environments that can be used to demonstrate the ability of AI.
-Nevertheless, most of these simulations are game environment, such as [OpenAI gym](https://gym.openai.com/), [deepmind lab](https://github.com/deepmind/lab), [OpenAI Universe](https://blog.openai.com/universe/), and more.
+Nevertheless, most of these simulations are a game environment, such as [OpenAI gym](https://gym.openai.com/), [deepmind lab](https://github.com/deepmind/lab), [OpenAI Universe](https://blog.openai.com/universe/), and more.
 However, the limitation of game environments is that the actions of the agents are limited and its goal is too strict.
 While it is nice to show how artificial agent can master games, it is more interesting to see  how artificial creatures can develop
 complex behavior, social behavior, and survival skills.

@@ -8,10 +8,10 @@ class Config:
 
     class ConfigPhysics:
         SPACE_SIZE = 20
-        NUM_FATHERS = 200
+        NUM_FATHERS = 1000
         ETERNITY = 100000
         SLIPPERY_SPACE = True
-        FOOD_CREATURE_RATIO = 0
+        FOOD_CREATURE_RATIO = 1
         INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
 
     class ConfigBiology:

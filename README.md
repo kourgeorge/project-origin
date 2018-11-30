@@ -8,7 +8,7 @@ See [Nature versus nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture)
 Researchers using project-origin can control and manipulate the physical environment, the biological rules and the learning mechanisms of the algorithm, and observe how different intelligence and behaviors can be developed under different rules.
 
 The simulator is build of a [`Universe`](/docs/Universe.md) which is an environment that [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
-The universe in project-origin has all aspects that any universe has like space, time, physics, evolution and chance.
+The universe in project-origin has all aspects that any universe has like Space, time, physics, evolution and chance.
 Different universes may have different rules which we call *physics*. 
 The [`Space`](/docs/Space.md) is a grid of 'Cells' that contain objects such as creatures, food, etc.
 The creatures may have different senses and a different set of actions depending on the Race.
@@ -25,10 +25,11 @@ At each time step, they see their surrounding environment and select an action.
 The creatures can move in the grid, eat, mate and fight.
 Their destiny is controlled by the universe's physics, their genes and intelligence which dictates their actions, interactions and skills.
 
+The current version of the project is a first seed, and several fundamental features are planned for the future releases.
+In [**this page**](/docs/FuturePlans.md) we maintain a list of future plans.
+For scientific motivation visit [**this page**](/docs/Scientific.md).
 
 
-
-## Updates:
 * 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.
 * 20.11.2018 - Added DQN based brain.
 * 22.11.2018 - Adding Dashboard to visualize simulation progress.

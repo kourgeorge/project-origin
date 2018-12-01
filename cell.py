@@ -57,6 +57,8 @@ class Cell:
     def race_energy_level(self, race):
         return sum([creature.energy() for creature in self.creatures() if creature.race_name() == race.race_name()])
 
+    def get_state_in_cell(self, races):
+        return [self.get_food(), self.race_energy_level(races[0]), self.race_energy_level(races[1])]
 
     def num_creatures(self):
         return len(self._creatures)

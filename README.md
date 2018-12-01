@@ -40,5 +40,5 @@ For scientific motivation visit [**this page**](/docs/Scientific.md).
 * 29.11.2018 - Supporting several creature races in the universe. Made new races creation easy.
 * 30.11.2018 - Developing Gamified GUI to watch how different races compete and survive the battle.
 * 30.11.2018 - Oral tradition implementation - supporting inheriting experience to descendants.
-* 2.12.2018 - Moving DNA to Race.
+* 1.12.2018 - Adding the Fitrah to the DNA- an expression of the innate nature of a creature.
 * TBI - Different kinds of food and Dopamine implementation for DQN

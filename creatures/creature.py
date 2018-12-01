@@ -10,7 +10,8 @@ from collections import deque
 class Creature:
     RACE_NAME = 'mango'
 
-    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None, model_path=None):
+    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
+                 model_path=None):
         self._id = id
         self._name = str(id) + Creature.RACE_NAME
         self._dna = dna
@@ -178,13 +179,12 @@ class Creature:
     def smarten(self):
         self._brain.train(self._memory)
 
-    def surroundings_size(self):
-        # surrounding(2*vision_range+1)*2(food and creatures) + 2 (internal state)
-        return (2 * self.vision_range() + 1) ** 2
-
     def state_dims(self):
         # Creatures, Food, Energy, age
-        return 5, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
+        num_races = 2
+        food_dim = 1
+        internal_state_dims = 2  # energy, age
+        return num_races + food_dim + internal_state_dims, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
 
     def alive(self):
         return self.cell() is not None

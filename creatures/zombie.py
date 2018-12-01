@@ -5,6 +5,8 @@ import utils
 
 
 class Zombie(Human):
+    """Human like creature but with no reason, acting from the inherited fitrah or behave randomly"""
+
     Fitrah = [0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,

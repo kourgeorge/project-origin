@@ -26,15 +26,41 @@ class Creature:
         if model_path is not None and os.path.exists(model_path):
             self._brain.load_model(model_path)
 
-    def get_actions(self):
-        return Actions.get_all_actions()
+    #########################################################
+    # Virtual function to override when creating a new race #
+    #########################################################
+    @staticmethod
+    def get_actions():
+        '''return a list of actions that creature of the race can perform'''
+        raise NotImplementedError()
+
+    @staticmethod
+    def self_race_enemy():
+        raise NotImplementedError()
 
     # Identity
-    def get_race(self):
+    @staticmethod
+    def get_race():
         raise NotImplementedError()
 
-    def race_name(self):
+    @staticmethod
+    def race_name():
         raise NotImplementedError()
+
+    @staticmethod
+    def race_fitrah():
+        raise NotImplementedError()
+
+    def decide(self, state):
+        raise NotImplementedError()
+
+    #########################################################
+    #########################################################
+    #########################################################
+
+    @staticmethod
+    def vision_range():
+        return 2
 
     def id(self):
         return self._id
@@ -47,9 +73,6 @@ class Creature:
 
     def brain(self):
         return self._brain
-
-    def vision_range(self):
-        return 2
 
     def memory_size(self):
         return self._dna.memory_size()
@@ -65,6 +88,9 @@ class Creature:
 
     def life_expectancy(self):
         return self._dna.life_expectancy()
+
+    def fitrah(self):
+        return self._dna.fitrah()
 
     def gamma(self):
         return self._dna.gamma()
@@ -86,7 +112,7 @@ class Creature:
 
     def coord(self):
         if self._cell is None:
-            print(self)
+            raise BaseException('An dead element should not be asked for it''s coordinate')
         return self._cell.get_coord()
 
     def energy(self):
@@ -97,8 +123,7 @@ class Creature:
 
     def reduce_energy(self, amount):
         if self._energy < amount:
-            print('An error - reduce energy called when there is no enough energy')
-            return
+            raise Exception('An error - reduce energy called when there is no enough energy')
         self._energy -= amount
 
     def internal_state(self):
@@ -111,10 +136,6 @@ class Creature:
         space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
         state = np.append(space_state, self.internal_state(), 0)
         return state
-
-    # Actions
-    def decide(self, state):
-        raise NotImplementedError()
 
     def execute_action(self):
         if self._age > self.life_expectancy():

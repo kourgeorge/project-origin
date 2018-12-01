@@ -9,14 +9,14 @@ from config import Config
 class Evolution:
 
     @staticmethod
-    def get_Basic_dna(num_actions):
-        return DNA(Config.ConfigBiology.MEMORY_SIZE,
+    def get_Basic_dna(race):
+        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
                    Config.ConfigBrain.BASE_LEARNING_RATE,
                    Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    Config.ConfigBiology.BASE_LEARN_FREQ,
                    Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
                    Config.ConfigBrain.BASE_GAMMA,
-                   utils.softmax(np.ones(num_actions)))
+                   race.race_fitrah())
 
     @staticmethod
     def mix_dna(dna1, dna2):
@@ -26,7 +26,7 @@ class Evolution:
                       np.mean([dna1.learning_frequency(), dna2.learning_frequency()]),
                       np.mean([dna1.life_expectancy(), dna2.life_expectancy()]),
                       np.mean([dna1.gamma(), dna2.gamma()]),
-                      np.mean([dna1.action_bias(), dna2.action_bias()]))
+                      np.mean([dna1.fitrah(), dna2.fitrah()]))
         return Evolution.mutate_dna(new_dna)
 
     @staticmethod
@@ -37,8 +37,8 @@ class Evolution:
         learning_frequency = max(dna.learning_frequency() + randint(-1, 1), 1)
         life_expectancy = max(0, dna.life_expectancy() + randint(-10, 10))
         gamma = max(0.1, min(1, np.random.normal(loc=dna.gamma(), scale=0.001)))
-        action_bias = utils.softmax(dna.action_bias() + np.random.normal(loc=0, scale=0.001, size=dna.action_bias().size))
-        return DNA(memory_size, learning_rate, hidden_layer_size, learning_frequency, life_expectancy, gamma, action_bias)
+        fitrah = utils.softmax(dna.fitrah() + np.random.normal(loc=0, scale=0.1, size=dna.fitrah().size))
+        return DNA(memory_size, learning_rate, hidden_layer_size, learning_frequency, life_expectancy, gamma, fitrah)
 
 
 class DNA:
@@ -48,14 +48,14 @@ class DNA:
                  base_learning_frequency,
                  base_life_expectancy,
                  base_gamma,
-                 base_action_bias):
+                 fitrah):
         self._memory_size = base_memory_size
         self._learning_rate = base_learning_rate
         self._hidden_layer_size = base_hidden_layer
         self._learning_frequency = base_learning_frequency
         self._life_expectancy = base_life_expectancy
         self._gamma = base_gamma
-        self._action_bias = base_action_bias
+        self._fitrah = fitrah
 
     def memory_size(self):
         return self._memory_size
@@ -75,6 +75,8 @@ class DNA:
     def gamma(self):
         return self._gamma
 
-    def action_bias(self):
-        return self._action_bias
+    def fitrah(self):
+        ''' Fitra means innate nature is Arabic. This defines a basic tendency of doing actions dictated in the dna.
+        See documentation for more information'''
+        return self._fitrah
 

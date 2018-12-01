@@ -28,7 +28,7 @@ class RandomBrain(AbstractBrain):
         super(AbstractBrain, self).__init__()
         self._action_size = action_size
 
-    def think(self, obs, eps=0):
+    def think(self, obs):
         return random.randint(0, self._action_size - 1)
 
     def train(self, experience):

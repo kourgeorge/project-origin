@@ -5,10 +5,7 @@ Their main goal is to survive and flourish.
 Creatures have senses, basically vision, from which they get information about their local environment.
 
 Each creature has a DNA which it inherits from his parents in an evolutionary process controlled in class evolution.
-In the case of asexual creatures, the DNA is copied to the daughter cells.
-The DNA define biological, intelligence, senses aspects of the creature.
-For instance, how far it sees, what is the brain architecture and hyper-parameters, and what is its life expectancy and maturity age.
-
+See more information in [Evolution.md](/docs/Evolution.md).
 At each time step, the universe gives every creature a chance to make a single action.
 To decide on his best action, the creature sees the environment around him and his internal states such as energy and age.
 Using his brain he makes a decision and executes the action. 
@@ -41,12 +38,3 @@ The creature DNA limits the size of it's memory.
 "Oral Tradition" is the knowledge passed from generation to generation.
 While this functionality is not implemented in the abstract class creature, in humans, a subclass of creature, ancestors inherit their memories to their offsprings.
 Note that while the knowledge may pass between generations, the brain parameters are unique to each individual.
-
-
-### DNA and Evolution
-The race defines a basic DNA to it's creatures.
-However, when each individual is born, the descendant does not get the same exact genes as his parents.
-For asexual creatures, the dna of the mother cell is copied and some mutation are introduced.
-For sexual races, the offspring dna is the mean gene value between the two parents plus a mutation.
-
-   

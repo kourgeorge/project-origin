@@ -1,7 +1,7 @@
 __author__ = 'gkour'
 
 from space import Space
-from evolution import DNA, Evolution
+from evolution import Evolution
 from config import Config
 import numpy as np
 import utils
@@ -20,7 +20,7 @@ class Universe:
             fathers_locations_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
             fathers_locations_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
             for n in range(Config.ConfigPhysics.NUM_FATHERS):
-                dna = Evolution.mutate_dna(Evolution.get_Basic_dna(len(race.available_actions())))
+                dna = Evolution.mutate_dna(Evolution.get_Basic_dna(race))
 
                 self.create_creature(race, id=self.allocate_id(), dna=dna,
                                      coord=(fathers_locations_i[n], fathers_locations_j[n]),
@@ -231,9 +231,13 @@ class Universe:
             return
         creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
 
-        opponent = creature.cell().find_nearby_creature_from_different_race(creature)
+        if not creature.self_race_enemy():
+            opponent = creature.cell().find_nearby_creature_from_different_race(creature)
+        else:
+            opponent = creature.cell().find_nearby_creature(creature)
         if opponent is None:
             return
+
         fight_res = utils.roll_fight(creature.energy(), opponent.energy())
         if fight_res == -1:
             energy_trans = int(opponent.energy() / 2)

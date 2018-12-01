@@ -7,7 +7,7 @@ class AbstractBrain:
         self._state_dims = state_dims
         self._action_size = action_size
 
-    def think(self, obs, eps):
+    def think(self, obs):
         raise NotImplementedError()
 
     def train(self, experience):

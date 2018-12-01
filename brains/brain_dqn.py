@@ -49,10 +49,9 @@ class BrainDQN(AbstractBrain):
 
         self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope))
 
-    def think(self, obs, eps=0):
+    def think(self, obs):
         q_value = BrainDQN.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
-        action = utils.epsilon_greedy(eps, dist=q_value)
-        return action
+        return q_value
 
     def train(self, memory):
         minibatch_size = min(BrainDQN.BATCH_SIZE, len(memory))

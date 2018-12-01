@@ -10,7 +10,7 @@ from creatures.human import Human
 
 def run(msg_queue=None):
     stats = Stats()
-    races = [Zombie, Human]
+    races = [Zombie]
     universe = Universe(races, stats)
 
     while universe.pass_time():

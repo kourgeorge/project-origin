@@ -10,8 +10,7 @@ from collections import deque
 class Creature:
     RACE_NAME = 'mango'
 
-    def __init__(self, universe, id,dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None,
-                 model_path=None):
+    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None, model_path=None):
         self._id = id
         self._name = str(id) + Creature.RACE_NAME
         self._dna = dna
@@ -19,7 +18,7 @@ class Creature:
         self._energy = energy
         self._cell = None
         self._universe = universe
-        self._parent = parent
+        self._parents = parents
         self._model_path = model_path
         self._memory = deque(maxlen=self.memory_size())
         self._brain = None
@@ -53,22 +52,22 @@ class Creature:
         return 2
 
     def memory_size(self):
-        return self._dna[0]
+        return self._dna.memory_size()
 
     def learning_rate(self):
-        return self._dna[1]
+        return self._dna.learning_rate()
 
-    def brain_hidden_layer(self):
-        return self._dna[2]
+    def brain_hidden_layer_size(self):
+        return self._dna.hidden_layer_size()
 
     def learning_frequency(self):
-        return self._dna[3]
+        return self._dna.learning_frequency()
 
-    def max_age(self):
-        return self._dna[4]
+    def life_expectancy(self):
+        return self._dna.life_expectancy()
 
     def gamma(self):
-        return self._dna[5]
+        return self._dna.gamma()
 
     def dna(self):
         return self._dna
@@ -77,7 +76,7 @@ class Creature:
         return self._cell
 
     def get_parent(self):
-        return self._parent
+        return self._parents
 
     def get_memory(self):
         return self._memory
@@ -118,7 +117,7 @@ class Creature:
         raise NotImplementedError()
 
     def execute_action(self):
-        if self._age > self.max_age():
+        if self._age > self.life_expectancy():
             self._universe.kill_creature(self, cause='elderly')
             return
         self._age += 1
@@ -178,7 +177,7 @@ class Creature:
             self._brain.save_model(self._model_path)
 
     def _dead_state(self):
-        return np.ones(shape=self.state_dims())*-1
+        return np.ones(shape=self.state_dims()) * -1
 
     def __str__(self):
         return str(self._id)

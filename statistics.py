@@ -29,15 +29,19 @@ class Stats:
             ('IDs', universe.get_creatures_counter()),
             ('Age', np.round(utils.emptynanmean([creature.age() for creature in universe.get_all_creatures()]), 2)),
             ('MaxAge',
-             np.round(utils.emptynanmean([creature.max_age() for creature in universe.get_all_creatures()]), 2)),
+             np.round(utils.emptynanmean([creature.life_expectancy() for creature in universe.get_all_creatures()]), 2)),
             ('HLayer',
-             np.round(utils.emptynanmean([creature.brain_hidden_layer() for creature in universe.get_all_creatures()]), 2)),
+             np.round(utils.emptynanmean([creature.brain_hidden_layer_size() for creature in universe.get_all_creatures()]),
+                      2)),
             ('LFreq',
-             np.round(utils.emptynanmean([creature.learning_frequency() for creature in universe.get_all_creatures()]), 2)),
-            ('LRate', np.round(utils.emptynanmean([creature.learning_rate() for creature in universe.get_all_creatures()]) *
-                               (1 / Config.ConfigBrain.BASE_LEARNING_RATE), 2)),
+             np.round(utils.emptynanmean([creature.learning_frequency() for creature in universe.get_all_creatures()]),
+                      2)),
+            ('LRate',
+             np.round(utils.emptynanmean([creature.learning_rate() for creature in universe.get_all_creatures()]) *
+                      (1 / Config.ConfigBrain.BASE_LEARNING_RATE), 2)),
             ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
-            ('VRange', np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
+            ('VRange',
+             np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
             ('AIQ', aiq.population_aiq(universe.get_all_creatures())),
             ('RacesDist', universe.races_dist()),
             ('ActionDist', self.action_dist),
@@ -55,13 +59,11 @@ class Stats:
         return OrderedDict([
             ('Time', universe.get_time()),
             ('PopulationAgeDist', np.histogram([creature.age() for creature in universe.get_all_creatures()],
-                                             bins=[0, Config.ConfigBiology.MATURITY_AGE,
-                                                   2 * Config.ConfigBiology.MATURITY_AGE, Config.ConfigBiology.BASE_DYING_AGE*2])[0]),
+                                               bins=[0, Config.ConfigBiology.MATURITY_AGE,
+                                                     2 * Config.ConfigBiology.MATURITY_AGE,
+                                                     Config.ConfigBiology.BASE_LIFE_EXPECTANCY * 2])[0]),
         ])
-
 
     def initialize_inter_step_stats(self):
         self.action_dist = np.zeros_like(self.action_dist)
         self.death_cause = np.zeros_like(self.death_cause)
-
-

@@ -5,9 +5,9 @@ from creatures.human import Human
 
 class Zombie(Human):
 
-    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None,
+    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
-        super(Zombie, self).__init__(universe, id, dna, age, energy, parent, model_path)
+        super(Zombie, self).__init__(universe, id, dna, age, energy, parents, model_path)
         self._brain = RandomBrain(self.num_actions())
 
     def get_race(self):

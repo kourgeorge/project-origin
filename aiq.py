@@ -15,7 +15,7 @@ def population_aiq(creatures):
 
 
 def population_aiq_dist(creatures):
-    bounds = [Config.ConfigBiology.BASE_DYING_AGE / 3, 2 * Config.ConfigBiology.BASE_DYING_AGE / 3]
+    bounds = [Config.ConfigBiology.BASE_LIFE_EXPECTANCY / 3, 2 * Config.ConfigBiology.BASE_LIFE_EXPECTANCY / 3]
     young = [test_aiq(creature) for creature in creatures if creature.age() <= bounds[0]]
     adult = [test_aiq(creature) for creature in creatures if bounds[0] < creature.age() <= bounds[1]]
     old = [test_aiq(creature) for creature in creatures if bounds[1] < creature.age()]

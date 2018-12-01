@@ -7,9 +7,13 @@ from brains.brain_dqn import BrainDQN
 class Bacterium(Creature):
     _master_brain = None
 
-    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parent=None,
+    @staticmethod
+    def available_actions():
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.DIVIDE]
+
+    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
-        super(Bacterium, self).__init__(universe, id, dna, age, energy, parent, model_path)
+        super(Bacterium, self).__init__(universe, id, dna, age, energy, parents, model_path)
         self._brain = self.get_master_brain()
 
     def get_master_brain(self):
@@ -23,7 +27,7 @@ class Bacterium(Creature):
         return Bacterium._master_brain
 
     def get_actions(self):
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.DIVIDE]
+        return Bacterium.available_actions()
 
     def race_name(self):
         return 'Bacterium'

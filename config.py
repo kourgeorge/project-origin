@@ -15,7 +15,7 @@ class Config:
         INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
 
     class ConfigBiology:
-        BASE_DYING_AGE = 80
+        BASE_LIFE_EXPECTANCY = 80
         DNA_SIZE = 6
         MOVE_ENERGY = 1
         FIGHT_ENERGY = 5
@@ -26,7 +26,7 @@ class Config:
         BASE_VISION_RANGE = 2
         MEAL_SIZE = 6
         WORK_ENERGY = 3
-        MEMORY_SIZE  = 30
+        MEMORY_SIZE = 30
 
     class ConfigBrain:
         BASE_GAMMA = 0.9

@@ -20,7 +20,7 @@ class Universe:
             fathers_locations_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
             fathers_locations_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
             for n in range(Config.ConfigPhysics.NUM_FATHERS):
-                dna = Evolution.mutate_dna(Evolution.get_Basic_dna(race))
+                dna = Evolution.mutate_dna(Evolution.get_basic_dna(race))
 
                 self.create_creature(race, id=self.allocate_id(), dna=dna,
                                      coord=(fathers_locations_i[n], fathers_locations_j[n]),
@@ -43,7 +43,7 @@ class Universe:
         return self._space
 
     def get_surroundings(self, coord, vision_range):
-        return self._space.get_state_in_coord(coord, vision_range)
+        return self._space.get_state_in_coord(coord, vision_range, self._races)
 
     # Time Management
     def pass_time(self):

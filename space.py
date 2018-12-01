@@ -35,12 +35,12 @@ class Space:
         x, y = creature.coord()
         self._grid[x][y].remove_creature(creature)
 
-    def get_state_in_coord(self, coord, vision_range):
+    def get_state_in_coord(self, coord, vision_range, races):
         if not self.valid_coord(coord):
-            print("Exception: bad coordinated in space.get_state_in_coord")
+            raise Exception("Exception: bad coordinated in space.get_state_in_coord")
         state_dim_size = 2 * vision_range + 1
         food_state = np.ones([state_dim_size, state_dim_size]) * -1
-        creature_state = np.ones([state_dim_size, state_dim_size]) * -1
+        creature_state = np.ones([len(races), state_dim_size, state_dim_size]) * -1
 
         for i in range(state_dim_size):
             for j in range(state_dim_size):
@@ -48,9 +48,11 @@ class Space:
                 abs_j = coord[1] - vision_range + j
                 if 0 <= abs_i < self._space_size and 0 <= abs_j < self._space_size:
                     food_state[i, j] = self._grid[abs_i][abs_j].get_food()
-                    creature_state[i, j] = self._grid[abs_i][abs_j].energy_level()
-        # return list(chain.from_iterable(creature_state)) + list(chain.from_iterable(food_state))
-        return np.stack((food_state, creature_state))
+                    for k in range(len(races)):
+                        creature_state[k, i, j] = self._grid[abs_i][abs_j].race_energy_level(races[k])
+        food_state = np.expand_dims(food_state, axis=0)
+        res = np.concatenate([creature_state, food_state], axis=0)
+        return res
 
     def get_all_creatures(self):
         return [creature for cell in list(chain.from_iterable(self._grid)) for creature in cell.creatures()]

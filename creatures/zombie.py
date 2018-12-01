@@ -5,6 +5,7 @@ import utils
 
 
 class Zombie(Human):
+    Fitrah = [0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
@@ -20,9 +21,9 @@ class Zombie(Human):
         return 'Zombie'
 
     def decide(self, state):
-        #brain_actions_prob = self._brain.think(state)
+        brain_actions_prob = self._brain.think(state)
         #action_prob = utils.softmax(brain_actions_prob + self.fitrah())
-        decision = utils.epsilon_greedy(0, dist=self.fitrah())
+        decision = utils.epsilon_greedy(0, dist=brain_actions_prob)
         return decision
 
     @staticmethod

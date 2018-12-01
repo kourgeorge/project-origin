@@ -184,7 +184,7 @@ class Creature:
 
     def state_dims(self):
         # Creatures, Food, Energy, age
-        return 4, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
+        return 5, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
 
     def alive(self):
         return self.cell() is not None

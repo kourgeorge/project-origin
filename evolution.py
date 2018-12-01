@@ -9,7 +9,7 @@ from config import Config
 class Evolution:
 
     @staticmethod
-    def get_Basic_dna(race):
+    def get_basic_dna(race):
         return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
                    Config.ConfigBrain.BASE_LEARNING_RATE,
                    Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,

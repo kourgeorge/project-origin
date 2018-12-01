@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png"><br><br>
+  <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png?raw=true"><br><br>
 </p>
 
 **project-origin** is the first attempt to create an artificial life environment that allows investigating how intelligence may be developed in different universes and under different rules.

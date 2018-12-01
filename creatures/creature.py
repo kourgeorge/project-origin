@@ -72,6 +72,9 @@ class Creature:
     def age(self):
         return self._age
 
+    def increase_age(self):
+        self._age += 1
+
     def brain(self):
         return self._brain
 
@@ -138,44 +141,6 @@ class Creature:
         state = np.append(space_state, self.internal_state(), 0)
         return state
 
-    def execute_action(self):
-        if self._age > self.life_expectancy():
-            self._universe.kill_creature(self, cause='elderly')
-            return
-        self._age += 1
-        previous_energy = self._energy
-        state = self.get_state()
-        decision = self.decide(state)
-        action = self.index_to_enum(decision)
-        if action == Actions.LEFT:
-            self._universe.creature_move_left(self)
-        if action == Actions.RIGHT:
-            self._universe.creature_move_right(self)
-        if action == Actions.UP:
-            self._universe.creature_move_up(self)
-        if action == Actions.DOWN:
-            self._universe.creature_move_down(self)
-        if action == Actions.EAT:
-            self._universe.creature_eat(self)
-        if action == Actions.MATE:
-            self._universe.creature_mate(self)
-        if action == Actions.FIGHT:
-            self._universe.creature_fight(self)
-        if action == Actions.WORK:
-            self._universe.creature_work(self)
-        if action == Actions.DIVIDE:
-            self._universe.creature_divide(self)
-
-        dec_1hot = np.zeros(self.num_actions())
-        dec_1hot[decision] = 1
-        reward = self.energy() - previous_energy
-        new_state = self.get_state() if self.alive() else self._dead_state()
-        terminated = False if self.alive() else True
-        self._memory.append([state, dec_1hot, reward, new_state, terminated])
-
-        if self._age % self.learning_frequency() == 0:
-            self.smarten()
-
     def smarten(self):
         self._brain.train(self._memory)
 
@@ -189,6 +154,9 @@ class Creature:
     def alive(self):
         return self.cell() is not None
 
+    def add_experience(self, experience):
+        self._memory.append(experience)
+
     def dying(self):
         """ Give a last will before dying"""
         # get smarter before dying. useful in the case of a single get_race brain
@@ -197,7 +165,7 @@ class Creature:
         if self._universe.num_creatures == 1 and self._model_path is not None:
             self._brain.save_model(self._model_path)
 
-    def _dead_state(self):
+    def dead_state(self):
         return np.ones(shape=self.state_dims()) * -1
 
     def __str__(self):

@@ -45,7 +45,7 @@ class Bacterium(Creature):
 
     def decide(self, state):
         eps = max(Config.ConfigBrain.BASE_EPSILON,
-                  1 - (self._age / (self.learning_frequency() * Config.ConfigBiology.MATURITY_AGE)))
+                  1 - (self.age() / (self.learning_frequency() * Config.ConfigBiology.MATURITY_AGE)))
         brain_actions_prob = self._brain.think(state)
         action_prob = utils.softmax(brain_actions_prob + self.fitrah())
         action = utils.epsilon_greedy(eps, dist=action_prob)

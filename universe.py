@@ -52,7 +52,7 @@ class Universe:
             self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
-                    creature.execute_action()
+                    self.execute_action(creature)
             return self._time
         else:
             return None
@@ -85,6 +85,44 @@ class Universe:
 
     def num_creatures(self):
         return len(self.get_all_creatures())
+
+    def execute_action(self, creature):
+        if creature.age() > creature.life_expectancy():
+            self.kill_creature(creature, cause='elderly')
+            return
+        creature.increase_age()
+        previous_energy = creature.energy()
+        state = creature.get_state()
+        decision = creature.decide(state)
+        action = creature.index_to_enum(decision)
+        if action == Actions.LEFT:
+            self.creature_move_left(creature)
+        if action == Actions.RIGHT:
+            self.creature_move_right(creature)
+        if action == Actions.UP:
+            self.creature_move_up(creature)
+        if action == Actions.DOWN:
+            self.creature_move_down(creature)
+        if action == Actions.EAT:
+            self.creature_eat(creature)
+        if action == Actions.MATE:
+            self.creature_mate(creature)
+        if action == Actions.FIGHT:
+            self.creature_fight(creature)
+        if action == Actions.WORK:
+            self.creature_work(creature)
+        if action == Actions.DIVIDE:
+            self.creature_divide(creature)
+
+        dec_1hot = np.zeros(creature.num_actions())
+        dec_1hot[decision] = 1
+        reward = creature.energy() - previous_energy
+        new_state = creature.get_state() if creature.alive() else creature.dead_state()
+        terminated = False if creature.alive() else True
+        creature.add_experience([state, dec_1hot, reward, new_state, terminated])
+
+        if creature.age() % creature.learning_frequency() == 0:
+            creature.smarten()
 
     def races_dist(self):
         dist = []

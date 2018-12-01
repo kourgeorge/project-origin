@@ -7,7 +7,7 @@ import utils
 
 class Human(Creature):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
@@ -28,7 +28,7 @@ class Human(Creature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT]
 
     @staticmethod
     def get_race():

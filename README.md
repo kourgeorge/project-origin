@@ -16,13 +16,12 @@ The [`Space`](/docs/Space.md) is basically a grid of 'cells' that inhibits objec
 The [`Evolution`](/docs/Evolution.md) in project-origin describes the content of the creatures DNA and the rules of its creations and alternation.
 Creatures are beings, defined by their **DNA**, which may have different senses and a different set of actions depending on their **Race**.
 While still have no morphology and form, creatures have a [`Brain`](/docs/Brain.md), that defines the nature of their intelligence.
-The brain role is to select an action given information about the creature's surrounding environment and its internal state.
+The brain role is to select an action given a state containing information about the creature's surrounding environment and its internal status.
 Periodically, using its brain learning rules, the creature can improve its knowledge and optimize his actions. 
-The actions of the creature are not determined solely by the brain but also affected by the creature inherited [**Fitrah**](https://en.wikipedia.org/wiki/Fitra).
+The creature actions are not determined solely by its intellect (i.e., the brain decisions) but also affected by the inherited state-independent [**Fitrah**](https://en.wikipedia.org/wiki/Fitra).
 The main "goal" of the creatures is to increase their chance of survival under the environment physics, by learning to behave intelligibly.
-While the intelligence of the creature is determined by its genes and brain, there are three mechanisms for collecting knowledge.
-1. Evolution and inheritance (including the fitrah), (2) experience (trial and error) and (3) "Oral Tradition" representing part of the ancestors' knowledge.  
-Their destiny is determined by the universe's physics, their genes, skills, experience, and intelligence.
+While the intelligence of the creature is determined by its genes and brain, there are three main mechanisms for collecting knowledge: (1) Evolution and inheritance (including the fitrah), (2) experience (trial and error) and (3) "Oral Tradition" representing part of the ancestors' knowledge.  
+The destiny of the creatures is determined by the universe's physics, their genes, skills, experience, and intelligence.
 
 We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a great method for practicing science.
 In biology, this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).

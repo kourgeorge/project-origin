@@ -4,27 +4,28 @@
 
 **project-origin** is an attempt to create an artificial life environment that allows studying intelligence development and evolution.
 This area of study is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
-Researchers using project-origin can observe how different behaviors can be developed under different physical and biological universes, using both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture)
-It gives a full control over the environment rules and mechanisms of learning to investigate the phenomenon of noogenesis.
+Researchers using project-origin can observe how different behaviors can be developed under different nature rules, using both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture)
+It gives a full control over the environment rules and mechanisms of learning to investigate tantalizing natural phenomena.
 
-**project-origin** is basically a simulator that emulates a [`Universe`](/docs/Universe.md) in which [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
-The universe in project-origin, as like any other universe has **Physics**, which dictates the rules of Space, Time, Evolution and Learning.
+**project-origin** is a simulator that emulates a [`Universe`](/docs/Universe.md) in which [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
+The universe has **Physics**, which dictates its nature, such as its Space, Time and Evolution.\\
 The [`Space`](/docs/Space.md) is a grid of 'Cells' that contain objects such as creatures, food, etc.
 [`Evolution`](/docs/Evolution.md) describe the content of the DNA and the rules of its creations and alternation.
 Creatures are beings, defined by their **DNA**, which may have different senses and a different set of actions depending on their **Race**.
 While still have no morphology and form, creatures have a [`Brain`](/docs/Brain.md), that defines their nature of intelligence and learning rules
 Given information collected by the creature's senses about its surrounding environment, the brain selects an action.
-Periodically, using learning rules, the creature can improve its knowledge and optimize his actions. 
-The main "goal" of these creatures is to increase their chance of survival under the environment physics, by learning to behave intelligibly and pass their knowledge to their ancestors. 
-Their destiny is controlled by the universe's physics, their genes which dictates their actions, interactions, and intelligence.
+Periodically, using its brain learning rules, the creature can improve its knowledge and optimize his actions. 
+The main "goal" of the creatures is to increase their chance of survival under the environment physics, by learning to behave intelligibly and inherit their knowledge to their ancestors. 
+Their destiny is determined by the universe's physics, their genes, skills, experience and intelligence.
 
-project-origin is made simple to allow fast training.
-It has no graphics, however, it is built and visioned to be easy to imagine.
-Most aspects of the simulator, can be easily modified using inheritance and configuration files.
-Building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a great tool and a new method for practicing science, especially in biology, in which this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
+project-origin is made simple and graphics-deficient to allow fast execution, however, it is built and visioned to be easy to imagine.
+Most aspects of the simulator can be easily modified using programmatic inheritance and configuration files.
 
+We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a great method for practicing science.
+In biology this this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
 We think that ***the understanding of a phenomena is substantially deeper, when the scientist not only can observe it, but can perceive the effect on it when changing the rules of nature.***
 For more information about the scientific motivation visit [**this page**](/docs/Scientific.md).
+In addition to the thrill of developing intelligent creators, project-origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
 
 The current version of the project is the first seed, and several fundamental features are planned for future releases.
 See [**the Future Plans page**](/docs/FuturePlans.md) for more information.

@@ -5,26 +5,28 @@
 [![DOI](https://zenodo.org/badge/141611333.svg)](https://zenodo.org/badge/latestdoi/141611333)
 
 **project-origin** is an attempt to create an artificial life environment that allows studying intelligence emergence and evolution.
-This area of study is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
-project-origin allows researchers to simulate different natures that allows the development of a wide variety of behaviors governed by intelligence determined by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
-It gives a full control over the environment rules and mechanisms of learning to investigate tantalizing natural phenomena.
-In addition to the thrill of developing new type of artificial intelligent, project-origin allows it's users to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
+An area of study which is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
+project-origin allows researchers to simulate different nature rules and mechanisms of learning that enable the development of a wide variety of behaviors determined by intelligence governed by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
+In addition to the thrill of developing a new type of artificial intelligence, project-origin allows its users to investigate tantalizing natural phenomena by observing the behavior and destiny of intelligent creatures.
+For more information about the scientific motivation behind project-origin visit [**this page**](/docs/Scientific.md).
 
 project-origin is a simulator that emulates a [`Universe`](/docs/Universe.md) in which [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
-The universe has **Physics**, which dictates its nature, such as its Space, Time and Evolution.
-The [`Space`](/docs/Space.md) is a grid of 'cells' that contain objects such as creatures, food, etc.
-[`Evolution`](/docs/Evolution.md) describe the content of the DNA and the rules of its creations and alternation.
+The universe has **Physics**, which are basic rules dictating its nature, such as it's **Space**, **Time** and **Evolution**.
+The [`Space`](/docs/Space.md) is basically a grid of 'cells' that inhibits objects such as creatures, food, etc.
+The [`Evolution`](/docs/Evolution.md) in project-origin describes the content of the creatures DNA and the rules of its creations and alternation.
 Creatures are beings, defined by their **DNA**, which may have different senses and a different set of actions depending on their **Race**.
-While still have no morphology and form, creatures have a [`Brain`](/docs/Brain.md), that defines their nature of intelligence and learning rules
-Given information collected by the creature's senses about its surrounding environment, the brain selects an action.
+While still have no morphology and form, creatures have a [`Brain`](/docs/Brain.md), that defines the nature of their intelligence.
+The brain role is to select an action given information about the creature's surrounding environment and its internal state.
 Periodically, using its brain learning rules, the creature can improve its knowledge and optimize his actions. 
-The main "goal" of the creatures is to increase their chance of survival under the environment physics, by learning to behave intelligibly and inherit their knowledge to their ancestors. 
-Their destiny is determined by the universe's physics, their genes, skills, experience and intelligence.
+The actions of the creature are not determined solely by the brain but also affected by the creature inherited [**Fitrah**](https://en.wikipedia.org/wiki/Fitra).
+The main "goal" of the creatures is to increase their chance of survival under the environment physics, by learning to behave intelligibly.
+While the intelligence of the creature is determined by its genes and brain, there are three mechanisms for collecting knowledge.
+1. Evolution and inheritance (including the fitrah), (2) experience (trial and error) and (3) "Oral Tradition" representing part of the ancestors' knowledge.  
+Their destiny is determined by the universe's physics, their genes, skills, experience, and intelligence.
 
 We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a great method for practicing science.
-In biology this this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
-We think that _the understanding of a phenomenon is substantially deeper when not only it can be observed, but perceiving how changes in the rules of nature effect it._
-For more information about the scientific motivation behind project-origin visit [**this page**](/docs/Scientific.md).
+In biology, this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
+We think that _the understanding of a phenomenon is substantially deeper when not only it can be observed in a fixed environment, but its nature is perceived in different settings._
 
 project-origin is made simple and graphics-deficient to allow fast execution, however, it is built and visioned to be easy to imagine.
 Most aspects of the simulator can be easily modified using programmatic inheritance and configuration files.
@@ -39,7 +41,7 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 @misc{kour2018projectorigin,
   author       = {Kour, George},
   title        = {project-origin: an artificial life simulator for investigating noogenesis},
-  month        = dec,
+  month        = December,
   year         = 2018,
   doi          = {10.5281/zenodo.8475},
   howpublished = {\url{https://kourgeorge.github.io/project-origin/}}

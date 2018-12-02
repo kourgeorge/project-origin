@@ -35,6 +35,17 @@ See [**the Future Plans page**](/docs/FuturePlans.md) for more information.
 _We are more than happy to hear your comments, ideas, and contribution.
 Please contact us in the following address "kourgeorge at gmail dot com", or simply open an issue._
 
+### Citing project-origin
+```
+@misc{kour2018projectorigin,
+  author       = {Kour, George},
+  title        = {project-origin: an artificial life simulator for investigating noogenesis},
+  month        = dec,
+  year         = 2018,
+  doi          = {10.5281/zenodo.8475},
+  howpublished = {\url{https://kourgeorge.github.io/project-origin/}}
+}
+```
 
 ### Updates:
 * 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.

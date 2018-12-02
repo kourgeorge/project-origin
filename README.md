@@ -6,9 +6,9 @@
 
 **project-origin** is an attempt to create an artificial life environment that allows studying intelligence emergence and evolution.
 This area of study is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
-project-origin allows researchers to simulate different natures observe how a wide variety of behaviors are developed under different nature rules.
-The simulator allow the development of intelligence using both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
+project-origin allows researchers to simulate different natures that allows the development of a wide variety of behaviors governed by intelligence determined by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
 It gives a full control over the environment rules and mechanisms of learning to investigate tantalizing natural phenomena.
+In addition to the thrill of developing new type of artificial intelligent, project-origin allows it's users to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
 
 project-origin is a simulator that emulates a [`Universe`](/docs/Universe.md) in which [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
 The universe has **Physics**, which dictates its nature, such as its Space, Time and Evolution.
@@ -23,9 +23,8 @@ Their destiny is determined by the universe's physics, their genes, skills, expe
 
 We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a great method for practicing science.
 In biology this this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
-We think that ***the understanding of a phenomena is substantially deeper, when the scientist not only can observe it, but can perceive the effect on it when changing the rules of nature.***
-For more information about the scientific motivation visit [**this page**](/docs/Scientific.md).
-In addition to the thrill of developing intelligent creators, project-origin allows you to observe the behavior and destiny of these creatures and maybe learn something about ourselves.
+We think that _the understanding of a phenomenon is substantially deeper when not only it can be observed, but perceiving how changes in the rules of nature effect it._
+For more information about the scientific motivation behind project-origin visit [**this page**](/docs/Scientific.md).
 
 project-origin is made simple and graphics-deficient to allow fast execution, however, it is built and visioned to be easy to imagine.
 Most aspects of the simulator can be easily modified using programmatic inheritance and configuration files.

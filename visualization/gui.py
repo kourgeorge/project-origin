@@ -1,6 +1,6 @@
 __author__ = 'gkour'
 
-import runner
+import simulator
 from visualization.dashboard import Dashboard
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
@@ -86,7 +86,7 @@ class SimulationPage(tk.Frame):
         self.status_label['text'] = "Simulation Started!"
         self.start_sim_btn['state'] = tk.DISABLED
 
-        self.sim_thread = threading.Thread(target=runner.run, args=[self.queue])
+        self.sim_thread = threading.Thread(target=simulator.run, args=[self.queue])
         self.sim_thread.daemon = True
         self.sim_thread.start()
 

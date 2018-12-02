@@ -14,7 +14,7 @@ class Dashboard:
         self._fig.canvas.set_window_title('Origin Dashboard')
         self._axes_pop = self._fig.add_subplot(221)
         self._axes_pop.set_ylabel('Population Size')
-        self._line_pop, = self._axes_pop.semilogy([], [], '-', label=self._axes_pop.yaxis.label.get_text())
+        self._line_pop, = self._axes_pop.plot([], [], '-', label=self._axes_pop.yaxis.label.get_text())
         self._axes_age = self._axes_pop.twinx()
         self._axes_age.set_ylabel('AVG Age')
         self._line_age, = self._axes_age.plot([], [], 'y-', label=self._axes_age.yaxis.label.get_text())

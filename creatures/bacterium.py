@@ -41,7 +41,7 @@ class Bacterium(Creature):
 
     @staticmethod
     def race_fitrah():
-        return utils.softmax(Bacterium.Fitrah)
+        return utils.softmax(Bacterium.Fitrah, len(Bacterium.get_actions()))
 
     def decide(self, state):
         eps = max(Config.ConfigBrain.BASE_EPSILON,

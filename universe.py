@@ -38,6 +38,9 @@ class Universe:
     def get_races(self):
         return self._races
 
+    def num_races(self):
+        return len(self._races)
+
     # Space Management
     def space(self):
         return self._space

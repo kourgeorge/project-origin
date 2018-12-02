@@ -66,7 +66,7 @@ def update_target_graph(from_scope, to_scope):
     return op_holder
 
 
-def softmax(x):
+def softmax(x, temprature=1):
     """
     Compute softmax values for each sets of scores in x.
 
@@ -74,10 +74,10 @@ def softmax(x):
     Columns are predictions (samples).
     """
     # x = normalize(np.reshape(x, (1, -1)), norm='l2')[0]
-    scoreMatExp = np.exp(np.subtract(x, max(x)))
-    if np.isinf(np.sum(scoreMatExp)):
-        print('Inf in softmax')
-    return scoreMatExp / scoreMatExp.sum(0)
+    ex_x = np.exp(temprature*np.subtract(x, max(x)))
+    if np.isinf(np.sum(ex_x)):
+        raise Exception('Inf in softmax')
+    return ex_x / ex_x.sum(0)
 
 
 def roll_fight(energy1, energy2):

@@ -7,7 +7,7 @@ import utils
 
 class Human(Creature):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0.1, 0.1, 0.1, 0.1, 0.2, 0.2]
 
     def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
@@ -28,7 +28,7 @@ class Human(Creature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE]
 
     @staticmethod
     def get_race():
@@ -40,7 +40,7 @@ class Human(Creature):
 
     @staticmethod
     def race_fitrah():
-        return utils.softmax(Human.Fitrah)
+        return utils.softmax(Human.Fitrah, len(Human.get_actions()))
 
     @staticmethod
     def self_race_enemy():
@@ -48,10 +48,11 @@ class Human(Creature):
 
     def decide(self, state):
         eps = max(Config.ConfigBrain.BASE_EPSILON,
-                  1 - (self._age / (self.learning_frequency() * Config.ConfigBiology.MATURITY_AGE)))
+                 1 - (self._age / (self.learning_frequency() * Config.ConfigBiology.MATURITY_AGE)))
         brain_actions_prob = self._brain.think(state)
-        action_prob = utils.softmax(brain_actions_prob + self.fitrah())
-        decision = utils.epsilon_greedy(eps, dist=action_prob)
+        action_prob = utils.softmax(brain_actions_prob, temprature=len(self.fitrah()))
+        decision = utils.epsilon_greedy(eps, action_prob)
+        print(self.fitrah())
         return decision
 
     def new_born(self):

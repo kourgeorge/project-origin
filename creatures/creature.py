@@ -145,11 +145,9 @@ class Creature:
         self._brain.train(self._memory)
 
     def state_dims(self):
-        # Creatures, Food, Energy, age
-        num_races = 2
         food_dim = 1
         internal_state_dims = 2  # energy, age
-        return num_races + food_dim + internal_state_dims, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
+        return self._universe.num_races() + food_dim + internal_state_dims, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
 
     def alive(self):
         return self.cell() is not None

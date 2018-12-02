@@ -2,31 +2,29 @@
   <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png?raw=true"><br><br>
 </p>
 
-**project-origin** is the first attempt to create an artificial life environment that allows investigating how intelligence may be developed in different universes and under different rules.
-It allows blending both Nature and Nurture, the two origins of intelligence, to build superior intelligence. 
-See [Nature versus nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
-Researchers using project-origin can control and manipulate the physical environment, the biological rules and the learning mechanisms of the algorithm, and observe how different intelligence and behaviors can be developed under different rules.
+**project-origin** is an attempt to create an artificial life environment that allows studying intelligence development and evolution.
+This area of study is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis), which means the emergence and evolution of intelligence.
 
-The simulator is build of a [`Universe`](/docs/Universe.md) which is an environment that [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
-The universe in project-origin has all aspects that any universe has like Space, time, physics, evolution and chance.
-Different universes may have different rules which we call *physics*. 
+It allows blending both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture), the main two origins of intelligence, to build superior intelligence. 
+Researchers using project-origin can observe how different intelligence and behaviors can be developed under different physical and biological universes.
+It gives a full control over the environment rules and mechanisms of learning to investigate the phenomenon of noogenesis.
+
+**project-origin** is basically a simulator that emulates a [`Universe`](/docs/Universe.md) which is an environment that [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
+The universe in project-origin, as like any other universe has **Physics** which contains the rules of Space, Time, Evolution and Learning.
 The [`Space`](/docs/Space.md) is a grid of 'Cells' that contain objects such as creatures, food, etc.
-The creatures may have different senses and a different set of actions depending on the Race.
-The most important aspect of the creature is its [`Brain`](/docs/Brain.md) which controls its actions given its internal and external state.
-The universe reacts to the actions of the creatures under the laws of physics and biology.
-Development and survival may be affected and controlled not only by the environment physics but also by the creature biological features, such as structure, sensors, and actions.
+[`Evolution`](/docs/Evolution.md) describe the content of the DNA and the rules of its creations and alternation.
+Creatures, are beings, defined by the **DNA**, may have different senses and a different set of actions depending on their **Race**.
+While still have no morphology and form, creatures have a [`Brain`](/docs/Brain.md), that defines their nature of intelligence and learning rules
+Given information collected by the creature's sensors about it's surrounding environment, the brain selects an action and using learning rules, learns how to act optimally. 
+The main "goal" of these creatures is to increase there chance of survival under the environment physics, by learning to behave intelligibly and pass their knowledge to their ancestors. 
+Their destiny is controlled by the universe's physics, their genes which dictates their actions, interactions, and intelligence
 
 project-origin is made simple to allow fast training.
 It has no graphics, however, it is built and visioned to be easy to imagine.
-Most aspects of the simulator can be easily modified using inheritance and configuration files.
-
-While still have no morphology and form, creatures have a brain, sensors and set of actions.
-At each time step, they see their surrounding environment and select an action.
-The creatures can move in the grid, eat, mate and fight.
-Their destiny is controlled by the universe's physics, their genes and intelligence which dictates their actions, interactions and skills.
+Most aspects of the simulator, can be easily modified using inheritance and configuration files.
 
 The current version of the project is a first seed, and several fundamental features are planned for the future releases.
-In [**this page**](/docs/FuturePlans.md) we maintain a list of future plans.
+See [**the Future Plans page**](/docs/FuturePlans.md).
 For scientific motivation visit [**this page**](/docs/Scientific.md).
 
 ### Updates:

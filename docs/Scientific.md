@@ -56,11 +56,6 @@ For instance in his field of study - bacterial sciences and antibiotics developm
 - How persistors develop? Persistors are germ individuals that develop superior survival abilities in a hostile environment (e.g., an environment with antibiotics).
 - Explain why pathogens behave differently in lab bacterial culture vs. in organismic hosts? How they learn to use different aspects of the environment to survive when they are in environments with different hostile agents. For instance, in lab bacterial culture the germs mostly eat the glucose provided in the Petric plate but in the organic host, they eat feces of their friends.
 
-Building a simulation which is close enough to reality by modeling the important aspects of nature could be a great tool and a new method for practicing science, especially in biology, in which this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
-
-***Once the experimenter is not only observing a phenomenon under specific physics but can change the rules of nature and observe the effect of the change on the phenomenon, his understanding of the phenomenon deepens.***
-
-
 ## Widening the horizons of Intelligence research
 In the current implementation of project-origin, there are aspects that in other game environment is not possible or not relevant, for instance, the combination of Evolution and Learning for development and survival in the race.
 In the current implementation of project-origin DNA can affect some biological aspects of the creature, for example, changing its sight range.

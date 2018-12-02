@@ -1,7 +1,6 @@
 ## Space
-The space in the universe is built up of cells.
-Each Cell can contain a limited or unlimited number of creatures and the food.
-The creatures are held in a list.
+The [`space`](/space.py) is built up of a matrix of [`Cells`](/cell.py).
+Depending on the configuration, each Cell can contain a limited or unlimited number of creatures and the food.
 
 The universe is not exposed directly to Cells but uses space as a proxy.
 Thus, most of the services the class space provides are delegated to the Cell class.

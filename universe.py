@@ -20,7 +20,7 @@ class Universe:
             fathers_locations_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
             fathers_locations_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
             for n in range(Config.ConfigPhysics.NUM_FATHERS):
-                dna = Evolution.mutate_dna(Evolution.get_basic_dna(race))
+                dna = Evolution.mutate_dna(race.race_basic_dna())
 
                 self.create_creature(race, id=self.allocate_id(), dna=dna,
                                      coord=(fathers_locations_i[n], fathers_locations_j[n]),

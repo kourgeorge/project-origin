@@ -1,7 +1,10 @@
+__author__ = 'gkour'
+
 from config import Config
 from brains.brain_simple import RandomBrain
 from creatures.human import Human
 import utils
+from evolution import DNA
 
 
 class Zombie(Human):
@@ -21,6 +24,16 @@ class Zombie(Human):
     @staticmethod
     def race_name():
         return 'Zombie'
+
+    @staticmethod
+    def get_basic_dna():
+        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
+                   Config.ConfigBrain.BASE_LEARNING_RATE,
+                   Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   Config.ConfigBiology.BASE_LEARN_FREQ,
+                   Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
+                   Config.ConfigBrain.BASE_GAMMA,
+                   Human.race_fitrah())
 
     def decide(self, state):
         brain_actions_prob = self._brain.think(state)

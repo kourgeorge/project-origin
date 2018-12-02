@@ -11,7 +11,7 @@ from creatures.human2 import Human2
 
 def run(msg_queue=None):
     stats = Stats()
-    races = [Human]
+    races = [Human, Zombie]
     universe = Universe(races, stats)
 
     while universe.pass_time():

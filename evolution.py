@@ -9,16 +9,6 @@ from config import Config
 class Evolution:
 
     @staticmethod
-    def get_basic_dna(race):
-        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
-                   Config.ConfigBrain.BASE_LEARNING_RATE,
-                   Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
-                   Config.ConfigBiology.BASE_LEARN_FREQ,
-                   Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   Config.ConfigBrain.BASE_GAMMA,
-                   race.race_fitrah())
-
-    @staticmethod
     def mix_dna(dna1, dna2):
         new_dna = DNA(np.mean([dna1.memory_size(), dna2.memory_size()]),
                       np.mean([dna1.learning_rate(), dna2.learning_rate()]),

@@ -1,8 +1,11 @@
+__author__ = 'gkour'
+
 from creatures.creature import Creature
 from creature_actions import Actions
 from config import Config
 from brains.brain_dqn import BrainDQN
 import utils
+from evolution import DNA
 
 
 class Human(Creature):
@@ -25,6 +28,17 @@ class Human(Creature):
                                            scope='master' + self.race_name())
             return Human._master_brain
         return Human._master_brain
+
+
+    @staticmethod
+    def race_basic_dna():
+        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
+                   Config.ConfigBrain.BASE_LEARNING_RATE,
+                   Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   Config.ConfigBiology.BASE_LEARN_FREQ,
+                   Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
+                   Config.ConfigBrain.BASE_GAMMA,
+                   Human.race_fitrah())
 
     @staticmethod
     def get_actions():
@@ -52,7 +66,6 @@ class Human(Creature):
         brain_actions_prob = self._brain.think(state)
         action_prob = utils.softmax(brain_actions_prob, temprature=len(self.fitrah()))
         decision = utils.epsilon_greedy(eps, action_prob)
-        print(self.fitrah())
         return decision
 
     def new_born(self):

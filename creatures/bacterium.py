@@ -1,8 +1,11 @@
+__author__ = 'gkour'
+
 from creatures.creature import Creature
 from creature_actions import Actions
 from config import Config
 from brains.brain_dqn import BrainDQN
 import utils
+from evolution import DNA
 
 
 class Bacterium(Creature):
@@ -27,6 +30,16 @@ class Bacterium(Creature):
     @staticmethod
     def get_actions():
         return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.DIVIDE]
+
+    @staticmethod
+    def race_basic_dna():
+        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
+                   Config.ConfigBrain.BASE_LEARNING_RATE,
+                   Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   Config.ConfigBiology.BASE_LEARN_FREQ,
+                   Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
+                   Config.ConfigBrain.BASE_GAMMA,
+                   Creature.race_fitrah())
 
     @staticmethod
     def race_name():

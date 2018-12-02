@@ -1,7 +1,7 @@
 __author__ = 'gkour'
 
 from config import Config
-from creature_actions import Actions
+from evolution import DNA
 import os
 import numpy as np
 from collections import deque
@@ -30,6 +30,17 @@ class Creature:
     #########################################################
     # Virtual function to override when creating a new race #
     #########################################################
+
+    @staticmethod
+    def race_basic_dna():
+        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
+                   Config.ConfigBrain.BASE_LEARNING_RATE,
+                   Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   Config.ConfigBiology.BASE_LEARN_FREQ,
+                   Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
+                   Config.ConfigBrain.BASE_GAMMA,
+                   Creature.race_fitrah())
+
     @staticmethod
     def get_actions():
         '''return a list of actions that creature of the race can perform'''

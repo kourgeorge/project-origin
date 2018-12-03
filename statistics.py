@@ -1,12 +1,12 @@
 __author__ = 'gkour'
 
 import numpy as np
-from config import Config
 from collections import OrderedDict
 import aiq
 import pandas as pd
 import utils
 from creature_actions import Actions
+from config import ConfigBrain, ConfigBiology
 
 
 class Stats:
@@ -38,7 +38,7 @@ class Stats:
                       2)),
             ('LRate',
              np.round(utils.emptynanmean([creature.learning_rate() for creature in universe.get_all_creatures()]) *
-                      (1 / Config.ConfigBrain.BASE_LEARNING_RATE), 2)),
+                      (1 / ConfigBrain.BASE_LEARNING_RATE), 2)),
             ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
             ('VRange',
              np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
@@ -59,9 +59,9 @@ class Stats:
         return OrderedDict([
             ('Time', universe.get_time()),
             ('PopulationAgeDist', np.histogram([creature.age() for creature in universe.get_all_creatures()],
-                                               bins=[0, Config.ConfigBiology.MATURITY_AGE,
-                                                     2 * Config.ConfigBiology.MATURITY_AGE,
-                                                     Config.ConfigBiology.BASE_LIFE_EXPECTANCY * 2])[0]),
+                                               bins=[0, ConfigBiology.MATURITY_AGE,
+                                                     2 * ConfigBiology.MATURITY_AGE,
+                                                     ConfigBiology.BASE_LIFE_EXPECTANCY * 2])[0]),
         ])
 
     def initialize_inter_step_stats(self):

@@ -6,8 +6,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 from tkinter import ttk, Scale
 import matplotlib.pyplot as plt
-from config import Config
 import threading
+from config import ConfigPhysics
 
 
 plt.style.use('seaborn-paper')
@@ -69,7 +69,7 @@ class SimulationPage(tk.Frame):
         self.start_sim_btn.pack()
         self.food_creature_scale = Scale(self, from_=0, to=1, orient=tk.HORIZONTAL, resolution=0.1, bg='white',
                                          command=lambda x: self.set_food_creature_ratio(x))
-        self.food_creature_scale.set(Config.ConfigPhysics.FOOD_CREATURE_RATIO)
+        self.food_creature_scale.set(ConfigPhysics.FOOD_CREATURE_RATIO)
         self.food_creature_scale.pack()
 
         dash_fig = self._dashboard.get_figure()
@@ -98,5 +98,5 @@ class SimulationPage(tk.Frame):
 
     @staticmethod
     def set_food_creature_ratio(new):
-        Config.ConfigPhysics.FOOD_CREATURE_RATIO = float(new)
+        ConfigPhysics.FOOD_CREATURE_RATIO = float(new)
 

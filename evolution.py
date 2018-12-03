@@ -3,7 +3,6 @@ __author__ = 'gkour'
 import numpy as np
 from random import randint
 import utils
-from config import Config
 
 
 class Evolution:

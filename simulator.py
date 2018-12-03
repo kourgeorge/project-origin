@@ -3,15 +3,12 @@ __author__ = 'gkour'
 from universe import Universe
 from statistics import Stats
 import printing
-from config import Config
-from creatures.zombie import Zombie
-from creatures.human import Human
-from creatures.human2 import Human2
+from configsimulator import ConfigSimulator
 
 
 def run(msg_queue=None):
     stats = Stats()
-    races = [Human, Zombie]
+    races = ConfigSimulator.RACES
     universe = Universe(races, stats)
 
     while universe.pass_time():
@@ -21,7 +18,7 @@ def run(msg_queue=None):
             msg_queue.put(stats)
         stats.initialize_inter_step_stats()
 
-        if universe.get_time() % Config.Batch_SIZE == 0:
+        if universe.get_time() % ConfigSimulator.BATCH_SIZE == 0:
             stats.accumulate_epoch_stats(universe)
             printing.print_epoch_stats(stats)
 

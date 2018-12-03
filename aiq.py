@@ -1,10 +1,9 @@
 __author__ = 'gkour'
 
 import numpy as np
-from config import Config
+from config import ConfigBiology
 import utils
 from creature_actions import Actions
-from itertools import chain
 import random
 
 
@@ -15,7 +14,7 @@ def population_aiq(creatures):
 
 
 def population_aiq_dist(creatures):
-    bounds = [Config.ConfigBiology.BASE_LIFE_EXPECTANCY / 3, 2 * Config.ConfigBiology.BASE_LIFE_EXPECTANCY / 3]
+    bounds = [ConfigBiology.BASE_LIFE_EXPECTANCY / 3, 2 * ConfigBiology.BASE_LIFE_EXPECTANCY / 3]
     young = [test_aiq(creature) for creature in creatures if creature.age() <= bounds[0]]
     adult = [test_aiq(creature) for creature in creatures if bounds[0] < creature.age() <= bounds[1]]
     old = [test_aiq(creature) for creature in creatures if bounds[1] < creature.age()]

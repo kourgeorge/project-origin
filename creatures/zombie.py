@@ -1,6 +1,6 @@
 __author__ = 'gkour'
 
-from config import Config
+from config import ConfigBiology
 from brains.brain_simple import RandomBrain
 from creatures.human import Human
 import utils
@@ -12,7 +12,7 @@ class Zombie(Human):
 
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
-    def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
+    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
         super(Zombie, self).__init__(universe, id, dna, age, energy, parents, model_path)
         self._brain = RandomBrain(self.num_actions())
@@ -27,12 +27,12 @@ class Zombie(Human):
 
     @staticmethod
     def get_basic_dna():
-        return DNA(Config.ConfigBiology.BASE_MEMORY_SIZE,
-                   Config.ConfigBrain.BASE_LEARNING_RATE,
-                   Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
-                   Config.ConfigBiology.BASE_LEARN_FREQ,
-                   Config.ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   Config.ConfigBrain.BASE_GAMMA,
+        return DNA(ConfigBiology.BASE_MEMORY_SIZE,
+                   ConfigBrain.BASE_LEARNING_RATE,
+                   ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   ConfigBiology.BASE_LEARN_FREQ,
+                   ConfigBiology.BASE_LIFE_EXPECTANCY,
+                   ConfigBrain.BASE_GAMMA,
                    Human.race_fitrah())
 
     def decide(self, state):

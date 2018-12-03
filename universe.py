@@ -2,7 +2,7 @@ __author__ = 'gkour'
 
 from space import Space
 from evolution import Evolution
-from config import Config
+from config import ConfigPhysics, ConfigBiology, ConfigBrain
 import numpy as np
 import utils
 from creature_actions import Actions
@@ -14,20 +14,20 @@ class Universe:
     def __init__(self, races, statistics=None):
         self._creature_counter = 0
         self._races = races
-        self._space = Space(Config.ConfigPhysics.SPACE_SIZE)
+        self._space = Space(ConfigPhysics.SPACE_SIZE)
         self._time = 0
         self.statistics = statistics
         for race in races:
-            fathers_locations_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
-            fathers_locations_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, Config.ConfigPhysics.NUM_FATHERS)
-            for n in range(Config.ConfigPhysics.NUM_FATHERS):
+            fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, ConfigPhysics.NUM_FATHERS)
+            fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, ConfigPhysics.NUM_FATHERS)
+            for n in range(ConfigPhysics.NUM_FATHERS):
                 dna = Evolution.mutate_dna(race.race_basic_dna())
 
                 self.create_creature(race, id=self.allocate_id(), dna=dna,
                                      coord=(fathers_locations_i[n], fathers_locations_j[n]),
                                      age=0, parents=None)
 
-        self.give_food(Config.ConfigPhysics.INITIAL_FOOD_AMOUNT)
+        self.give_food(ConfigPhysics.INITIAL_FOOD_AMOUNT)
 
     def allocate_id(self):
         self._creature_counter += 1
@@ -52,8 +52,8 @@ class Universe:
     # Time Management
     def pass_time(self):
         self._time += 1
-        if self._time < Config.ConfigPhysics.ETERNITY and self.num_creatures() > 0:
-            self.give_food(round(self.num_creatures() * Config.ConfigPhysics.FOOD_CREATURE_RATIO))
+        if self._time < ConfigPhysics.ETERNITY and self.num_creatures() > 0:
+            self.give_food(round(self.num_creatures() * ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     self.execute_action(creature)
@@ -66,15 +66,15 @@ class Universe:
 
     # Food Supply management
     def give_food(self, amount):
-        food_cells_i = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, amount)
-        food_cells_j = np.random.choice(Config.ConfigPhysics.SPACE_SIZE, amount)
+        food_cells_i = np.random.choice(ConfigPhysics.SPACE_SIZE, amount)
+        food_cells_j = np.random.choice(ConfigPhysics.SPACE_SIZE, amount)
         for n in range(amount):
             self.space().add_food((food_cells_i[n], food_cells_j[n]), 1)
 
     # Creatures Control
-    def create_creature(self, race, id, dna, coord, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None):
+    def create_creature(self, race, id, dna, coord, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         descendant = race(universe=self, id=id, dna=dna, age=age, energy=energy, parents=parents,
-                          model_path=Config.ConfigBrain.MODEL_PATH)
+                          model_path=ConfigBrain.MODEL_PATH)
         cell = self.space().insert_creature(descendant, coord)
         descendant.update_cell(cell)
 
@@ -156,12 +156,12 @@ class Universe:
     ## Creature Actions
     def creature_eat(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.EAT)] += 1
-        if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
+        if creature.energy() < ConfigBiology.MOVE_ENERGY:
             self.kill_creature(creature)
             return
-        creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
+        creature.reduce_energy(ConfigBiology.MOVE_ENERGY)
         available_food = creature.cell().get_food()
-        meal = min(Config.ConfigBiology.MEAL_SIZE, available_food)
+        meal = min(ConfigBiology.MEAL_SIZE, available_food)
         creature.add_energy(meal)
         creature.cell().remove_food(meal)
 
@@ -182,16 +182,16 @@ class Universe:
         self.move_creature(creature, Actions.DOWN)
 
     def move_creature(self, creature, direction):
-        if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
+        if creature.energy() < ConfigBiology.MOVE_ENERGY:
             self.kill_creature(creature)
             return
-        creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
+        creature.reduce_energy(ConfigBiology.MOVE_ENERGY)
 
         i, j = creature.coord()
         if direction == Actions.RIGHT:
             rel_dim_coord = j
-            if rel_dim_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
-                if not Config.ConfigPhysics.SLIPPERY_SPACE:
+            if rel_dim_coord == ConfigPhysics.SPACE_SIZE - 1:
+                if not ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature, "fall")
                 return
@@ -202,7 +202,7 @@ class Universe:
         if direction == Actions.LEFT:
             rel_dim_coord = j
             if rel_dim_coord == 0:
-                if not Config.ConfigPhysics.SLIPPERY_SPACE:
+                if not ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature, "fall")
                 return
@@ -213,7 +213,7 @@ class Universe:
         if direction == Actions.UP:
             rel_dim_coord = i
             if rel_dim_coord == 0:
-                if not Config.ConfigPhysics.SLIPPERY_SPACE:
+                if not ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature, "fall")
                 return
@@ -223,8 +223,8 @@ class Universe:
 
         if direction == Actions.DOWN:
             rel_dim_coord = i
-            if rel_dim_coord == Config.ConfigPhysics.SPACE_SIZE - 1:
-                if not Config.ConfigPhysics.SLIPPERY_SPACE:
+            if rel_dim_coord == ConfigPhysics.SPACE_SIZE - 1:
+                if not ConfigPhysics.SLIPPERY_SPACE:
                     return
                 self.kill_creature(creature)
                 return
@@ -234,18 +234,18 @@ class Universe:
 
     def creature_mate(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.MATE)] += 1
-        if creature.age() < Config.ConfigBiology.MATURITY_AGE:
-            if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
+        if creature.age() < ConfigBiology.MATURITY_AGE:
+            if creature.energy() < ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
                 return
-            creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
+            creature.reduce_energy(ConfigBiology.MOVE_ENERGY)
             return
 
-        if creature.energy() < Config.ConfigBiology.MATE_ENERGY:
+        if creature.energy() < ConfigBiology.MATE_ENERGY:
             self.kill_creature(creature)
             return
 
-        creature.reduce_energy(Config.ConfigBiology.MATE_ENERGY)
+        creature.reduce_energy(ConfigBiology.MATE_ENERGY)
         mate_body = creature.cell().find_nearby_creature_from_same_race(creature)
         if mate_body is None:
             return
@@ -255,11 +255,11 @@ class Universe:
 
     def creature_divide(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.DIVIDE)] += 1
-        if creature.age() < Config.ConfigBiology.MATURITY_AGE or creature.energy() < 2 * Config.ConfigBiology.INITIAL_ENERGY:
-            if creature.energy() < Config.ConfigBiology.MOVE_ENERGY:
+        if creature.age() < ConfigBiology.MATURITY_AGE or creature.energy() < 2 * ConfigBiology.INITIAL_ENERGY:
+            if creature.energy() < ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
                 return
-            creature.reduce_energy(Config.ConfigBiology.MOVE_ENERGY)
+            creature.reduce_energy(ConfigBiology.MOVE_ENERGY)
             return
 
         self.create_creature(creature.get_race(), self.allocate_id(), dna=Evolution.mutate_dna(creature.dna()), coord=creature.coord(),
@@ -270,10 +270,10 @@ class Universe:
 
     def creature_fight(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.FIGHT)] += 1
-        if creature.energy() < Config.ConfigBiology.FIGHT_ENERGY:
+        if creature.energy() < ConfigBiology.FIGHT_ENERGY:
             self.kill_creature(creature, 'fight')
             return
-        creature.reduce_energy(Config.ConfigBiology.FIGHT_ENERGY)
+        creature.reduce_energy(ConfigBiology.FIGHT_ENERGY)
 
         if not creature.self_race_enemy():
             opponent = creature.cell().find_nearby_creature_from_different_race(creature)
@@ -294,8 +294,8 @@ class Universe:
 
     def creature_work(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.WORK)] += 1
-        if creature.energy() < Config.ConfigBiology.WORK_ENERGY:
+        if creature.energy() < ConfigBiology.WORK_ENERGY:
             self.kill_creature(creature, 'work')
             return
-        creature.reduce_energy(Config.ConfigBiology.WORK_ENERGY)
-        creature.cell().add_food(Config.ConfigBiology.MEAL_SIZE)
+        creature.reduce_energy(ConfigBiology.WORK_ENERGY)
+        creature.cell().add_food(ConfigBiology.MEAL_SIZE)

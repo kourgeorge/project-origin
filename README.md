@@ -36,6 +36,8 @@ Most aspects of the simulator can be modified using programmatic inheritance and
 The current version of the project is the first seed, and several fundamental features are planned for future releases.
 See [**the Future Plans page**](/docs/FuturePlans.md) for more information.
 
+For instruction on how to configure install and run the simulator see [**Execution page**](/docs/Execution.md)
+
 _We are more than happy to hear your comments, ideas, and contribution.
 Please contact us in the following address "kourgeorge at gmail dot com", or simply open an issue._
 
@@ -51,8 +53,6 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 }
 ```
 
-Website Navigation map:
-[creature](/docx/)
 ### Updates:
 * 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.
 * 20.11.2018 - Added DQN based brain.

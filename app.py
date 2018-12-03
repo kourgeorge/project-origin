@@ -3,7 +3,7 @@ __author__ = 'gkour'
 import tkinter as tk
 from queue import Queue
 from visualization.gui import OriginGUI
-from config import Config
+from configsimulator import ConfigSimulator
 
 
 class OriginApp:
@@ -29,7 +29,7 @@ class OriginApp:
 
     def periodic_call(self):
         self.gui.processIncoming()
-        self.master.after(Config.UI_UPDATE_INTERVAL, self.periodic_call)
+        self.master.after(ConfigSimulator.UI_UPDATE_INTERVAL, self.periodic_call)
 
 
 if __name__ == '__main__':

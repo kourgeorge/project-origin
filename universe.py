@@ -79,9 +79,7 @@ class Universe:
         descendant.update_cell(cell)
 
     def get_all_creatures(self):
-        creature_list = self.space().get_all_creatures()
-        random.shuffle(creature_list)
-        return creature_list
+        return np.random.permutation(self.space().get_all_creatures())
 
     def get_food_distribution(self):
         return self.space().get_food_distribution()

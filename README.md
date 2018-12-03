@@ -1,5 +1,3 @@
-<link rel="shortcut icon" type="image/x-icon" href="docs/favicon.ico">
-
 <p align="center">
   <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png?raw=true"><br><br>
 </p>
@@ -66,3 +64,7 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * 30.11.2018 - Oral tradition implementation - supporting inheriting experience to descendants.
 * 01.12.2018 - Adding the Fitrah to the DNA- an expression of the innate nature of a creature. Improving the state representation.
 * TBI - adding Dopamine implementation for RL algorithms.
+* TBI - clean termination of GUI
+* TBI - Adding sexual attraction emotional/brain state functionality.
+* TBI - creating an executable program.
+* TBI - downloading and loading brain models.

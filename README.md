@@ -4,10 +4,11 @@
 
 [![DOI](https://zenodo.org/badge/141611333.svg)](https://zenodo.org/badge/latestdoi/141611333)
 
-**project-origin** is an attempt to create an artificial life environment that allows studying intelligence emergence and evolution.
-An area of study which is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
-project-origin allows researchers to simulate different nature rules and mechanisms of learning that enable the development of a wide variety of behaviors determined by intelligence governed by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
-In addition to the thrill of developing a new type of artificial intelligence, project-origin allows its users to investigate tantalizing natural phenomena by observing the behavior and destiny of intelligent creatures.
+**project-origin** is an attempt to create an artificial life environment that allows studying the emergence and evolution of intelligence; an area of study which is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
+Natures with different rules and creatures with different learning mechanisms can be easily simulated enabling the users of project-origin to investigate the tantalizing phenomenon of intelligence.
+It aims at expanding the horizon of artificial intelligence research by implementing mechanisms of intelligence governed by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
+project-origin not only observing the emergence of behavior and the destiny of different intelligent creatures, but make it easy to implement and extend reinforcement learning algorithms.
+While project-origin is built with deep learning models in mind, any learning algorithm can be effortlessly implemented and employed.   
 For more information about the scientific motivation behind project-origin visit [**this page**](/docs/Scientific.md).
 
 project-origin is a simulator that emulates a [`Universe`](/docs/Universe.md) in which [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
@@ -17,18 +18,19 @@ The [`Evolution`](/docs/Evolution.md) in project-origin describes the content of
 Creatures are beings, defined by their **DNA**, which may have different senses and a different set of actions depending on their **Race**.
 While still have no morphology and form, creatures have a [`Brain`](/docs/Brain.md), that defines the nature of their intelligence.
 The brain role is to select an action given a state containing information about the creature's surrounding environment and its internal status.
-Periodically, using its brain learning rules, the creature can improve its knowledge and optimize his actions. 
+Periodically, using its brain learning rules, the creature can improve its knowledge and optimize his actions.
 The creature actions are not determined solely by its intellect (i.e., the brain decisions) but also affected by the inherited state-independent [**Fitrah**](https://en.wikipedia.org/wiki/Fitra).
 The main "goal" of the creatures is to increase their chance of survival under the environment physics, by learning to behave intelligibly.
 While the intelligence of the creature is determined by its genes and brain, there are three main mechanisms for collecting knowledge: (1) Evolution and inheritance (including the fitrah), (2) experience (trial and error) and (3) "Oral Tradition" representing part of the ancestors' knowledge.  
 The destiny of the creatures is determined by the universe's physics, their genes, skills, experience, and intelligence.
+In addition to the ultimate test of survival, IQ tests are performed periodically to reveal the knowledge of the creatures. 
 
-We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a great method for practicing science.
+We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a powerful scientific method.
 In biology, this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
-We think that _the understanding of a phenomenon is substantially deeper when not only it can be observed in a fixed environment, but its nature is perceived in different settings._
+We think that _the understanding of a phenomenon is substantially deeper when not only it can be experienced in a single setting, but can be observed in different settings._
 
 project-origin is made simple and graphics-deficient to allow fast execution, however, it is built and visioned to be easy to imagine.
-Most aspects of the simulator can be easily modified using programmatic inheritance and configuration files.
+Most aspects of the simulator can be modified using programmatic inheritance and configuration files.
 The current version of the project is the first seed, and several fundamental features are planned for future releases.
 See [**the Future Plans page**](/docs/FuturePlans.md) for more information.
 

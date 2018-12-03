@@ -155,10 +155,10 @@ class Creature:
     def smarten(self):
         self._brain.train(self._memory)
 
-    def state_dims(self):
+    def observation_shape(self):
         food_dim = 1
         internal_state_dims = 2  # energy, age
-        return self._universe.num_races() + food_dim + internal_state_dims, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1
+        return [self._universe.num_races() + food_dim + internal_state_dims, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1]
 
     def alive(self):
         return self.cell() is not None
@@ -175,7 +175,7 @@ class Creature:
             self._brain.save_model(self._model_path)
 
     def dead_state(self):
-        return np.ones(shape=self.state_dims()) * -1
+        return np.ones(shape=self.observation_shape()) * -1
 
     def __str__(self):
         return str(self._id)

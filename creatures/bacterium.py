@@ -20,8 +20,8 @@ class Bacterium(Creature):
     def get_master_brain(self):
         if Bacterium._master_brain is None:
             Bacterium._master_brain = BrainDQN(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
-                                               state_dims=self.state_dims(),
-                                               action_size=self.num_actions(),
+                                               observation_shape=self.observation_shape(),
+                                               num_actions=self.num_actions(),
                                                h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                                                gamma=Config.ConfigBrain.BASE_GAMMA, scope='master' + self.race_name())
             return Bacterium._master_brain

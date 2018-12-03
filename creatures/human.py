@@ -10,7 +10,7 @@ from evolution import DNA
 
 class Human(Creature):
     _master_brain = None
-    Fitrah = [0.1, 0.1, 0.1, 0.1, 0.2, 0.2]
+    Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=Config.ConfigBiology.INITIAL_ENERGY, parents=None,
                  model_path=None):
@@ -21,8 +21,8 @@ class Human(Creature):
     def get_master_brain(self):
         if Human._master_brain is None:
             Human._master_brain = BrainDQN(lr=Config.ConfigBrain.BASE_LEARNING_RATE,
-                                           state_dims=self.state_dims(),
-                                           action_size=self.num_actions(),
+                                           observation_shape=self.observation_shape(),
+                                           num_actions=self.num_actions(),
                                            h_size=Config.ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                                            gamma=Config.ConfigBrain.BASE_GAMMA,
                                            scope='master' + self.race_name())
@@ -42,7 +42,7 @@ class Human(Creature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT]
 
     @staticmethod
     def get_race():

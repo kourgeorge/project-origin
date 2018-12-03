@@ -6,6 +6,7 @@ from config import Config
 import numpy as np
 import utils
 from creature_actions import Actions
+import random
 
 
 class Universe:
@@ -78,7 +79,9 @@ class Universe:
         descendant.update_cell(cell)
 
     def get_all_creatures(self):
-        return self.space().get_all_creatures()
+        creature_list = self.space().get_all_creatures()
+        random.shuffle(creature_list)
+        return creature_list
 
     def get_food_distribution(self):
         return self.space().get_food_distribution()

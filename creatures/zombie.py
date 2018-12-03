@@ -1,6 +1,6 @@
 __author__ = 'gkour'
 
-from config import ConfigBiology
+from config import ConfigBiology, ConfigBrain
 from brains.brain_simple import RandomBrain
 from creatures.human import Human
 import utils
@@ -26,7 +26,7 @@ class Zombie(Human):
         return 'Zombie'
 
     @staticmethod
-    def get_basic_dna():
+    def race_basic_dna():
         return DNA(ConfigBiology.BASE_MEMORY_SIZE,
                    ConfigBrain.BASE_LEARNING_RATE,
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,

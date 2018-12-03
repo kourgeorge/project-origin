@@ -3,9 +3,9 @@ This project is a seed for a far-reaching vision. In the future, it should allow
 
 - project-origin should allow extending the physics of the environment easily and maybe incorporate realistic physical simulators.
 - It should support morphology of creatures, i.e. to give physical shape to creatures, that may affect their capabilities such as movement speed, power, etc.
-- It should support the introduction of different objects with a variety of functionalities and behavior to the universe.
+- It should support the introduction of different inanimated and non-intelligent living objects with a variety of functionalities and behavior to the universe, e.g. poison.
 - While currently, space is a 2-D, in the future it should allow supporting different types of spaces.
-- Controlling biological aspects of physics such as mating rule, evolution, and intelligence inheritance.
+- Easily controlling biological aspects of physics such as mating rule, evolution, and intelligence inheritance.
 - It should allow extending the creature's capabilities, such as adding vocal communication and even love, hate, and motivation.
 - It should allow defining dynamic natures, like periods of dearth and epidemics. 
 - Use dynamic graph deep learning framework such as TensorFlow 2.0 or Pytorch.

@@ -1,3 +1,5 @@
+<link rel="shortcut icon" type="image/x-icon" href="docs/favicon.ico">
+
 <p align="center">
   <img src="https://github.com/kourgeorge/project-origin/blob/master/docs/origin-icon.png?raw=true"><br><br>
 </p>
@@ -49,6 +51,8 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 }
 ```
 
+Website Navigation map:
+[creature](/docx/)
 ### Updates:
 * 19.11.2018 - Added Artificial IQ tests to test the fit of creatures.
 * 20.11.2018 - Added DQN based brain.

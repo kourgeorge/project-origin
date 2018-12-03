@@ -91,7 +91,7 @@ class Dashboard:
         ## races Dist
         races = np.mean(step_stats_df['RacesDist'].tail(ConfigSimulator.BATCH_SIZE).values, axis=0)
         self._fig_races.clear()
-        self._fig_races.pie(races, labels=['Human', 'Zombie'],
+        self._fig_races.pie(races, labels=[race.race_name() for race in ConfigSimulator.RACES],
                             startangle=90, autopct='%1.1f%%')
 
     def get_figure(self):

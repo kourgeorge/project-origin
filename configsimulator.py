@@ -4,7 +4,8 @@ from creatures.zombie import Zombie
 
 
 class ConfigSimulator:
-    LOG_FILE_PATH = './log/log.csv'
+    CSV_FILE_PATH = './log/output{}.csv'
+    CSV_LOGGING = True
     BATCH_SIZE = 10
     UI_UPDATE_INTERVAL = 200  # ms
     RACES = [Human, Zombie]

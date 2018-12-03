@@ -79,7 +79,7 @@ class Universe:
         descendant.update_cell(cell)
 
     def get_all_creatures(self):
-        return np.random.permutation(self.space().get_all_creatures())
+        return np.random.permutation(self.space().get_all_creatures()).tolist()
 
     def get_food_distribution(self):
         return self.space().get_food_distribution()
@@ -130,7 +130,7 @@ class Universe:
 
     def races_dist(self):
         dist = []
-        for race in self._races:
+        for race in self.get_races():
             num_in_race = [creature for creature in self.get_all_creatures() if creature.get_race() == race]
             dist.extend([len(num_in_race)])
         return np.asarray(dist)
@@ -260,7 +260,8 @@ class Universe:
             creature.reduce_energy(ConfigBiology.MOVE_ENERGY)
             return
 
-        self.create_creature(creature.get_race(), self.allocate_id(), dna=Evolution.mutate_dna(creature.dna()), coord=creature.coord(),
+        self.create_creature(creature.get_race(), self.allocate_id(), dna=Evolution.mutate_dna(creature.dna()),
+                             coord=creature.coord(),
                              energy=int(creature.energy() / 2) + 1,
                              parents=[creature])
         creature.reduce_energy(amount=int(creature.energy() / 2))

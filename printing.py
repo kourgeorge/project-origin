@@ -1,6 +1,6 @@
 __author__ = 'gkour'
 
-import numpy as np
+import os
 
 
 def print_step_stats(stats):
@@ -21,6 +21,11 @@ def print_step_stats(stats):
 #         wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
 #         wr.writerow(step_stats.values())
 #         myfile.close()
+
+
+def dataframe2csv(data_frame, file_path):
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    data_frame.to_csv(path_or_buf=file_path, index=False)
 
 
 def print_epoch_stats(stats):

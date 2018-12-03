@@ -4,12 +4,12 @@ from universe import Universe
 from statistics import Stats
 import printing
 from configsimulator import ConfigSimulator
+import time
 
 
 def run(msg_queue=None):
     stats = Stats()
-    races = ConfigSimulator.RACES
-    universe = Universe(races, stats)
+    universe = Universe(ConfigSimulator.RACES, stats)
 
     while universe.pass_time():
         stats.accumulate_step_stats(universe)
@@ -21,6 +21,9 @@ def run(msg_queue=None):
         if universe.get_time() % ConfigSimulator.BATCH_SIZE == 0:
             stats.accumulate_epoch_stats(universe)
             printing.print_epoch_stats(stats)
+
+    if ConfigSimulator.CSV_LOGGING:
+        printing.dataframe2csv(stats.step_stats_df, ConfigSimulator.CSV_FILE_PATH.format(time.strftime("%Y%m%d-%H%M%S")))
 
 
 if __name__ == '__main__':

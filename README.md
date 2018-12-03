@@ -68,3 +68,5 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * TBI - Adding sexual attraction emotional/brain state functionality.
 * TBI - creating an executable program.
 * TBI - downloading and loading brain models.
+* TBI - improve the AIQ to support different sizes of states.
+* TBI - improve the gui to proper battle (two competing race) mode.

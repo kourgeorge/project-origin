@@ -53,12 +53,12 @@ class BrainDQN(AbstractBrain):
         q_value = BrainDQN.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
         return q_value
 
-    def train(self, memory):
-        minibatch_size = min(BrainDQN.BATCH_SIZE, len(memory))
+    def train(self, experience):
+        minibatch_size = min(BrainDQN.BATCH_SIZE, len(experience))
         if minibatch_size == 0:
             return
 
-        minibatch = random.sample(memory, minibatch_size)
+        minibatch = random.sample(experience, minibatch_size)
         state_batch = [data[0] for data in minibatch]
         action_batch = [data[1] for data in minibatch]
         reward_batch = [data[2] for data in minibatch]

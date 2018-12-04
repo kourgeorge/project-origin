@@ -12,9 +12,8 @@ class Zombie(Human):
 
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
-    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None,
-                 model_path=None):
-        super(Zombie, self).__init__(universe, id, dna, age, energy, parents, model_path)
+    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
+        super(Zombie, self).__init__(universe, id, dna, age, energy, parents)
         self._brain = RandomBrain(self.num_actions())
 
     @staticmethod

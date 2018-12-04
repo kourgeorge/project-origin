@@ -4,7 +4,7 @@
 
 [![DOI](https://zenodo.org/badge/141611333.svg)](https://zenodo.org/badge/latestdoi/141611333)
 
-**project-origin** is an attempt to create an artificial life environment that allows studying the emergence and evolution of intelligence; an area of study which is known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
+**project-origin** is an attempt to create an artificial life environment that allows studying the emergence and evolution of intelligence; an area of study known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
 Natures with different rules and creatures with different learning mechanisms can be easily simulated enabling the users of project-origin to investigate the tantalizing phenomenon of intelligence.
 It aims at expanding the horizon of artificial intelligence research by implementing mechanisms of intelligence governed by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
 project-origin does not only allow observing the emergence of behavior and the destiny of different intelligent creatures, but make it easy to implement and extend reinforcement learning algorithms.

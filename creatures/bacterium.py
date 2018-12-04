@@ -12,9 +12,8 @@ class Bacterium(Creature):
     _master_brain = None
     Fitrah = [0, 0, 0, 0, 1, 1]
 
-    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None,
-                 model_path=None):
-        super(Bacterium, self).__init__(universe, id, dna, age, energy, parents, model_path)
+    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
+        super(Bacterium, self).__init__(universe, id, dna, age, energy, parents)
         self._brain = self.get_master_brain()
 
     def get_master_brain(self):

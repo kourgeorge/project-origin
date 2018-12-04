@@ -73,8 +73,7 @@ class Universe:
 
     # Creatures Control
     def create_creature(self, race, id, dna, coord, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
-        descendant = race(universe=self, id=id, dna=dna, age=age, energy=energy, parents=parents,
-                          model_path=ConfigBrain.MODEL_PATH)
+        descendant = race(universe=self, id=id, dna=dna, age=age, energy=energy, parents=parents)
         cell = self.space().insert_creature(descendant, coord)
         descendant.update_cell(cell)
 

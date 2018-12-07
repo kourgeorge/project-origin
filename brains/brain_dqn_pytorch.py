@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from brains.abstractbrain import AbstractBrain
+import os.path
 
 device = "cpu"
 
@@ -25,7 +26,7 @@ class BrainDQN(AbstractBrain):
 
     def think(self, obs):
         with torch.no_grad():
-            return self.policy_net(torch.from_numpy(obs).float().unsqueeze_(0)).max(1)[1].item()  # .view(1, 1)
+            return self.policy_net(torch.from_numpy(obs).float().unsqueeze_(0)).numpy()[0]
 
     def train(self, experience):
 
@@ -60,10 +61,12 @@ class BrainDQN(AbstractBrain):
         self.optimizer.step()
 
     def save_model(self, path):
-        raise NotImplementedError()
+        torch.save(self.policy_net.state_dict(), path)
 
     def load_model(self, path):
-        raise NotImplementedError()
+        if os.path.exists(path):
+            self.policy_net.load_state_dict(torch.load(path))
+            self.target_net.load_state_dict(torch.load(path))
 
 
 class DQN(nn.Module):

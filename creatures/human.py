@@ -12,7 +12,6 @@ class Human(Creature):
     _master_brain = None
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
-
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
         self._brain = self.get_master_brain()
@@ -28,7 +27,6 @@ class Human(Creature):
                                            scope='master' + self.race_name())
             return Human._master_brain
         return Human._master_brain
-
 
     @staticmethod
     def race_basic_dna():

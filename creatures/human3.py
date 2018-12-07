@@ -20,6 +20,7 @@ class Human3(Human):
         if Human3._master_brain is None:
             Human3._master_brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
                                             num_actions=self.num_actions(), gamma=ConfigBrain.BASE_GAMMA)
+            Human3._master_brain.load_model(self.model_path())
             return Human3._master_brain
         return Human3._master_brain
 
@@ -49,15 +50,5 @@ class Human3(Human):
     def self_race_enemy():
         return False
 
-    def decide(self, state):
-        eps = max(ConfigBrain.BASE_EPSILON,
-                 1 - (self._age / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
-        brain_actions_prob = self.brain().think(state)
-        action_prob = utils.softmax(brain_actions_prob + self.fitrah(), len(Human3.get_actions()))
-        decision = utils.epsilon_greedy(eps, dist=action_prob)
-        return decision
-
-    def new_born(self):
-        if self.get_parent() is None:
-            return
-        self._memory = self.get_parent().get_memory()
+    def model_path(self):
+        return './models/'+self.race_name()

@@ -72,6 +72,9 @@ class Creature:
     def vision_range():
         return 2
 
+    def model_path(self):
+        return None
+
     def id(self):
         return self._id
 
@@ -169,8 +172,10 @@ class Creature:
         # get smarter before dying. useful in the case of a single get_race brain
         self.smarten()
         # write the model of the last survivor.
-        if self._universe.num_creatures == 1 and self._model_path is not None:
-            self._brain.save_model(self._model_path)
+        if self._universe.num_creatures() == 1 and self.model_path() is not None:
+            self._brain.save_model(self.model_path())
+
+        print(self.fitrah())
 
     def dead_state(self):
         return np.ones(shape=self.observation_shape()) * -1

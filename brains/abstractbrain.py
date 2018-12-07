@@ -8,7 +8,7 @@ class AbstractBrain:
         self._num_actions = num_actions
 
     def think(self, obs):
-        '''Given an observation should returen a distribution over the action set'''
+        '''Given an observation should return a distribution over the action set'''
         raise NotImplementedError()
 
     def train(self, experience):

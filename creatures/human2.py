@@ -56,8 +56,3 @@ class Human2(Human):
         #action_prob = utils.softmax(brain_actions_prob + self.fitrah(), len(Human2.get_actions()))
         #decision = utils.epsilon_greedy(0, dist=action_prob)
         return brain_actions_prob
-
-    def new_born(self):
-        if self.get_parent() is None:
-            return
-        self._memory = self.get_parent().get_memory()

@@ -5,7 +5,7 @@ class ConfigPhysics:
     SPACE_SIZE = 20
     NUM_FATHERS = 500
     ETERNITY = 100000
-    SLIPPERY_SPACE = False
+    SLIPPERY_SPACE = True
     FOOD_CREATURE_RATIO = 1
     INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
 
@@ -23,6 +23,7 @@ class ConfigBiology:
     MEAL_SIZE = 6
     WORK_ENERGY = 3
     BASE_MEMORY_SIZE = 30
+    EVOLUTION_MUTATION_STD = 0.1
 
 
 class ConfigBrain:

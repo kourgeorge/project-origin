@@ -173,10 +173,16 @@ class Creature:
         # write the model of the last survivor.
         if self._universe.num_creatures() == 1 and self.model_path() is not None:
             self._brain.save_model(self.model_path())
-            print(self.fitrah())
+            print(self.get_fitrah_dict())
 
     def dead_state(self):
         return np.ones(shape=self.observation_shape()) * -1
+
+    def get_fitrah_dict(self):
+        fitrah_dict = {}
+        for i in range(self.num_actions()):
+            fitrah_dict[str(self.get_actions()[i])] = round(self.fitrah()[i]*100)
+        return fitrah_dict
 
     def __str__(self):
         return str(self._id)

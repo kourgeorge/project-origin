@@ -60,9 +60,9 @@ class Human(Creature):
 
     def decide(self, state):
         eps = max(ConfigBrain.BASE_EPSILON,
-                 1 - (self._age / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
+                  1 - (self._age / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
         brain_actions_prob = self._brain.think(state)
-        action_prob = utils.softmax(brain_actions_prob, temprature=len(self.fitrah()))
+        action_prob = utils.softmax(brain_actions_prob + self.fitrah(), temprature=1)
         decision = utils.epsilon_greedy(eps, action_prob)
         return decision
 

@@ -30,7 +30,7 @@ class HumanTorchBrain(Human):
 
     @staticmethod
     def race_name():
-        return 'Human3'
+        return 'HumanTorchBrain'
 
     @staticmethod
     def race_basic_dna():
@@ -51,4 +51,4 @@ class HumanTorchBrain(Human):
         return False
 
     def model_path(self):
-        return './models/'+self.race_name()
+        return './models/' + self.race_name()

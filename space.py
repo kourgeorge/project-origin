@@ -39,7 +39,7 @@ class Space:
         if not self.valid_coord(coord):
             raise Exception("Exception: bad coordinated in space.get_state_in_coord")
         state_dim_size = 2 * vision_range + 1
-        dims = len(races)+1 # races and food
+        dims = len(races) + 1  # races and food
         state = np.ones([dims, state_dim_size, state_dim_size]) * -1
 
         for i in range(state_dim_size):
@@ -84,7 +84,8 @@ class Space:
         return None
 
     def get_nearby_creatures_from_same_race(self, creature):
-        return [creat for creat in creature.cell().creatures() if creat != creature and creat.race_name() == creature.race_name()]
+        return [creat for creat in creature.cell().creatures() if
+                creat != creature and creat.race_name() == creature.race_name()]
 
     def get_nearby_creatures_from_different_race(self, creature):
         return [creat for creat in creature.cell().creatures() if creat.race_name() != creature.race_name()]

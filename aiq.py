@@ -7,13 +7,15 @@ from creature_actions import Actions
 import random
 
 
-def population_aiq(creatures):
+def population_aiq(universe):
+    creatures = universe.get_all_creatures()
     sample_creatures = random.sample(creatures, utils.safe_log2(len(creatures)))
     all_aiq = [test_aiq(creature) for creature in sample_creatures]
     return np.round(utils.emptynanmean(all_aiq), 2)
 
 
-def population_aiq_dist(creatures):
+def population_aiq_dist(universe):
+    creatures = universe.get_all_creatures()
     bounds = [ConfigBiology.BASE_LIFE_EXPECTANCY / 3, 2 * ConfigBiology.BASE_LIFE_EXPECTANCY / 3]
     young = [test_aiq(creature) for creature in creatures if creature.age() <= bounds[0]]
     adult = [test_aiq(creature) for creature in creatures if bounds[0] < creature.age() <= bounds[1]]
@@ -29,6 +31,9 @@ def test_aiq(creature):
     w = 0
     for i in range(len(scenarios)):
         test_state, positive_test_type, expected_actions, weight = scenarios[i](creature.vision_range())
+        if creature._universe.num_races() == 1:
+            # delete the other race creatures entry from the state
+            test_state = np.delete(test_state, obj=2, axis=0)
         w += weight
         decision = Actions.index_to_enum(creature.decide(test_state))
         if positive_test_type:
@@ -45,31 +50,37 @@ def _haven(vision_range, where):
     age = 3
 
     food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
-    creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
+    same_race_creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
+    different_race_creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
     energy = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * energy
     age = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * age
     if where == 'INPLACE':
         food[vision_range][vision_range] = 20
-        creatures[vision_range][vision_range] = 0
+        same_race_creatures[vision_range][vision_range] = 0
+        different_race_creatures[vision_range][vision_range] = 0
         optimal_action = Actions.EAT
     if where == 'UP':
         food[vision_range - 1][vision_range] = 20
-        creatures[vision_range - 1][vision_range] = 0
+        same_race_creatures[vision_range - 1][vision_range] = 0
+        different_race_creatures[vision_range - 1][vision_range] = 0
         optimal_action = Actions.UP
     if where == 'DOWN':
         food[vision_range + 1][vision_range] = 20
-        creatures[vision_range + 1][vision_range] = 0
+        same_race_creatures[vision_range + 1][vision_range] = 0
+        different_race_creatures[vision_range + 1][vision_range] = 0
         optimal_action = Actions.DOWN
     if where == 'LEFT':
         food[vision_range][vision_range - 1] = 20
-        creatures[vision_range][vision_range - 1] = 0
+        same_race_creatures[vision_range][vision_range - 1] = 0
+        different_race_creatures[vision_range][vision_range - 1] = 0
         optimal_action = Actions.LEFT
     if where == 'RIGHT':
         food[vision_range][vision_range + 1] = 20
-        creatures[vision_range][vision_range + 1] = 0
+        same_race_creatures[vision_range][vision_range + 1] = 0
+        different_race_creatures[vision_range][vision_range + 1] = 0
         optimal_action = Actions.RIGHT
 
-    return np.stack((creatures, food, energy, age)), True, [optimal_action], 1
+    return np.stack((food, same_race_creatures, different_race_creatures, energy, age)), True, [optimal_action], 1
 
 
 def haven_inplace(vision_range):
@@ -118,7 +129,7 @@ def _border_awareness(vision_range, direction):
         creatures[:][vision_range + 1:] = -1
         bad_action = Actions.RIGHT
 
-    return np.stack((creatures, food, energy, age)), False, [bad_action], 0.25
+    return np.stack((food, creatures, creatures, energy, age)), False, [bad_action], 0.25
 
 
 def border_awareness_up(vision_range):

@@ -150,6 +150,15 @@ class Creature:
 
     def get_state(self):
         space_state = self._universe.get_surroundings(self.coord(), self.vision_range())
+
+        race_index = self._universe.get_races().index(self.get_race())  # get the index of the creature race from the univerce races list
+        races_starting_index = 1
+        if race_index != 0:
+            # swap between the race the first index (races_starting_index) in the current race
+            temp = space_state[races_starting_index]
+            space_state[races_starting_index] = space_state[race_index + races_starting_index]
+            space_state[race_index + races_starting_index] = temp
+
         state = np.append(space_state, self.internal_state(), 0)
         return state
 
@@ -184,7 +193,7 @@ class Creature:
         if the_other is None:
             return None
         cosine_sim = utils.cosine_similarity(self.dna().flatten(), the_other.dna().flatten())
-        return cosine_sim*(1 - cosine_sim)
+        return cosine_sim * (1 - cosine_sim)
 
     def select_spouse(self, potential_spouses):
         if not potential_spouses:

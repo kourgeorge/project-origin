@@ -36,8 +36,8 @@ class Zombie(Human):
 
     def decide(self, state):
         brain_actions_prob = self._brain.think(state)
-        #action_prob = utils.softmax(brain_actions_prob + self.fitrah())
-        decision = utils.epsilon_greedy(0, dist=brain_actions_prob)
+        action_prob = utils.softmax(brain_actions_prob + self.fitrah())
+        decision = utils.epsilon_greedy(0, dist=action_prob)
         return decision
 
     @staticmethod

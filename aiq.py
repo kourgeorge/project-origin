@@ -35,7 +35,7 @@ def test_aiq(creature):
             # delete the other race creatures entry from the state
             test_state = np.delete(test_state, obj=2, axis=0)
         w += weight
-        decision = Actions.index_to_enum(creature.decide(test_state))
+        decision = creature.index_to_enum(np.argmax(creature.brain().think(test_state)))
         if positive_test_type:
             score += weight if decision in expected_actions else 0
         else:

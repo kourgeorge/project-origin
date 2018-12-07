@@ -29,7 +29,7 @@ class Evolution:
         gamma = max(0.1, min(1, np.random.normal(loc=dna.gamma(), scale=0.001)))
         fitrah = utils.softmax(
             + np.random.normal(loc=0, scale=ConfigBiology.EVOLUTION_MUTATION_STD, size=dna.fitrah().size), 1)
-        if fitrah.size==1:
+        if fitrah.size == 1:
             print('found')
         return DNA(memory_size, learning_rate, hidden_layer_size, learning_frequency, life_expectancy, gamma, fitrah)
 
@@ -74,5 +74,5 @@ class DNA:
         return self._fitrah
 
     def flatten(self):
-        return [self.memory_size(), self.learning_rate(), self.learning_frequency(),self.hidden_layer_size(), self.life_expectancy(), self.gamma()] + self.fitrah()
-
+        return [self.memory_size(), self.learning_rate(), self.learning_frequency(), self.hidden_layer_size(),
+                self.life_expectancy(), self.gamma()] + list(self.fitrah())

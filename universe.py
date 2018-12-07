@@ -275,7 +275,7 @@ class Universe:
         creature.reduce_energy(ConfigBiology.FIGHT_ENERGY)
 
         if not creature.self_race_enemy():
-            opponent = creature.cell().find_nearby_creature_from_different_race(creature)
+            opponent = self.space().find_nearby_creature_from_different_race(creature)
         else:
             opponent = self.space().find_nearby_creature(creature)
         if opponent is None:

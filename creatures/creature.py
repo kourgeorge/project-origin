@@ -8,11 +8,10 @@ import utils
 
 
 class Creature:
-    RACE_NAME = 'mango'
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         self._id = id
-        self._name = str(id) + Creature.RACE_NAME
+        self._name = str(id) + self.race_name()
         self._dna = dna
         self._age = age
         self._energy = energy

@@ -17,8 +17,8 @@ class BrainDQN(AbstractBrain):
 
     def __init__(self, observation_shape, num_actions, gamma):
         super(BrainDQN, self).__init__(observation_shape, num_actions)
-        self.policy_net = DQN(num_actions).to(device)
-        self.target_net = DQN(num_actions).to(device)
+        self.policy_net = DQN(observation_shape[0], num_actions).to(device)
+        self.target_net = DQN(observation_shape[0], num_actions).to(device)
         self.optimizer = optim.RMSprop(self.policy_net.parameters())
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
@@ -26,7 +26,10 @@ class BrainDQN(AbstractBrain):
 
     def think(self, obs):
         with torch.no_grad():
-            return self.policy_net(torch.from_numpy(obs).float().unsqueeze_(0)).numpy()[0]
+            action = self.policy_net(torch.from_numpy(obs).float().unsqueeze_(0)).argmax().item()
+            distribution = np.zeros(self.num_actions())
+            distribution[action] = 1
+            return distribution
 
     def train(self, experience):
 
@@ -70,9 +73,9 @@ class BrainDQN(AbstractBrain):
 
 
 class DQN(nn.Module):
-    def __init__(self, num_actions):
+    def __init__(self, num_channels, num_actions):
         super(DQN, self).__init__()
-        self.conv1 = nn.Conv2d(4, 16, kernel_size=2)
+        self.conv1 = nn.Conv2d(num_channels, 16, kernel_size=2)
         self.bn1 = nn.BatchNorm2d(16)
         self.conv2 = nn.Conv2d(16, 32, kernel_size=2)
         self.bn2 = nn.BatchNorm2d(32)

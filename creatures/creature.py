@@ -2,7 +2,6 @@ __author__ = 'gkour'
 
 from config import ConfigBiology, ConfigBrain
 from evolution import DNA
-import os
 import numpy as np
 from collections import deque
 
@@ -174,8 +173,7 @@ class Creature:
         # write the model of the last survivor.
         if self._universe.num_creatures() == 1 and self.model_path() is not None:
             self._brain.save_model(self.model_path())
-
-        print(self.fitrah())
+            print(self.fitrah())
 
     def dead_state(self):
         return np.ones(shape=self.observation_shape()) * -1

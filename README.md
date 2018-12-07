@@ -63,6 +63,8 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * 30.11.2018 - Developing Gamified GUI to watch how different races compete and survive the battle.
 * 30.11.2018 - Oral tradition implementation - supporting inheriting experience to descendants.
 * 01.12.2018 - Adding the Fitrah to the DNA- an expression of the innate nature of a creature. Improving the state representation.
+* 06.12.2018 - Adding Torch DQN implementation of brain and allowing saving and loading models.
+* 07.12.2018 - Adding sexual attraction for spouse selection
 * TBI - adding Dopamine implementation for RL algorithms.
 * TBI - clean termination of GUI
 * TBI - Adding sexual attraction emotional/brain state functionality.

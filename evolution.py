@@ -73,3 +73,6 @@ class DNA:
         See documentation for more information'''
         return self._fitrah
 
+    def flatten(self):
+        return [self.memory_size(), self.learning_rate(), self.learning_frequency(),self.hidden_layer_size(), self.life_expectancy(), self.gamma()] + self.fitrah()
+

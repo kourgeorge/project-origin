@@ -3,8 +3,6 @@ __author__ = 'gkour'
 import numpy as np
 import tensorflow as tf
 from scipy.signal import lfilter
-import csv
-import os
 
 
 def discount_rewards(r, gamma):
@@ -74,7 +72,7 @@ def softmax(x, temprature=1):
     Columns are predictions (samples).
     """
     # x = normalize(np.reshape(x, (1, -1)), norm='l2')[0]
-    ex_x = np.exp(temprature*np.subtract(x, max(x)))
+    ex_x = np.exp(temprature * np.subtract(x, max(x)))
     if np.isinf(np.sum(ex_x)):
         raise Exception('Inf in softmax')
     return ex_x / ex_x.sum(0)
@@ -95,3 +93,7 @@ def safe_log2(number):
     if number <= np.e:
         return 0
     return int(np.log2(number))
+
+
+def cosine_similarity(vec1, vec2):
+    return np.dot(vec1, vec2)/(np.linalg.norm(vec1)*np.linalg.norm(vec2))

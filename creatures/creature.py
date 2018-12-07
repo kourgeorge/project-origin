@@ -4,6 +4,7 @@ from config import ConfigBiology, ConfigBrain
 from evolution import DNA
 import numpy as np
 from collections import deque
+import utils
 
 
 class Creature:
@@ -21,7 +22,7 @@ class Creature:
         self._memory = deque(maxlen=self.memory_size())
         self._brain = None
 
-        #if model_path is not None and os.path.exists(model_path):
+        # if model_path is not None and os.path.exists(model_path):
         #    self._brain.load_model(model_path)
 
     #########################################################
@@ -158,7 +159,8 @@ class Creature:
     def observation_shape(self):
         food_dim = 1
         internal_state_dims = 2  # energy, age
-        return [self._universe.num_races() + food_dim + internal_state_dims, 2 * self.vision_range() + 1, 2 * self.vision_range() + 1]
+        return [self._universe.num_races() + food_dim + internal_state_dims, 2 * self.vision_range() + 1,
+                2 * self.vision_range() + 1]
 
     def alive(self):
         return self.cell() is not None
@@ -178,10 +180,22 @@ class Creature:
     def dead_state(self):
         return np.ones(shape=self.observation_shape()) * -1
 
+    def sexual_attraction(self, the_other):
+        if the_other is None:
+            return None
+        cosine_sim = utils.cosine_similarity(self.dna().flatten(), the_other.dna().flatten())
+        return cosine_sim*(1 - cosine_sim)
+
+    def select_spouse(self, potential_spouses):
+        if not potential_spouses:
+            return None
+        attractions = [self.sexual_attraction(spouse) for spouse in potential_spouses]
+        return potential_spouses[utils.dist_selection(utils.softmax(attractions, 1))]
+
     def get_fitrah_dict(self):
         fitrah_dict = {}
         for i in range(self.num_actions()):
-            fitrah_dict[str(self.get_actions()[i])] = round(self.fitrah()[i]*100)
+            fitrah_dict[str(self.get_actions()[i])] = round(self.fitrah()[i] * 100)
         return fitrah_dict
 
     def __str__(self):

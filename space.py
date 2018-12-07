@@ -63,6 +63,32 @@ class Space:
         x, y = coord
         return 0 <= x < self._space_size and 0 <= y < self._space_size
 
+    def find_nearby_creature(self, creature):
+        nearby_creatures = creature.cell().creatures()
+        if len(nearby_creatures) < 2:
+            return None
+        for i in range(len(nearby_creatures)):
+            if nearby_creatures[i] != creature:
+                return nearby_creatures[i]
+
+    def find_nearby_creature_from_same_race(self, creature):
+        others = self.get_nearby_creatures_from_same_race(creature)
+        if others:
+            return np.random.permutation(others)[0]
+        return None
+
+    def find_nearby_creature_from_different_race(self, creature):
+        others = self.get_nearby_creatures_from_different_race(creature)
+        if others:
+            return np.random.permutation(others)[0]
+        return None
+
+    def get_nearby_creatures_from_same_race(self, creature):
+        return [creat for creat in creature.cell().creatures() if creat != creature and creat.race_name() == creature.race_name()]
+
+    def get_nearby_creatures_from_different_race(self, creature):
+        return [creat for creat in creature.cell().creatures() if creat.race_name() != creature.race_name()]
+
     def __str__(self):
         string = ''
         for cell in self._grid:

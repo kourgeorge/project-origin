@@ -243,12 +243,13 @@ class Universe:
             return
 
         creature.reduce_energy(ConfigBiology.MATE_ENERGY)
-        mate_body = creature.cell().find_nearby_creature_from_same_race(creature)
-        if mate_body is None:
+        potential_spouses = self.space().get_nearby_creatures_from_same_race(creature)
+        spouse = creature.select_spouse(potential_spouses)
+        if spouse is None:
             return
-        new_dna = Evolution.mix_dna(creature.dna(), mate_body.dna())
+        new_dna = Evolution.mix_dna(creature.dna(), spouse.dna())
         self.create_creature(creature.get_race(), self.allocate_id(), new_dna, creature.coord(),
-                             parents=[creature, mate_body])
+                             parents=[creature, spouse])
 
     def creature_divide(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.DIVIDE)] += 1
@@ -276,7 +277,7 @@ class Universe:
         if not creature.self_race_enemy():
             opponent = creature.cell().find_nearby_creature_from_different_race(creature)
         else:
-            opponent = creature.cell().find_nearby_creature(creature)
+            opponent = self.space().find_nearby_creature(creature)
         if opponent is None:
             return
 

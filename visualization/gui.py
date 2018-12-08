@@ -1,14 +1,13 @@
 __author__ = 'gkour'
 
-import simulator
+from simulator import Simulator, SimState
 from visualization.dashboard import Dashboard
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 from tkinter import ttk, Scale
 import matplotlib.pyplot as plt
-import threading
 from config import ConfigPhysics
-
+import sys
 
 plt.style.use('seaborn-paper')
 LARGE_FONT = ("Verdana", 12)
@@ -36,7 +35,6 @@ class OriginGUI:
 
     def processIncoming(self):
         """Handle all messages currently in the queue, if any."""
-        self._simulation_page.check_handle_sim_end()
         while self.queue.qsize():
             try:
                 self.refresh_data(self.queue.get(0))
@@ -50,8 +48,7 @@ class SimulationPage(tk.Frame):
     def __init__(self, parent, controller, queue):
         self._dashboard = Dashboard()
         self.controller = controller
-        self.queue = queue
-        self.sim_thread = None
+        self.simulator = Simulator(queue)
 
         tk.Frame.__init__(self, parent, bg='white')
         title_label = tk.Label(self, text="Project Origin Dashboard", font=LARGE_FONT, foreground='blue', bg='white')
@@ -78,25 +75,28 @@ class SimulationPage(tk.Frame):
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
-    def refresh_data(self, statistics):
-        self._dashboard.update_step_dash(statistics.step_stats_df)
-        self._dashboard.update_epoch_dash(statistics.epoch_stats_df)
+        controller.protocol("WM_DELETE_WINDOW", self.close_window)
+
+    def close_window(self):
+        self.simulator.stop()
+        self.status_label['text'] = "Simulation Stopping!"
+        self.controller.destroy()
+        sys.exit()
+
+    def refresh_data(self, msg):
+        if type(msg) == SimState:
+            if msg == SimState.INITIALIZING:
+                self.start_sim_btn['state'] = tk.DISABLED
+            if msg == SimState.STOPPED:
+                self.start_sim_btn['state'] = tk.ACTIVE
+            self.status_label['text'] = str(msg.value)
+        else:
+            self._dashboard.update_step_dash(msg.step_stats_df)
+            self._dashboard.update_epoch_dash(msg.epoch_stats_df)
 
     def start_simulation(self):
-        self.status_label['text'] = "Simulation Started!"
-        self.start_sim_btn['state'] = tk.DISABLED
-
-        self.sim_thread = threading.Thread(target=simulator.run, args=[self.queue])
-        self.sim_thread.daemon = True
-        self.sim_thread.start()
-
-    def check_handle_sim_end(self):
-        if self.sim_thread is not None and not self.sim_thread.isAlive():
-            self.start_sim_btn['state'] = tk.ACTIVE
-            self.status_label['text'] = 'Simulation Ended'
-
+        self.simulator.run_in_thread()
 
     @staticmethod
     def set_food_creature_ratio(new):
         ConfigPhysics.FOOD_CREATURE_RATIO = float(new)
-

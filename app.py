@@ -29,7 +29,10 @@ class OriginApp:
 
     def periodic_call(self):
         self.gui.processIncoming()
-        self.master.after(ConfigSimulator.UI_UPDATE_INTERVAL, self.periodic_call)
+        try:
+            self.master.after(ConfigSimulator.UI_UPDATE_INTERVAL, self.periodic_call)
+        except:
+            print("Periodic call exception.")
 
 
 if __name__ == '__main__':

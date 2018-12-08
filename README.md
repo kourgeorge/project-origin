@@ -67,8 +67,6 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * 07.12.2018 - Adding sexual attraction for spouse selection
 * TBI - adding Dopamine implementation for RL algorithms.
 * TBI - clean termination of GUI
-* TBI - Adding sexual attraction emotional/brain state functionality.
+* TBI - emotional/brain state functionality.
 * TBI - creating an executable program.
-* TBI - downloading and loading brain models.
-* TBI - improve the AIQ to support different sizes of states.
 * TBI - improve the gui to proper battle (two competing race) mode.

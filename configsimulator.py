@@ -10,4 +10,4 @@ class ConfigSimulator:
     CSV_LOGGING = True
     BATCH_SIZE = 10
     UI_UPDATE_INTERVAL = 200  # ms
-    RACES = [HumanTorchBrain]
+    RACES = [HumanTorchBrain, HumanDQNBrain]

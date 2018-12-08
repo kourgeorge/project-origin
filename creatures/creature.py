@@ -182,7 +182,7 @@ class Creature:
         self.smarten()
         # write the model of the last survivor.
         if self._universe.num_creatures() == 1 and self.model_path() is not None:
-            self._brain.save_model(self.model_path())
+            self.brain().save_model(self.model_path())
             print(self.get_fitrah_dict())
 
     def dead_state(self):

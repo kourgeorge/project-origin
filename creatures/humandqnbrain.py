@@ -50,3 +50,6 @@ class HumanDQNBrain(Human):
     @staticmethod
     def self_race_enemy():
         return False
+
+    def model_path(self):
+        return './models/' + self.race_name()

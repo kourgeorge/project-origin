@@ -63,10 +63,10 @@ class Simulator:
             self._msg_queue.put(msg)
 
     def _report_state(self):
-        self._msg_queue.put(self._status)
+        if self._msg_queue is not None:
+            self._msg_queue.put(self.status())
 
     def run_in_thread(self):
-        self._status = SimState.INITIALIZING
         self._report_state()
         self._thread = threading.Thread(target=self.run)
         self._thread.start()

@@ -3,9 +3,9 @@ __author__ = 'gkour'
 from creatures.creature import Creature
 from creature_actions import Actions
 from config import ConfigBiology, ConfigBrain
-from brains.brain_dqn import BrainDQN
 import utils
 from evolution import DNA
+from brains.brain_simple import RandomBrain
 
 
 class Human(Creature):
@@ -19,12 +19,7 @@ class Human(Creature):
 
     def get_master_brain(self):
         if Human._master_brain is None:
-            Human._master_brain = BrainDQN(lr=ConfigBrain.BASE_LEARNING_RATE,
-                                           observation_shape=self.observation_shape(),
-                                           num_actions=self.num_actions(),
-                                           h_size=ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
-                                           gamma=ConfigBrain.BASE_GAMMA,
-                                           scope='master' + self.race_name())
+            Human._master_brain = RandomBrain(self.num_actions())
             return Human._master_brain
         return Human._master_brain
 

@@ -1,7 +1,6 @@
 __author__ = 'gkour'
 
 import numpy as np
-import tensorflow as tf
 from scipy.signal import lfilter
 
 
@@ -49,19 +48,6 @@ def one_hot(arg, size):
 def moving_average(data, window_width):
     cumsum_vec = np.cumsum(np.insert(data, 0, 0))
     return (cumsum_vec[window_width:] - cumsum_vec[:-window_width]) / window_width
-
-
-def update_target_graph(from_scope, to_scope):
-    from_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, from_scope)
-    to_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, to_scope)
-
-    if len(from_vars) != len(to_vars):
-        print("unequal number of variables of source and target networks.")
-
-    op_holder = []
-    for from_var, to_var in zip(from_vars, to_vars):
-        op_holder.append(to_var.assign(from_var))
-    return op_holder
 
 
 def softmax(x, temprature=1):

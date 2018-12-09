@@ -40,7 +40,7 @@ class BrainDQN(AbstractBrain):
         self.state_inT = tf.placeholder(shape=[None]+self.observation_shape(), dtype=tf.float32)
         self.QValueT = self._create_qnetwork('T' + scope, self.state_inT)
 
-        self.copyTargetQNetworkOperation = utils.update_target_graph(scope, 'T' + scope)
+        self.copyTargetQNetworkOperation = self.update_target_graph(scope, 'T' + scope)
 
         # Initialize Variables
         self._create_training_method()
@@ -109,3 +109,16 @@ class BrainDQN(AbstractBrain):
 
     def _copy_target_qnetwork(self):
         BrainDQN.sess.run(self.copyTargetQNetworkOperation)
+
+    @staticmethod
+    def update_target_graph(from_scope, to_scope):
+        from_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, from_scope)
+        to_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, to_scope)
+
+        if len(from_vars) != len(to_vars):
+            print("unequal number of variables of source and target networks.")
+
+        op_holder = []
+        for from_var, to_var in zip(from_vars, to_vars):
+            op_holder.append(to_var.assign(from_var))
+        return op_holder

@@ -58,3 +58,7 @@ The creature that wins the fight takes half of the enemy energy, therefore, it i
 The fight action requires a substantial amount of energy, controlled in the config file. 
 
 #### Working
+When the creature choose to work, The creature spends working energy (defined in the configuration file) to add food to the cell it is located in.
+Note that the action work only spends energy, and the creature should perform the action each to consume food from the space.
+Therefore, the creature should learn that it should work only if there is no food in the surrounding environment.
+In addition, it should learn that working is not enough to provide it with energy, but it must eat to consume it's labor product.

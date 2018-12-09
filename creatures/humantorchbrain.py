@@ -9,7 +9,7 @@ from evolution import DNA
 
 class HumanTorchBrain(Human):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 1, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
@@ -44,7 +44,7 @@ class HumanTorchBrain(Human):
 
     @staticmethod
     def race_fitrah():
-        return utils.softmax(HumanTorchBrain.Fitrah, len(HumanTorchBrain.get_actions()))
+        return utils.normalize_dist(HumanTorchBrain.Fitrah)
 
     @staticmethod
     def self_race_enemy():

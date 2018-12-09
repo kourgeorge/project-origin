@@ -21,6 +21,7 @@ class BrainDQN(AbstractBrain):
 
     def __init__(self, lr, observation_shape, num_actions, h_size, scope, gamma, copy_from_scope=None):
         super(BrainDQN, self).__init__(observation_shape, num_actions)
+        self._scope = scope
         self._h_size = h_size
         self._regularization_param = 0.001
         self.lr = lr
@@ -48,6 +49,11 @@ class BrainDQN(AbstractBrain):
         BrainDQN.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope)))
 
         self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope))
+
+        print("Tensorflow DQN. Num parameters: " + str(self.num_trainable_parameters()))
+
+    def num_trainable_parameters(self):
+        return np.sum([np.prod(v.get_shape().as_list()) for v in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, self._scope)])
 
     def think(self, obs):
         q_value = BrainDQN.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]

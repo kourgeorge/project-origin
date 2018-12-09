@@ -39,6 +39,14 @@ class Dashboard:
         if epoch_stats_df is None or epoch_stats_df.empty:
             return
 
+    @staticmethod
+    def make_autopct(values):
+        def my_autopct(pct):
+            total = sum(values)
+            val = int(round(pct * total / 100.0))
+            return '{v:d}'.format(v=val)
+        return my_autopct
+
     def update_step_dash(self, step_stats_df):
         if step_stats_df is None or step_stats_df.empty:
             return
@@ -80,7 +88,7 @@ class Dashboard:
         actions_dist = np.mean(step_stats_df['ActionDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_action.clear()
         self._fig_action.pie(actions_dist, labels=Actions.get_actions_str(),
-                             startangle=90, autopct=Dashboard.my_autopct)
+                             startangle=90, autopct='%1.1f%%')
 
         ## Death Dist Pie
         death_cause = np.mean(step_stats_df['DeathCause'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
@@ -92,11 +100,7 @@ class Dashboard:
         races = np.mean(step_stats_df['RacesDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_races.clear()
         self._fig_races.pie(races, labels=[race.race_name() for race in ConfigSimulator.RACES],
-                            startangle=90, autopct='%1.1f%%')
+                            startangle=90, autopct=self.make_autopct(races))
 
     def get_figure(self):
         return self._fig
-
-    @staticmethod
-    def my_autopct(pct):
-        return ('%.2f' % pct) if pct > 1 else ''

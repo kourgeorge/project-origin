@@ -23,6 +23,7 @@ class BrainDQN(AbstractBrain):
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
         self.gamma = gamma
+        print("Pytorch DQN. Num parameters: " + str(self.num_trainable_parameters()))
 
     def think(self, obs):
         with torch.no_grad():
@@ -32,7 +33,6 @@ class BrainDQN(AbstractBrain):
             return distribution
 
     def train(self, experience):
-
         minibatch_size = min(BrainDQN.BATCH_SIZE, len(experience))
         if minibatch_size == 0:
             return
@@ -71,15 +71,18 @@ class BrainDQN(AbstractBrain):
             self.policy_net.load_state_dict(torch.load(path))
             self.target_net.load_state_dict(torch.load(path))
 
+    def num_trainable_parameters(self):
+        return sum(p.numel() for p in self.policy_net.parameters())
+
 
 class DQN(nn.Module):
     def __init__(self, num_channels, num_actions):
         super(DQN, self).__init__()
-        self.conv1 = nn.Conv2d(num_channels, 16, kernel_size=2)
-        self.bn1 = nn.BatchNorm2d(16)
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=2)
-        self.bn2 = nn.BatchNorm2d(32)
-        self.head = nn.Linear(288, num_actions)
+        self.conv1 = nn.Conv2d(num_channels, 4, kernel_size=2)
+        self.bn1 = nn.BatchNorm2d(4)
+        self.conv2 = nn.Conv2d(4, 5, kernel_size=2)
+        self.bn2 = nn.BatchNorm2d(5)
+        self.head = nn.Linear(45, num_actions)
 
     def forward(self, x):
         x = F.relu(self.conv1(x))

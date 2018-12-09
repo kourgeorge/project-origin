@@ -65,7 +65,7 @@ def softmax(x, temprature=1):
 
 
 def roll_fight(energy1, energy2):
-    dist = softmax([energy1, energy2])
+    dist = normalize_dist([energy1, energy2])
     return np.random.choice(a=[-1, 1], p=dist)
 
 
@@ -82,4 +82,18 @@ def safe_log2(number):
 
 
 def cosine_similarity(vec1, vec2):
-    return np.dot(vec1, vec2)/(np.linalg.norm(vec1)*np.linalg.norm(vec2))
+    return np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
+
+
+def normalize_dist(p):
+    return linear_dist_normalization(p)
+
+
+def linear_dist_normalization(p):
+    p = np.asarray(p)
+    p += abs(min(p))
+    norm = sum(p)
+    if norm == 0:
+        norm = 1e-16
+    res = p / norm
+    return res

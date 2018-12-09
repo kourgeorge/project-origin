@@ -27,8 +27,8 @@ class Evolution:
         learning_frequency = max(dna.learning_frequency() + randint(-1, 1), 1)
         life_expectancy = max(0, dna.life_expectancy() + randint(-10, 10))
         gamma = max(0.1, min(1, np.random.normal(loc=dna.gamma(), scale=0.001)))
-        fitrah = utils.softmax(
-            + np.random.normal(loc=0, scale=ConfigBiology.EVOLUTION_MUTATION_STD, size=dna.fitrah().size), 1)
+        fitrah = utils.normalize_dist(
+            dna.fitrah() + np.random.normal(loc=0, scale=ConfigBiology.EVOLUTION_MUTATION_STD, size=dna.fitrah().size))
         if fitrah.size == 1:
             print('found')
         return DNA(memory_size, learning_rate, hidden_layer_size, learning_frequency, life_expectancy, gamma, fitrah)

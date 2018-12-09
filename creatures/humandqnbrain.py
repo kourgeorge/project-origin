@@ -9,7 +9,7 @@ from evolution import DNA
 
 class HumanDQNBrain(Human):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 1, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanDQNBrain, self).__init__(universe, id, dna, age, energy, parents)
@@ -45,7 +45,7 @@ class HumanDQNBrain(Human):
 
     @staticmethod
     def race_fitrah():
-        return utils.softmax(HumanDQNBrain.Fitrah, len(HumanDQNBrain.get_actions()))
+        return utils.normalize_dist(HumanDQNBrain.Fitrah)
 
     @staticmethod
     def self_race_enemy():

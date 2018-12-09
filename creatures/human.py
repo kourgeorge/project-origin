@@ -10,7 +10,7 @@ from brains.brain_simple import RandomBrain
 
 class Human(AbstractCreature):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [1, 1, 1, 1, 2, 2, 2]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
@@ -47,7 +47,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def race_fitrah():
-        return utils.softmax(Human.Fitrah, len(Human.get_actions()))
+        return utils.normalize_dist(Human.Fitrah)
 
     @staticmethod
     def self_race_enemy():
@@ -57,7 +57,7 @@ class Human(AbstractCreature):
         eps = max(ConfigBrain.BASE_EPSILON,
                   1 - (self._age / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
         brain_actions_prob = self.brain().think(state)
-        action_prob = utils.softmax(brain_actions_prob + self.fitrah(), temprature=1)
+        action_prob = utils.normalize_dist(self.fitrah() + brain_actions_prob)
         decision = utils.epsilon_greedy(eps, action_prob)
         return decision
 

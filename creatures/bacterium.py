@@ -53,12 +53,12 @@ class Bacterium(AbstractCreature):
 
     @staticmethod
     def race_fitrah():
-        return utils.softmax(Bacterium.Fitrah, len(Bacterium.get_actions()))
+        return utils.normalize_dist(Bacterium.Fitrah)
 
     def decide(self, state):
         eps = max(ConfigBrain.BASE_EPSILON,
                   1 - (self.age() / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
         brain_actions_prob = self._brain.think(state)
-        action_prob = utils.softmax(brain_actions_prob + self.fitrah())
+        action_prob = utils.normalize_dist(brain_actions_prob + self.fitrah())
         action = utils.epsilon_greedy(eps, dist=action_prob)
         return action

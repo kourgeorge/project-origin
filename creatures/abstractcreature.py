@@ -195,7 +195,7 @@ class AbstractCreature:
         if not potential_spouses:
             return None
         attractions = [self.sexual_attraction(spouse) for spouse in potential_spouses]
-        return potential_spouses[utils.dist_selection(utils.softmax(attractions, 1))]
+        return potential_spouses[utils.dist_selection(utils.normalize_dist(attractions))]
 
     def get_fitrah_dict(self):
         fitrah_dict = {}

@@ -7,7 +7,7 @@ The size of the and the nature of cues in the observed surroundings is determine
 There could be many types of brains, from random to complicated brain that employ neural networks and advanced learning algorithms, such as reinforcement learning.
 The brain can be trained and improved by the experience of the creature.
 The creature experiences are saved in the creature (limited) memory which size is defined in the creature DNA.
-The frequency of brain training, is also defined in the creature dna.
+The frequency of brain training is also defined in the creature DNA.
 
 Each creature may have a separate brain, or alternatively, the entire race may share the same brain which centralizes the race knowledge.
 If every creature has a separate brain, it's inherited DNA may determine the structure of the brain.

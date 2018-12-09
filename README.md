@@ -7,8 +7,8 @@
 **project-origin** is an attempt to create an artificial life environment that allows studying the emergence and evolution of intelligence; an area of study known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
 Natures with different rules and creatures with different learning mechanisms can be easily simulated enabling the users of project-origin to investigate the tantalizing phenomenon of intelligence.
 It aims at expanding the horizon of artificial intelligence research by implementing mechanisms of intelligence governed by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
-project-origin does not only allow observing the emergence of behavior and the destiny of different intelligent creatures, but make it easy to implement and extend reinforcement learning algorithms.
-While project-origin is built with deep learning models in mind, any learning algorithm can effortlessly implemented and deployed.   
+project-origin does not only allow observing the emergence of behavior and the destiny of different intelligent creatures but make it easy to implement and extend reinforcement learning algorithms.
+While project-origin is built with deep learning models in mind, any learning algorithm can effortlessly be implemented and deployed.   
 For more information about the scientific motivation behind project-origin visit [**this page**](/docs/Scientific.md).
 
 project-origin is a simulator that emulates a [`Universe`](/docs/Universe.md) in which [`Creatures`](/docs/Creature.md) live in, adapt to, flourish or extinct.
@@ -27,7 +27,7 @@ In addition to the ultimate test of survival, IQ tests are performed periodicall
 
 We believe that building a simulation which is close enough to reality, by modeling the important aspects of nature, could be a powerful scientific method.
 In biology, this field is called [**"Artificial Life"**](https://en.wikipedia.org/wiki/Artificial_life).
-We think that _the understanding of a phenomenon is substantially deeper when not only it can be experienced in a single setting, but can be observed in different settings._
+We think that _the understanding of a phenomenon is substantially deeper when not only it can be experienced in a single setup but can be observed in different settings._
 
 project-origin is made simple and graphics-deficient to allow fast execution, however, it is built and visioned to be easy to imagine.
 Most aspects of the simulator can be modified using programmatic inheritance and configuration files.
@@ -63,14 +63,14 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * 30.11.2018 - Developing Gamified GUI to watch how different races compete and survive the battle.
 * 30.11.2018 - Oral tradition implementation - supporting inheriting experience to descendants.
 * 01.12.2018 - Adding the Fitrah to the DNA- an expression of the innate nature of a creature. Improving the state representation.
-* 06.12.2018 - Adding Torch DQN implementation of brain and allowing saving and loading models.
+* 06.12.2018 - Adding Torch DQN implementation of the brain and allowing saving and loading models.
 * 07.12.2018 - Adding sexual attraction for spouse selection
 * 08.12.2018 - Improving the architecture and communication between the GUI and the simulator.
 * TBI - adding Dopamine implementation for RL algorithms.
 * TBI - emotional/brain state functionality.
 * TBI - creating an executable program.
 * TBI - improve the gui to proper battle (two competing race) mode.
-* TBI - Adding communication abilities.
+* TBI - adding communication abilities.
 * TBI - Improving the physics architecture to allow easy alternation.
 * TBI - creating a visual environment and creatures using unity.
 * TBI - Different types of food/poison.

@@ -24,6 +24,8 @@ class Simulator:
 
     def run(self):
         self._status = SimState.INITIALIZING
+        self._report_state()
+
         stats = Stats()
         universe = Universe(ConfigSimulator.RACES, stats)
 
@@ -36,7 +38,7 @@ class Simulator:
             self._report(stats)
             stats.initialize_inter_step_stats()
 
-            if universe.get_time() % ConfigSimulator.BATCH_SIZE == 0:
+            if universe.get_time() % ConfigSimulator.LOGGING_BATCH_SIZE == 0:
                 stats.accumulate_epoch_stats(universe)
                 printing.print_epoch_stats(stats)
 

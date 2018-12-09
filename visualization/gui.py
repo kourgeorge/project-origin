@@ -8,6 +8,8 @@ from tkinter import ttk, Scale
 import matplotlib.pyplot as plt
 from config import ConfigPhysics
 import sys
+from queue import Queue
+
 
 plt.style.use('seaborn-paper')
 LARGE_FONT = ("Verdana", 12)
@@ -15,29 +17,30 @@ LARGE_FONT = ("Verdana", 12)
 
 class OriginGUI:
 
-    def __init__(self, master, queue, *args, **kwargs):
+    def __init__(self, master, *args, **kwargs):
         tk.Tk.wm_title(master, "Project Origin")
         # tk.Tk.iconbitmap(self,default="")
 
         self.master = master
-        self.queue = queue
+        self.msg_queue = Queue()
+
         container = tk.Frame(master)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self._simulation_page = SimulationPage(container, master, queue)
+        self._simulation_page = SimulationPage(container, master, self.msg_queue)
         self._simulation_page.grid(row=0, column=0, sticky="nsew")
         self._simulation_page.tkraise()
 
     def refresh_data(self, msg):
         self._simulation_page.refresh_data(msg)
 
-    def processIncoming(self):
+    def process_incoming_msg(self):
         """Handle all messages currently in the queue, if any."""
-        while self.queue.qsize():
+        while self.msg_queue.qsize():
             try:
-                self.refresh_data(self.queue.get(0))
+                self.refresh_data(self.msg_queue.get(0))
             except Exception as exp:
                 print(str(exp))
                 pass
@@ -85,6 +88,7 @@ class SimulationPage(tk.Frame):
 
     def refresh_data(self, msg):
         if type(msg) == SimState:
+            print(msg.value)
             if msg == SimState.INITIALIZING:
                 self.start_sim_btn['state'] = tk.DISABLED
             if msg == SimState.STOPPED:

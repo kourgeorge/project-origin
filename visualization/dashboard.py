@@ -77,19 +77,19 @@ class Dashboard:
         self._fig_food_loc.xaxis.set_major_locator(plt.NullLocator())
 
         ## Action Dist Pie
-        actions_dist = np.mean(step_stats_df['ActionDist'].tail(ConfigSimulator.BATCH_SIZE).values, axis=0)
+        actions_dist = np.mean(step_stats_df['ActionDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_action.clear()
         self._fig_action.pie(actions_dist, labels=Actions.get_actions_str(),
                              startangle=90, autopct=Dashboard.my_autopct)
 
         ## Death Dist Pie
-        death_cause = np.mean(step_stats_df['DeathCause'].tail(ConfigSimulator.BATCH_SIZE).values, axis=0)
+        death_cause = np.mean(step_stats_df['DeathCause'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_death.clear()
         self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly', 'Fall'],
                             startangle=90, autopct='%1.1f%%')
 
         ## races Dist
-        races = np.mean(step_stats_df['RacesDist'].tail(ConfigSimulator.BATCH_SIZE).values, axis=0)
+        races = np.mean(step_stats_df['RacesDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_races.clear()
         self._fig_races.pie(races, labels=[race.race_name() for race in ConfigSimulator.RACES],
                             startangle=90, autopct='%1.1f%%')

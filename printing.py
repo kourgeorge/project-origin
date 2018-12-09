@@ -4,23 +4,8 @@ import os
 
 
 def print_step_stats(stats):
-    last_update = stats.step_stats_df.tail(1)
-    print(last_update.to_json(orient='records'))
-
-
-# def log_step_stats(file_path, universe):
-#     step_stats = Stats.collect_step_stats(universe)
-#     exists = os.path.isfile(file_path)
-#     if not exists:
-#         with open(file_path, 'a', newline='') as myfile:
-#             wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
-#             wr.writerow(list(step_stats.keys()))
-#             myfile.close()
-#
-#     with open(file_path, 'a', newline='') as myfile:
-#         wr = csv.writer(myfile, quoting=csv.QUOTE_NONNUMERIC)
-#         wr.writerow(step_stats.values())
-#         myfile.close()
+    printing_stats = stats.step_stats_df.drop(columns=['CreaturesDist', 'FoodDist']).tail(1)
+    print(printing_stats.to_json(orient='records'))
 
 
 def dataframe2csv(data_frame, file_path):

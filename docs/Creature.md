@@ -1,40 +1,36 @@
 ## Creatures
 
-Creatures are intelligent agents that behave in the world. 
+Creatures are intelligent agents that live and behave in the universe. 
 Their main goal is to survive and flourish.
 Creatures have senses, basically vision, from which they get information about their local environment.
+Different creatures may have a different set of abilities, namely, different actions they can do in their environment and to  other surrounding creaturs.
 
-Each creature has a DNA which it inherits from his parents in an evolutionary process controlled in class evolution.
+Creatures belongs to a **Race** (see below) determined by the race of his ancestors and which define his set of abilities (actions).  
+It has a DNA which it inherits from his parents in an evolutionary process controlled by the evolution.
 See more information in [Evolution.md](/docs/Evolution.md).
-At each time step, the universe gives every creature a chance to make a single action.
-To decide on his best action, the creature sees the environment around him and his internal states such as energy and age.
-Using his brain he makes a decision and executes the action. 
-The state description of the surrounding environment usually contains the location of food, creatures number and the total creature's energy in the space around him.
-If it gets to the grid edge, the description of the out of grid cells will be marked by special number for each aspect.
+At each time step, the creature makes an action, which is decided upon by one or several "intelligence sources" such as his brain, his instincts and by chance.
+To decide on his best action, the creature sees the environment around him and his internal states such as energy and age. 
+In reinforcement learning terminology, this is called the "environment state".
+The state description of the surrounding environment may contains the distribution of food, creatures, their race and energy.
+If the edge of the grid is in the vision range of the creature, each aspect of the environment in the location of the edge and beyond, will be marked by (-1).
 
-Implementation wise, each race should be derived from  [`creature.py`](/creatures/creature.py).
-It should implement some basic methods to define the race features.
-For implementation examples, see class [`human.py`](/creatures/human.py), class [`bacterium.py`](/creatures/bacterium.py) and class [`zombie.py`](/creatures/zombie.py) taht inherits from class human but changes the action decision method.
 ### Races:
-Every creature has a race. 
-His race defines the actions he can make and whom he can make with and fight.
+The creature race defines the actions he can make and whom he can mate with and fight.
 There could be several races in a single experiment.
-Usually, the goal in such scenarios is to see which race is more effective and has better survival skills.
- 
-
-### Actions:
-The actions implemented are the following: MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, EAT, MATE, DIVIDE and WORK.
-Each creature has a subset of actions it can perform. 
-These race abilities is specified in the class defining the race, which is derived from the creature class.
-Not every action is possible in every situation, for instance, mating in not allowed before the creature get to maturity age.
-Another example is that moving out of the grid is not possible in a non-slippery world.
-If the creature tries to execute an implausible action, it loses a energy and his action will not take place.
-Note that this loss of energy may lead to the creature dies.  
+Usually, the goal in such scenarios is to see which race is more effective and has better survival skills. 
 
 
 ### Memory and Oral Tradition
-The creature has a memory member that allow accumulating it's experiences.
-The creature DNA limits the size of it's memory. 
+The creature has a memory that accumulates it's experiences.
+The size of the memory is limited by the creature's DNA. 
 "Oral Tradition" is the knowledge passed from generation to generation.
 While this functionality is not implemented in the abstract class creature, in humans, a subclass of creature, ancestors inherit their memories to their offsprings.
 Note that while the knowledge may pass between generations, the brain parameters are unique to each individual.
+
+
+### Creating New Creatures
+Implementation wise, each race should be derived from  [`creature.py`](/creatures/creature.py) or from one of its sub-classes.
+It should implement some basic methods to define the race nature.
+For implementation examples, see class [`human.py`](/creatures/human.py), class [`bacterium.py`](/creatures/bacterium.py) and class [`zombie.py`](/creatures/zombie.py) that inherits from class human but changes the action decision method.
+One of the important methods in the creature is the `decide` method, which given the state, decides on an action.
+It may take into consideration the brain recommendation, the fitrah, the creature curiosity mechanism, age, energy or any other information to make a decision.

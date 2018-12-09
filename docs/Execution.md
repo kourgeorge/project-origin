@@ -3,13 +3,16 @@
 Currently, the project can run in two modes, with or without GUI.
 The GUI is basically a dashboard that provides aggregated information about the population state, location, actions, age, AIQ, etc..
 
-First you should install all requirements using the following command:
-`pip3 install -r requirements.txt`
+First you should install all requirements using the following command:\
+`pip3 install -r requirements.txt` \
 
-To run GUI, run the following command:
+if you are using Anaconda use the following:\
+`conda install --yes --file requirements.txt`
+
+To run GUI, run the following command:\
 `python app.py`
 
-To run the simulator in console mode use the following command:
+To run the simulator in console mode use the following command:\
 `python simulator.py`
 
 ## Changing the simulator configuration

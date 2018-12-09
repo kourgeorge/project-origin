@@ -150,7 +150,7 @@ class Universe:
             else:
                 self.statistics.death_cause[0] += 1
 
-    ## Creature Actions
+    ## AbstractCreature Actions
     def creature_eat(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.EAT)] += 1
         if creature.energy() < ConfigBiology.MOVE_ENERGY:

@@ -1,6 +1,6 @@
 __author__ = 'gkour'
 
-from creatures.creature import Creature
+from creatures.abstractcreature import AbstractCreature
 from creature_actions import Actions
 from config import ConfigBiology, ConfigBrain
 import utils
@@ -8,7 +8,7 @@ from evolution import DNA
 from brains.brain_simple import RandomBrain
 
 
-class Human(Creature):
+class Human(AbstractCreature):
     _master_brain = None
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 

@@ -1,6 +1,6 @@
 __author__ = 'gkour'
 
-from creatures.creature import Creature
+from creatures.abstractcreature import AbstractCreature
 from creature_actions import Actions
 from config import ConfigBiology, ConfigBrain
 from brains.brain_dqn import BrainDQN
@@ -8,7 +8,7 @@ import utils
 from evolution import DNA
 
 
-class Bacterium(Creature):
+class Bacterium(AbstractCreature):
     _master_brain = None
     Fitrah = [0, 0, 0, 0, 1, 1]
 
@@ -38,7 +38,7 @@ class Bacterium(Creature):
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_GAMMA,
-                   Creature.race_fitrah())
+                   AbstractCreature.race_fitrah())
 
     @staticmethod
     def race_name():

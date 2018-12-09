@@ -29,7 +29,7 @@ Note that while the knowledge may pass between generations, the brain parameters
 
 
 ### Creating New Creatures
-Implementation wise, each race should be derived from  [`creature.py`](/creatures/creature.py) or from one of its sub-classes.
+Implementation wise, each race should be derived from  [`abstractcreature.py`](/creatures/abstractcreature.py) or from one of its sub-classes.
 It should implement some basic methods to define the race nature.
 For implementation examples, see class [`human.py`](/creatures/human.py), class [`bacterium.py`](/creatures/bacterium.py) and class [`zombie.py`](/creatures/zombie.py) that inherits from class human but changes the action decision method.
 One of the important methods in the creature is the `decide` method, which given the state, decides on an action.

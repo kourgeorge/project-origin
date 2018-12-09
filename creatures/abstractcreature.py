@@ -7,7 +7,7 @@ from collections import deque
 import utils
 
 
-class Creature:
+class AbstractCreature:
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         self._id = id
@@ -21,9 +21,6 @@ class Creature:
         self._memory = deque(maxlen=self.memory_size())
         self._brain = None
 
-        # if model_path is not None and os.path.exists(model_path):
-        #    self._brain.load_model(model_path)
-
     #########################################################
     # Virtual function to override when creating a new race #
     #########################################################
@@ -36,7 +33,7 @@ class Creature:
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_GAMMA,
-                   Creature.race_fitrah())
+                   AbstractCreature.race_fitrah())
 
     @staticmethod
     def get_actions():

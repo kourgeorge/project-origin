@@ -42,9 +42,22 @@ class Dashboard:
     @staticmethod
     def make_autopct(values):
         def my_autopct(pct):
+            if pct < 0.1:
+                return ''
             total = sum(values)
             val = int(round(pct * total / 100.0))
             return '{v:d}'.format(v=val)
+        return my_autopct
+
+    @staticmethod
+    def make_numpct(values):
+        def my_autopct(pct):
+            if pct == 0:
+                return ''
+            total = sum(values)
+            val = int(round(pct * total / 100.0))
+            return '({v:d}, {p:1.1f})'.format(v=val, p=pct / 100)
+
         return my_autopct
 
     def update_step_dash(self, step_stats_df):
@@ -87,14 +100,15 @@ class Dashboard:
         ## Action Dist Pie
         actions_dist = np.mean(step_stats_df['ActionDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_action.clear()
-        self._fig_action.pie(actions_dist, labels=Actions.get_actions_str(),
-                             startangle=90, autopct='%1.1f%%')
+        patches, texts, autotexts = self._fig_action.pie(actions_dist,
+                                                         startangle=90, autopct=self.make_autopct(actions_dist))
+        self._fig_action.legend(patches, labels=Actions.get_actions_str(), loc=(1, 0))
 
         ## Death Dist Pie
         death_cause = np.mean(step_stats_df['DeathCause'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_death.clear()
         self._fig_death.pie(death_cause, labels=['Fatigue', 'Fight', 'Elderly', 'Fall'],
-                            startangle=90, autopct='%1.1f%%')
+                            startangle=90, autopct=self.make_autopct(death_cause))
 
         ## races Dist
         races = np.mean(step_stats_df['RacesDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)

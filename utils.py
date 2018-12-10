@@ -86,7 +86,7 @@ def cosine_similarity(vec1, vec2):
 
 
 def normalize_dist(p):
-    return linear_dist_normalization(p)
+    return softmax(p)
 
 
 def linear_dist_normalization(p):

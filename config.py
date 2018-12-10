@@ -3,7 +3,7 @@ __author__ = 'gkour'
 
 class ConfigPhysics:
     SPACE_SIZE = 20
-    NUM_FATHERS = 100
+    NUM_FATHERS = 500
     ETERNITY = 100000
     SLIPPERY_SPACE = True
     FOOD_CREATURE_RATIO = 1
@@ -16,8 +16,8 @@ class ConfigBiology:
     MOVE_ENERGY = 1
     FIGHT_ENERGY = 5
     INITIAL_ENERGY = 50
-    MATE_ENERGY = int(INITIAL_ENERGY / 2.5)
-    MATURITY_AGE = 5  # int(BASE_DYING_AGE / 5)
+    MATE_ENERGY = int(INITIAL_ENERGY / 3)
+    MATURITY_AGE = 12  # int(BASE_DYING_AGE / 5)
     BASE_LEARN_FREQ = 5
     BASE_VISION_RANGE = 2
     MEAL_SIZE = 6

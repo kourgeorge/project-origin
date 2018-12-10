@@ -6,7 +6,6 @@ from config import ConfigPhysics, ConfigBiology, ConfigBrain
 import numpy as np
 import utils
 from creature_actions import Actions
-import random
 
 
 class Universe:

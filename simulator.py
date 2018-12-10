@@ -10,7 +10,7 @@ from enum import Enum
 
 
 class SimState(Enum):
-    STOPPED = "Simulation Terminated"
+    IDLE = "Simulation Idle"
     INITIALIZING = "Simulation Initialized"
     RUNNING = "Simulation Running"
     STOPPING = "Simulation Terminating"
@@ -19,7 +19,7 @@ class SimState(Enum):
 class Simulator:
     def __init__(self, queue=None):
         self._thread = None
-        self._status = SimState.STOPPED
+        self._status = SimState.IDLE
         self._msg_queue = queue
 
     def run(self):
@@ -46,7 +46,7 @@ class Simulator:
             printing.dataframe2csv(stats.step_stats_df,
                                    ConfigSimulator.CSV_FILE_PATH.format(time.strftime("%Y%m%d-%H%M%S")))
 
-        self._status = SimState.STOPPED
+        self._status = SimState.IDLE
         self._report_state()
 
     def status(self):
@@ -69,7 +69,6 @@ class Simulator:
             self._msg_queue.put(self.status())
 
     def run_in_thread(self):
-        self._report_state()
         self._thread = threading.Thread(target=self.run)
         self._thread.start()
 

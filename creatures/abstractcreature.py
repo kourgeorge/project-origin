@@ -113,7 +113,7 @@ class AbstractCreature:
     def cell(self):
         return self._cell
 
-    def get_parent(self):
+    def get_parents(self):
         return self._parents
 
     def get_memory(self):

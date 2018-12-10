@@ -96,7 +96,7 @@ class BrainDQN(AbstractBrain):
 
     def _create_qnetwork(self, scope, input_ph):
         with tf.variable_scope(scope):
-            state = slim.convolution2d(input_ph, 10, [2, 2], scope='conv2_1', padding='VALID')
+            state = slim.convolution2d(input_ph, 5, [2, 2], scope='conv2_1', padding='VALID')
             state = slim.max_pool2d(state, [2, 2])
             state = slim.flatten(state)
             state = slim.stack(state, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)

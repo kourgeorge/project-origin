@@ -5,7 +5,7 @@ class ConfigPhysics:
     SPACE_SIZE = 20
     NUM_FATHERS = 100
     ETERNITY = 100000
-    SLIPPERY_SPACE = False
+    SLIPPERY_SPACE = True
     FOOD_CREATURE_RATIO = 1
     INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
 
@@ -17,7 +17,7 @@ class ConfigBiology:
     FIGHT_ENERGY = 5
     INITIAL_ENERGY = 50
     MATE_ENERGY = int(INITIAL_ENERGY / 2.5)
-    MATURITY_AGE = 10  # int(BASE_DYING_AGE / 5)
+    MATURITY_AGE = 5  # int(BASE_DYING_AGE / 5)
     BASE_LEARN_FREQ = 5
     BASE_VISION_RANGE = 2
     MEAL_SIZE = 6
@@ -31,4 +31,3 @@ class ConfigBrain:
     BASE_LEARNING_RATE = 1e-4
     BASE_HIDDEN_LAYER_SIZE = 10
     BASE_EPSILON = 0.1
-    MODEL_PATH = './model/model'

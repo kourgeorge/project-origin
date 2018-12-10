@@ -13,7 +13,8 @@ class HumanTorchBrain(Human):
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
-        self._brain = self.get_master_brain()
+        self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
+                                                     num_actions=self.num_actions(), gamma=ConfigBrain.BASE_GAMMA)
         # self.new_born()
 
     def get_master_brain(self):
@@ -52,3 +53,16 @@ class HumanTorchBrain(Human):
 
     def model_path(self):
         return './models/' + self.race_name()
+
+
+class HumanTorchBrain2(HumanTorchBrain):
+    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
+        super(HumanTorchBrain2, self).__init__(universe, id, dna, age, energy, parents)
+
+    @staticmethod
+    def get_race():
+        return HumanTorchBrain2
+
+    @staticmethod
+    def race_name():
+        return 'HumanDQNBrain2'

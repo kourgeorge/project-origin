@@ -2,7 +2,8 @@ __author__ = 'gkour'
 
 from creatures.human import Human
 from creatures.humandqnbrain import HumanDQNBrain
-from creatures.humantorchbrain import HumanTorchBrain
+from creatures.humantorchbrain import HumanTorchBrain, HumanTorchBrain2
+from creatures.zombie import Zombie
 
 
 class ConfigSimulator:
@@ -10,4 +11,4 @@ class ConfigSimulator:
     CSV_LOGGING = False
     LOGGING_BATCH_SIZE = 10
     UI_UPDATE_INTERVAL = 200  # ms
-    RACES = [HumanDQNBrain, HumanTorchBrain]
+    RACES = [HumanTorchBrain, Zombie]

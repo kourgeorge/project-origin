@@ -18,9 +18,12 @@ class Universe:
         self._time = 0
         self.statistics = statistics
         for race in races:
-            fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, ConfigPhysics.NUM_FATHERS)
-            fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, ConfigPhysics.NUM_FATHERS)
-            for n in range(ConfigPhysics.NUM_FATHERS):
+            num_fathers = ConfigPhysics.NUM_FATHERS
+            if race.race_name() == 'Zombie':
+                num_fathers = 2*ConfigPhysics.NUM_FATHERS
+            fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
+            fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
+            for n in range(num_fathers):
                 dna = Evolution.mutate_dna(race.race_basic_dna())
 
                 self.create_creature(race, id=self.allocate_id(), dna=dna,

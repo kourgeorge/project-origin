@@ -6,6 +6,8 @@ from config import ConfigBiology, ConfigBrain
 import utils
 from evolution import DNA
 from brains.brain_simple import RandomBrain
+import random
+import numpy as np
 
 
 class Human(AbstractCreature):
@@ -15,7 +17,7 @@ class Human(AbstractCreature):
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
         self._brain = self.get_master_brain()
-        # self.new_born()
+        self.new_born()
 
     def get_master_brain(self):
         if Human._master_brain is None:
@@ -62,6 +64,8 @@ class Human(AbstractCreature):
         return decision
 
     def new_born(self):
-        if self.get_parent() is None:
+        if self.get_parents() is None:
             return
-        self._memory = self.get_parent().get_memory()
+        oral_tradition = np.concatenate([parent.get_memory() for parent in self.get_parents()])
+        self._memory.extend(random.sample(oral_tradition.tolist(), min(int(self.memory_size()/2), len(oral_tradition))))
+        self.brain().train(self.get_memory())

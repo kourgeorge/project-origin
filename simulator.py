@@ -53,9 +53,11 @@ class Simulator:
         return self._status
 
     def stop(self):
+        if self._status == SimState.IDLE:
+            return
         self._status = SimState.STOPPING
         if self._thread is None or not self._thread.isAlive():
-            self._status = SimState.STOPPING
+            self._status = SimState.IDLE
         else:
             self._status = SimState.STOPPING
         self._report_state()

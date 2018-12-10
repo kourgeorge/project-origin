@@ -18,7 +18,7 @@ class OriginGUI:
 
     def __init__(self, master, *args, **kwargs):
         tk.Tk.wm_title(master, "Project Origin")
-        # tk.Tk.iconbitmap(self,default="")
+        #master.iconbitmap(default="visualization/originicon.bmp")
 
         self.master = master
         self.msg_queue = Queue()
@@ -94,8 +94,9 @@ class SimulationPage(tk.Frame):
             print(msg.value)
             if msg == SimState.IDLE:
                 self.sim_btn['text'] = 'Start Simulation'
+                self.sim_btn['state'] = tk.ACTIVE
                 if self.window_closed:
-                    self. close_window()
+                    self.close_window()
             self.status_label['text'] = str(msg.value)
         else:
             self._dashboard.update_step_dash(msg.step_stats_df)
@@ -107,7 +108,7 @@ class SimulationPage(tk.Frame):
             self.sim_btn['text'] = 'Stop Simulation'
         else:
             self.stop_simulation()
-            self.sim_btn['text'] = 'Start Simulation'
+            self.sim_btn['state'] = tk.DISABLED
 
     def stop_simulation(self):
         self.simulator.stop()

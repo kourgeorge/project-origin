@@ -18,8 +18,6 @@ class Universe:
         self.statistics = statistics
         for race in races:
             num_fathers = ConfigPhysics.NUM_FATHERS
-            if race.race_name() == 'Zombie':
-                num_fathers = 2*ConfigPhysics.NUM_FATHERS
             fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
             fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
             for n in range(num_fathers):
@@ -54,12 +52,13 @@ class Universe:
     # Time Management
     def pass_time(self):
         self._time += 1
-        if self._time < ConfigPhysics.ETERNITY and self.num_creatures() > 0:
-            self.give_food(round(self.num_creatures() * ConfigPhysics.FOOD_CREATURE_RATIO))
+        num_creatures = self.num_creatures()
+        if self._time < ConfigPhysics.ETERNITY and num_creatures > 0:
+            self.give_food(round(num_creatures * ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     self.execute_action(creature)
-            return self._time
+            return self.num_creatures()
         else:
             return None
 

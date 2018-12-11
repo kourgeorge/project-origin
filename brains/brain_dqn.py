@@ -56,7 +56,7 @@ class BrainDQN(AbstractBrain):
         return np.sum([np.prod(v.get_shape().as_list()) for v in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, self._scope)])
 
     def think(self, obs):
-        q_value = BrainDQN.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0]
+        q_value = utils.softmax(BrainDQN.sess.run(self.QValue, feed_dict={self.state_in: [obs]})[0])
         return q_value
 
     def train(self, experience):
@@ -100,7 +100,7 @@ class BrainDQN(AbstractBrain):
             state = slim.max_pool2d(state, [2, 2])
             state = slim.flatten(state)
             state = slim.stack(state, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)
-            action_output = slim.fully_connected(state, self.num_actions(), activation_fn=tf.nn.softmax,
+            action_output = slim.fully_connected(state, self.num_actions(), activation_fn=None,
                                                  weights_regularizer=slim.l2_regularizer(
                                                      self._regularization_param))
 

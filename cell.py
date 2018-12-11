@@ -6,6 +6,7 @@ class Cell:
         self._coord = coord
         self._creatures = []
         self._food = 0
+        self._sounds = []
 
     def insert_creature(self, creature):
         self._creatures.append(creature)
@@ -26,6 +27,15 @@ class Cell:
     def remove_food(self, amount):
         self._food -= amount
 
+    def add_sound(self, sound):
+        self._sounds.append(sound)
+
+    def remove_sounds(self, time):
+        self._sounds = [s for s in self._sounds if s.get_end_time() > time]
+
+    def get_sounds(self):
+        return self._sounds
+
     def get_coord(self):
         return self._coord
 
@@ -40,8 +50,9 @@ class Cell:
 
     def get_state_in_cell(self, races):
         food = [self.get_food()]
+        sounds = [len(self.get_sounds())]
         races_energy = [self.race_energy_level(race) for race in races]
-        return food + races_energy
+        return food + sounds + races_energy
 
     def num_creatures(self):
         return len(self._creatures)

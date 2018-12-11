@@ -9,8 +9,8 @@ import utils
 
 class AbstractCreature:
 
-    def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
-        self._id = id
+    def __init__(self, universe, id_, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
+        self._id = id_
         self._name = str(id) + self.race_name()
         self._dna = dna
         self._age = age
@@ -59,6 +59,11 @@ class AbstractCreature:
 
     def decide(self, state):
         raise NotImplementedError()
+
+    def __eq__(self, other):
+        if isinstance(other, AbstractCreature):
+            return self._id == other._id
+        raise ValueError('comparing AbstractCreature with {}'.format(type(other)))
 
     #########################################################
     #########################################################
@@ -163,8 +168,9 @@ class AbstractCreature:
 
     def observation_shape(self):
         food_dim = 1
+        sound_dim = 1
         internal_state_dims = 2  # energy, age
-        return [self._universe.num_races() + food_dim + internal_state_dims, 2 * self.vision_range() + 1,
+        return [self._universe.num_races() + food_dim + sound_dim + internal_state_dims, 2 * self.vision_range() + 1,
                 2 * self.vision_range() + 1]
 
     def alive(self):

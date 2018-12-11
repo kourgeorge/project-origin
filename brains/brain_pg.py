@@ -6,14 +6,14 @@ import utils as utils
 import numpy as np
 
 
-class Brain:
+class BrainPG:
     sess = None
 
     @staticmethod
     def init_session():
-        if Brain.sess is None:
+        if BrainPG.sess is None:
             tf.reset_default_graph()
-            Brain.sess = tf.Session()
+            BrainPG.sess = tf.Session()
 
     def __init__(self, lr, s_size, action_size, h_size, scope, gamma, copy_from_scope=None):
         self._s_size = s_size
@@ -29,18 +29,18 @@ class Brain:
 
         self.action_distribution = self._construct_policy_model(scope)
 
-        taken_action_probability = Brain.get_decision_probability(self.action_holder, self.action_distribution)
+        taken_action_probability = BrainPG.get_decision_probability(self.action_holder, self.action_distribution)
 
         loss = -tf.reduce_mean(tf.log(taken_action_probability) * self.reward_holder)
         self.optimize = tf.train.RMSPropOptimizer(learning_rate=lr).minimize(loss)
 
         # Initialize Variables
-        Brain.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.VARIABLES, scope)))
+        BrainPG.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.VARIABLES, scope)))
 
         self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.VARIABLES, scope))
 
         if copy_from_scope is not None:
-            Brain.sess.run(utils.update_target_graph(copy_from_scope, scope))
+            BrainPG.sess.run(utils.update_target_graph(copy_from_scope, scope))
 
     def _construct_policy_model(self, scope):
         with tf.variable_scope(scope):
@@ -58,13 +58,13 @@ class Brain:
         return tf.gather(tf.reshape(decisions_probabilities, [-1]), action_indexes)
 
     def save_model(self, path):
-        self.saver.save(Brain.sess, path)
+        self.saver.save(BrainPG.sess, path)
 
     def load_model(self, path):
-        self.saver.restore(Brain.sess, path)
+        self.saver.restore(BrainPG.sess, path)
 
     def act(self, obs):
-        action_dist = Brain.sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})
+        action_dist = BrainPG.sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})
         action = utils.dist_selection(action_dist[0])
         # action = utils.epsilon_greedy(0.01, action_dist[0])
         return action
@@ -78,7 +78,7 @@ class Brain:
                      self.action_holder: batch_acts,
                      self.state_in: np.vstack(batch_obs)}
 
-        Brain.sess.run([self.optimize], feed_dict=feed_dict)
+        BrainPG.sess.run([self.optimize], feed_dict=feed_dict)
 
     def state_size(self):
         return self._s_size

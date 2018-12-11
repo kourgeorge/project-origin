@@ -84,7 +84,7 @@ class Dashboard:
         ## Creatures Dist
         creatures_dist = np.asarray(step_stats_df['CreaturesDist'].iloc[-1])
         self._fig_creatures_loc.clear()
-        self._fig_creatures_loc.imshow(creatures_dist, cmap="Purples", aspect="auto", vmin=0, vmax=30)
+        self._fig_creatures_loc.imshow(creatures_dist, cmap="Purples", aspect="auto", vmin=0, vmax=10)
         self._fig_creatures_loc.set_title('Creatures Location')
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())
         self._fig_creatures_loc.xaxis.set_major_locator(plt.NullLocator())

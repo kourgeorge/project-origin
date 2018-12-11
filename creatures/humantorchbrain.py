@@ -66,9 +66,6 @@ class HumanTorchBrain(Human):
         return decision
 
 
-
-
-
 class HumanTorchBrain2(HumanTorchBrain):
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain2, self).__init__(universe, id, dna, age, energy, parents)

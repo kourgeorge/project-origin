@@ -66,6 +66,7 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * 06.12.2018 - Adding Torch DQN implementation of the brain and allowing saving and loading models.
 * 07.12.2018 - Adding sexual attraction for spouse selection
 * 08.12.2018 - Improving the architecture and communication between the GUI and the simulator.
+* TBI - Arcade environment facade that will allow gym like interaction with the environment.
 * TBI - adding Dopamine implementation for RL algorithms.
 * TBI - emotional/brain state functionality.
 * TBI - creating an executable program.

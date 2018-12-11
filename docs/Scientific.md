@@ -28,6 +28,9 @@ project-origin can be employed to get us closer to answering intriguing question
 In the intelligence realm, first, it is a realistic environment for training intelligent creatures with various skills.
 Second, it may provide us with a deeper understanding of the development of complex skills from basic actions.
 Third, it can show us how intelligence and evolution, are two different mechanisms that affect each other and "cooperate" to build intelligence.
+In biology complex behavior is explained by evolutionary concepts such as nature selection, however, in intelligence studies, behaviour is explained by the concept of promoting individual current and future reward.
+However, we think that studying both of these aspects together and the affect one has on the other, may make our understanding much deeper.
+Intriguing and counter intuitive behaviour may be explained only when both nature and nurture are considered.        
 
 Below are several example questions embodying these aspects:
  - Can we create intelligent creatures that can develop survival skills such as collaboration and communication?
@@ -36,9 +39,10 @@ learn how to survive?
 - Can they learn to look for food?
 - Can it figure out complex behavior, from the procedural and social viewpoints, if that is required to their survival?  
 - Would they learn using their actions (moving, mating, fighting and producing sound) to flourish?
+- Would counter intuitive behavior like [altruism](https://en.wikipedia.org/wiki/Altruism_(biology)), like parenting would develop? What environment (physics) would promote such behaviour?   
 - Would they "understand" the effect of these actions on their own survival and on the environment? 
 - Would they develop non-obvious behavior showing their understanding of the effect of time and age?
-- How fast can they adapt to changes in the environment that change the game rule like epidemic or dearth?  
+- How fast can creatures adapt to changes in the environment? Such change may include epidemic, dearth, introduction of enemies, poisson and change in the enemy intelligence/fit?
 
 In addition, this project can be used as a tool by researchers in different disciples of science to give possible explanations to a wide range of phenomena in nature and help us reveal the essentiality of specific rules.
 For instance, consider the question of the need for minimal reproduction age in organisms biology.

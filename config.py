@@ -8,6 +8,7 @@ class ConfigPhysics:
     SLIPPERY_SPACE = True
     FOOD_CREATURE_RATIO = 1
     INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10
+    SOUND_LASTING_TIME = 2
 
 
 class ConfigBiology:
@@ -23,6 +24,7 @@ class ConfigBiology:
     MEAL_SIZE = 6
     WORK_ENERGY = 3
     BASE_MEMORY_SIZE = 30
+    VOCALIZE_ENERGY = 1
     EVOLUTION_MUTATION_STD = 0.1
 
 

@@ -6,6 +6,7 @@ from config import ConfigPhysics, ConfigBiology, ConfigBrain
 import numpy as np
 import utils
 from creature_actions import Actions
+from sound import Sound
 
 
 class Universe:
@@ -18,6 +19,7 @@ class Universe:
         self.statistics = statistics
         for race in races:
             num_fathers = ConfigPhysics.NUM_FATHERS
+
             fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
             fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
             for n in range(num_fathers):
@@ -52,12 +54,14 @@ class Universe:
     # Time Management
     def pass_time(self):
         self._time += 1
+
         num_creatures = self.num_creatures()
         if self._time < ConfigPhysics.ETERNITY and num_creatures > 0:
             self.give_food(round(num_creatures * ConfigPhysics.FOOD_CREATURE_RATIO))
             for creature in self.get_all_creatures():
                 if creature.alive():
                     self.execute_action(creature)
+            self.space().update_sounds(self._time)
             return self.num_creatures()
         else:
             return None
@@ -117,6 +121,8 @@ class Universe:
             self.creature_work(creature)
         if action == Actions.DIVIDE:
             self.creature_divide(creature)
+        if action == Actions.VOCALIZE:
+            self.creature_vocalize(creature)
 
         dec_1hot = np.zeros(creature.num_actions())
         dec_1hot[decision] = 1
@@ -224,7 +230,8 @@ class Universe:
             if rel_dim_coord == ConfigPhysics.SPACE_SIZE - 1:
                 if not ConfigPhysics.SLIPPERY_SPACE:
                     return
-                self.kill_creature(creature)
+
+                self.kill_creature(creature, "fall")
                 return
             self.space().remove_creature(creature)
             new_cell = self.space().insert_creature(creature, (i + 1, j))
@@ -299,3 +306,13 @@ class Universe:
             return
         creature.reduce_energy(ConfigBiology.WORK_ENERGY)
         creature.cell().add_food(ConfigBiology.MEAL_SIZE)
+
+    def creature_vocalize(self, creature):
+        self.statistics.action_dist[Actions.enum_to_index(Actions.VOCALIZE)] += 1
+        if creature.energy() < ConfigBiology.VOCALIZE_ENERGY:
+            self.kill_creature(creature, 'vocalize')
+            return
+        if [s for s in creature.cell().get_sounds() if s.creature() != creature]:
+            creature.add_energy(2)
+        creature.reduce_energy(ConfigBiology.VOCALIZE_ENERGY)
+        creature.cell().add_sound(Sound(creature, self._time))

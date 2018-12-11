@@ -38,8 +38,7 @@ mavg = Select(value=MA12, options=[MA12, MA26, EMA12, EMA26])
 
 
 class Dashborad:
-    def __init__(self, input_csv, file_path="lines.html"):
-        self._input_csv = input_csv
+    def __init__(self, file_path="lines.html"):
         self._source = ColumnDataSource(dict(
             time=[], average=[], low=[], high=[], open=[], close=[],
             ma=[], macd=[], macd9=[], macdh=[], color=[]))
@@ -104,3 +103,7 @@ class Dashborad:
         new_data['macdh'] = [macd - macd9]
 
         self._source.stream(new_data, 300)
+
+dash = Dashborad()
+for t in range(1000):
+    dash.update(t)

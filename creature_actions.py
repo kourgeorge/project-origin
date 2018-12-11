@@ -19,11 +19,12 @@ class Actions(AutoNumber):
     FIGHT = ()
     WORK = ()
     DIVIDE = ()
+    VOCALIZE = ()
 
     @staticmethod
     def get_all_actions():
         return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT,
-                Actions.WORK, Actions.DIVIDE]
+                Actions.WORK, Actions.DIVIDE, Actions.VOCALIZE]
 
     def __str__(self):
         return str(self.name)

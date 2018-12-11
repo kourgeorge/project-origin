@@ -15,6 +15,13 @@ class Space:
     def grid(self):
         return self._grid
 
+    def cells(self):
+        return list(chain.from_iterable(self._grid))
+
+    def update_sounds(self, time):
+        for cell in self.cells():
+            cell.remove_sounds(time)
+
     def insert_creature(self, creature, coord):
         if not self.valid_coord(coord):
             print("Exception: bad coordinated in space.insert_creature")
@@ -39,7 +46,7 @@ class Space:
         if not self.valid_coord(coord):
             raise Exception("Exception: bad coordinated in space.get_state_in_coord")
         state_dim_size = 2 * vision_range + 1
-        dims = len(races) + 1  # races and food
+        dims = len(races) + 2  # races, food, and sound
         state = np.ones([dims, state_dim_size, state_dim_size]) * -1
 
         for i in range(state_dim_size):
@@ -51,13 +58,16 @@ class Space:
         return state
 
     def get_all_creatures(self):
-        return [creature for cell in list(chain.from_iterable(self._grid)) for creature in cell.creatures()]
+        return [creature for cell in self.cells() for creature in cell.creatures()]
 
     def get_food_distribution(self):
         return [[self._grid[i][j].get_food() for j in range(self._space_size)] for i in range(self._space_size)]
 
     def get_creatures_distribution(self):
         return [[self._grid[i][j].num_creatures() for j in range(self._space_size)] for i in range(self._space_size)]
+
+    def get_sounds_distribution(self):
+        return [[len(self._grid[i][j].get_sounds()) for j in range(self._space_size)] for i in range(self._space_size)]
 
     def valid_coord(self, coord):
         x, y = coord
@@ -67,9 +77,9 @@ class Space:
         nearby_creatures = creature.cell().creatures()
         if len(nearby_creatures) < 2:
             return None
-        for i in range(len(nearby_creatures)):
-            if nearby_creatures[i] != creature:
-                return nearby_creatures[i]
+        for creature_nearby in nearby_creatures:
+            if creature_nearby != creature:
+                return creature_nearby
 
     def find_nearby_creature_from_same_race(self, creature):
         others = self.get_nearby_creatures_from_same_race(creature)

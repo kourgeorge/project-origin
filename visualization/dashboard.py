@@ -24,6 +24,7 @@ class Dashboard:
         self._axes_aiq = self._fig.add_subplot(222)
         self._axes_aiq.set_ylabel('Population AIQ')
         self._line_aiq, = self._axes_aiq.plot([], [], '-', label=self._axes_aiq.yaxis.label.get_text())
+        self._axes_aiq.set_ylim(bottom=0, top=1)
 
         self._fig_creatures_loc = self._fig.add_axes([0.05, 0.1, 0.2, 0.3])
         self._fig_creatures_loc.yaxis.set_major_locator(plt.NullLocator())

@@ -9,6 +9,7 @@ import random
 
 def population_aiq(universe):
     creatures = universe.get_all_creatures()
+    print(str(utils.safe_log2(len(creatures))))
     sample_creatures = random.sample(creatures, utils.safe_log2(len(creatures)))
     all_aiq = [test_aiq(creature) for creature in sample_creatures]
     return np.round(utils.emptynanmean(all_aiq), 2)
@@ -26,8 +27,8 @@ def population_aiq_dist(universe):
 
 def test_aiq(creature):
     score = 0
-    scenarios = [haven_left, haven_right, haven_inplace, haven_up, haven_down,
-                 border_awareness_up, border_awareness_down, border_awareness_left, border_awareness_right]
+    scenarios = [haven_left, haven_right, haven_inplace, haven_up, haven_down]
+                 #border_awareness_up, border_awareness_down, border_awareness_left, border_awareness_right]
     w = 0
     for i in range(len(scenarios)):
         test_state, positive_test_type, expected_actions, weight = scenarios[i](creature.vision_range())
@@ -52,6 +53,7 @@ def _haven(vision_range, where):
     food = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
     same_race_creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
     different_race_creatures = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * 20
+    sound = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
     energy = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * energy
     age = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * age
     if where == 'INPLACE':
@@ -80,7 +82,7 @@ def _haven(vision_range, where):
         different_race_creatures[vision_range][vision_range + 1] = 0
         optimal_action = Actions.RIGHT
 
-    return np.stack((food, same_race_creatures, different_race_creatures, energy, age)), True, [optimal_action], 1
+    return np.stack((food, sound, same_race_creatures, different_race_creatures, energy, age)), True, [optimal_action], 1
 
 
 def haven_inplace(vision_range):
@@ -111,25 +113,30 @@ def _border_awareness(vision_range, direction):
     creatures = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
     energy = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * energy
     age = np.ones(shape=(2 * vision_range + 1, 2 * vision_range + 1)) * age
+    sound = np.zeros(shape=(2 * vision_range + 1, 2 * vision_range + 1))
 
     if direction == 'DOWN':
         food[vision_range + 1:][:] = -1
         creatures[vision_range + 1:][:] = -1
+        sound[vision_range + 1:][:] = -1
         bad_action = Actions.DOWN
     if direction == 'UP':
         food[:vision_range][:] = -1
         creatures[:vision_range][:] = -1
+        sound[:vision_range][:] = -1
         bad_action = Actions.UP
     if direction == 'LEFT':
         food[:][:vision_range] = -1
         creatures[:][:vision_range] = -1
+        sound[:][:vision_range] = -1
         bad_action = Actions.LEFT
     if direction == 'RIGHT':
         food[:][vision_range + 1:] = -1
         creatures[:][vision_range + 1:] = -1
+        sound[:][vision_range + 1:] = -1
         bad_action = Actions.RIGHT
 
-    return np.stack((food, creatures, creatures, energy, age)), False, [bad_action], 0.25
+    return np.stack((food, sound, creatures, creatures, energy, age)), False, [bad_action], 0.25
 
 
 def border_awareness_up(vision_range):

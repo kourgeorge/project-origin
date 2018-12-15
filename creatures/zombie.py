@@ -10,7 +10,7 @@ from evolution import DNA
 class Zombie(Human):
     """Human like creature but with no reason, acting from the inherited fitrah or behave randomly"""
 
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Zombie, self).__init__(universe, id, dna, age, energy, parents)
@@ -32,13 +32,17 @@ class Zombie(Human):
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_GAMMA,
-                   Human.race_fitrah())
+                   Zombie.race_fitrah())
 
     def decide(self, state):
         brain_actions_prob = self._brain.think(state)
         action_prob = utils.normalize_dist(brain_actions_prob + self.fitrah())
         decision = utils.epsilon_greedy(0, dist=action_prob)
         return decision
+
+    @staticmethod
+    def race_fitrah():
+        return utils.normalize_dist(Zombie.Fitrah)
 
     @staticmethod
     def self_race_enemy():

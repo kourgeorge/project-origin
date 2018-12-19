@@ -16,3 +16,17 @@ The structure of the race brain is predefined by the race and parts determining 
 
 ## Creating new brains
 The class [`abstractbrain.py`](/brains/abstractbrain.py) is an abstract class that each brain should implement.
+The derived class must implement the following methods:
+
+#### `think` 
+Returns a distribution over the actions given an observation.
+
+#### `train` 
+Trains the brain based on given experience.
+It may first sample from the experience
+ 
+#### `save_model` (optional)
+Saves the brain model parameters to path. 
+
+#### `load_model` (optional)
+Loads the brain parameters from the disk given a path.

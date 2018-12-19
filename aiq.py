@@ -12,7 +12,6 @@ class AIQ:
     @staticmethod
     def get_population_aiq(universe):
         creatures = universe.get_all_creatures()
-        print(str(utils.safe_log2(len(creatures))))
         sample_creatures = random.sample(creatures, utils.safe_log2(len(creatures)))
         all_aiq = [AIQ.get_creature_aiq(creature) for creature in sample_creatures]
         return np.round(utils.emptynanmean(all_aiq), 2)

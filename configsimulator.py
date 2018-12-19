@@ -12,4 +12,4 @@ class ConfigSimulator:
     CSV_LOGGING = False
     LOGGING_BATCH_SIZE = 10
     UI_UPDATE_INTERVAL = 200  # ms
-    RACES = [Bacterium]
+    RACES = [HumanTorchBrain, HumanTorchBrain2]

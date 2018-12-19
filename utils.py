@@ -78,7 +78,7 @@ def emptynanmean(array):
 def safe_log2(number):
     if number <= np.e:
         return 0
-    return int(np.log2(number))
+    return int(number/10)
 
 
 def cosine_similarity(vec1, vec2):

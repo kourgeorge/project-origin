@@ -1,7 +1,7 @@
 __author__ = 'gkour'
 
 from config import ConfigBiology, ConfigBrain
-from brains.brain_simple import RandomBrain
+from brains.brainsimple import RandomBrain
 from creatures.human import Human
 import utils
 from evolution import DNA

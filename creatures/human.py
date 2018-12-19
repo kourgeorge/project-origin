@@ -5,7 +5,7 @@ from creature_actions import Actions
 from config import ConfigBiology, ConfigBrain
 import utils
 from evolution import DNA
-from brains.brain_simple import RandomBrain
+from brains.brainsimple import RandomBrain
 import random
 import numpy as np
 

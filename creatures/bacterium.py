@@ -3,7 +3,7 @@ __author__ = 'gkour'
 from creatures.abstractcreature import AbstractCreature
 from creature_actions import Actions
 from config import ConfigBiology, ConfigBrain
-from brains.brain_dqn_tf import BrainDQN
+from brains.braindqntf import BrainDQN
 import utils
 from evolution import DNA
 

@@ -31,7 +31,7 @@ class Zombie(Human):
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_GAMMA,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    Zombie.race_fitrah())
 
     def decide(self, state):

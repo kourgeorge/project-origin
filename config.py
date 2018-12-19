@@ -3,7 +3,7 @@ __author__ = 'gkour'
 
 class ConfigPhysics:
     SPACE_SIZE = 20
-    NUM_FATHERS = 300
+    NUM_FATHERS = 400
     ETERNITY = 100000
     SLIPPERY_SPACE = True
     FOOD_CREATURE_RATIO = 1
@@ -17,7 +17,7 @@ class ConfigBiology:
     MOVE_ENERGY = 1
     FIGHT_ENERGY = 5
     INITIAL_ENERGY = 50
-    MATE_ENERGY = int(INITIAL_ENERGY / 3)
+    MATE_ENERGY = int(INITIAL_ENERGY / 2)
     MATURITY_AGE = 12  # int(BASE_DYING_AGE / 5)
     BASE_LEARN_FREQ = 5
     BASE_VISION_RANGE = 2
@@ -29,7 +29,7 @@ class ConfigBiology:
 
 
 class ConfigBrain:
-    BASE_GAMMA = 0.9
+    BASE_REWARD_DISCOUNT = 0.9
     BASE_LEARNING_RATE = 1e-4
     BASE_HIDDEN_LAYER_SIZE = 10
     BASE_EPSILON = 0.1

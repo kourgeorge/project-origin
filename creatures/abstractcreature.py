@@ -32,7 +32,7 @@ class AbstractCreature:
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_GAMMA,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    AbstractCreature.race_fitrah())
 
     @staticmethod
@@ -109,8 +109,8 @@ class AbstractCreature:
     def fitrah(self):
         return self._dna.fitrah()
 
-    def gamma(self):
-        return self._dna.gamma()
+    def reward_discount(self):
+        return self._dna.reward_discount()
 
     def dna(self):
         return self._dna

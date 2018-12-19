@@ -15,15 +15,15 @@ device = "cpu"
 class BrainDQN(AbstractBrain):
     BATCH_SIZE = 128
 
-    def __init__(self, observation_shape, num_actions, gamma):
+    def __init__(self, observation_shape, num_actions, reward_discount):
         super(BrainDQN, self).__init__(observation_shape, num_actions)
         self.policy_net = DQN(observation_shape[0], num_actions).to(device)
         self.target_net = DQN(observation_shape[0], num_actions).to(device)
         self.optimizer = optim.RMSprop(self.policy_net.parameters())
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
-        self.gamma = gamma
-        print("Pytorch DQN. Num parameters: " + str(self.num_trainable_parameters()))
+        self.reward_discount = reward_discount
+        #print("Pytorch DQN. Num parameters: " + str(self.num_trainable_parameters()))
 
     def think(self, obs):
         with torch.no_grad():
@@ -52,7 +52,7 @@ class BrainDQN(AbstractBrain):
             if terminal:
                 expected_state_action_values.append(reward_batch[i])
             else:
-                expected_state_action_values.append(reward_batch[i] + self.gamma * torch.max(qvalue_batch[i]))
+                expected_state_action_values.append(reward_batch[i] + self.reward_discount * torch.max(qvalue_batch[i]))
 
         # Compute Huber loss
         loss = F.smooth_l1_loss(state_action_values, torch.stack(expected_state_action_values).detach())

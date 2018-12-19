@@ -25,7 +25,7 @@ class HumanDQNBrain(Human):
             HumanDQNBrain._master_brain = BrainDQN(observation_shape=self.observation_shape(),
                                                    num_actions=self.num_actions(), lr=ConfigBrain.BASE_LEARNING_RATE,
                                                    h_size=ConfigBrain.BASE_HIDDEN_LAYER_SIZE, scope=self.race_name(),
-                                                   gamma=ConfigBrain.BASE_GAMMA)
+                                                   reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
             return HumanDQNBrain._master_brain
         return HumanDQNBrain._master_brain
 
@@ -44,7 +44,7 @@ class HumanDQNBrain(Human):
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_GAMMA,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    HumanDQNBrain.race_fitrah())
 
     @staticmethod

@@ -11,18 +11,18 @@ import os
 
 class HumanTorchBrain(Human):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 1, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
-        self._brain = self.get_master_brain()
-        #self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-        #                                             num_actions=self.num_actions(), gamma=ConfigBrain.BASE_GAMMA)
+        #self._brain = self.get_master_brain()
+        self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
+                               num_actions=self.num_actions(), reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
 
     def get_master_brain(self):
         if HumanTorchBrain._master_brain is None:
             HumanTorchBrain._master_brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-                                                     num_actions=self.num_actions(), gamma=ConfigBrain.BASE_GAMMA)
+                                                     num_actions=self.num_actions(), reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
             if self.model_path() is not None and os.path.exists(self.model_path()):
                 HumanTorchBrain._master_brain.load_model(self.model_path())
             return HumanTorchBrain._master_brain
@@ -43,7 +43,7 @@ class HumanTorchBrain(Human):
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_GAMMA,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    HumanTorchBrain.race_fitrah())
 
     @staticmethod

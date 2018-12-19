@@ -19,13 +19,13 @@ class BrainDQN(AbstractBrain):
             tf.reset_default_graph()
             BrainDQN.sess = tf.Session()
 
-    def __init__(self, lr, observation_shape, num_actions, h_size, scope, gamma, copy_from_scope=None):
+    def __init__(self, lr, observation_shape, num_actions, h_size, scope, reward_discount, copy_from_scope=None):
         super(BrainDQN, self).__init__(observation_shape, num_actions)
         self._scope = scope
         self._h_size = h_size
         self._regularization_param = 0.001
         self.lr = lr
-        self._gamma = gamma
+        self.reward_discount = reward_discount
 
         BrainDQN.init_session()
 
@@ -78,7 +78,7 @@ class BrainDQN(AbstractBrain):
             if terminal:
                 y_batch.append(reward_batch[i])
             else:
-                y_batch.append(reward_batch[i] + self._gamma * np.max(qvalue_batch[i]))
+                y_batch.append(reward_batch[i] + self.reward_discount * np.max(qvalue_batch[i]))
 
         BrainDQN.sess.run(self.trainStep, feed_dict={
             self.y_input: y_batch,

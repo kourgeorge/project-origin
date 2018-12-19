@@ -32,7 +32,7 @@ class Human(AbstractCreature):
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_GAMMA,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    Human.race_fitrah())
 
     @staticmethod
@@ -68,4 +68,5 @@ class Human(AbstractCreature):
             return
         oral_tradition = np.concatenate([parent.get_memory() for parent in self.get_parents()])
         self._memory.extend(random.sample(oral_tradition.tolist(), min(int(self.memory_size()/2), len(oral_tradition))))
-        self.brain().train(self.get_memory())
+        for i in range(5):
+            self.brain().train(self.get_memory())

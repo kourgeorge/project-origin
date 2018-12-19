@@ -39,7 +39,7 @@ class Stats:
             ('LRate',
              np.round(utils.emptynanmean([creature.learning_rate() for creature in universe.get_all_creatures()]) *
                       (1 / ConfigBrain.BASE_LEARNING_RATE), 2)),
-            ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
+            ('RDiscount', np.round(utils.emptynanmean([creature.reward_discount() for creature in universe.get_all_creatures()]), 2)),
             ('VRange',
              np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
             ('AIQ', AIQ.get_population_aiq(universe)),

@@ -22,7 +22,7 @@ class Bacterium(AbstractCreature):
                                                observation_shape=self.observation_shape(),
                                                num_actions=self.num_actions(),
                                                h_size=ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
-                                               gamma=ConfigBrain.BASE_GAMMA, scope='master' + self.race_name())
+                                               reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT, scope='master' + self.race_name())
             return Bacterium._master_brain
         return Bacterium._master_brain
 
@@ -37,7 +37,7 @@ class Bacterium(AbstractCreature):
                    ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_GAMMA,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    Bacterium.race_fitrah())
 
     @staticmethod

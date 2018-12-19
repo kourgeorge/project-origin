@@ -2,7 +2,7 @@ __author__ = 'gkour'
 
 import numpy as np
 from collections import OrderedDict
-import aiq
+from aiq import AIQ
 import pandas as pd
 import utils
 from creature_actions import Actions
@@ -42,7 +42,7 @@ class Stats:
             ('gamma', np.round(utils.emptynanmean([creature.gamma() for creature in universe.get_all_creatures()]), 2)),
             ('VRange',
              np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
-            ('AIQ', aiq.population_aiq(universe)),
+            ('AIQ', AIQ.get_population_aiq(universe)),
             ('RacesDist', universe.races_dist()),
             ('ActionDist', self.action_dist),
             ('DeathCause', self.death_cause),

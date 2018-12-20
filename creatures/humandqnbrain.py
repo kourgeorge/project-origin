@@ -17,14 +17,14 @@ class HumanDQNBrain(Human):
 
         # self._brain = BrainDQN(observation_shape=self.observation_shape(),
         #                        num_actions=self.num_actions(), lr=ConfigBrain.BASE_LEARNING_RATE,
-        #                        h_size=ConfigBrain.BASE_HIDDEN_LAYER_SIZE, scope=str(id) + self.race_name(),
-        #                        gamma=ConfigBrain.BASE_GAMMA)
+        #                        h_size=ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM, scope=str(id) + self.race_name(),
+        #                        reward_discount=self.reward_discount())
 
     def get_master_brain(self):
         if HumanDQNBrain._master_brain is None:
             HumanDQNBrain._master_brain = BrainDQN(observation_shape=self.observation_shape(),
                                                    num_actions=self.num_actions(), lr=ConfigBrain.BASE_LEARNING_RATE,
-                                                   h_size=ConfigBrain.BASE_HIDDEN_LAYER_SIZE, scope=self.race_name(),
+                                                   h_size=ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM, scope=self.race_name(),
                                                    reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
             return HumanDQNBrain._master_brain
         return HumanDQNBrain._master_brain
@@ -41,7 +41,7 @@ class HumanDQNBrain(Human):
     def race_basic_dna():
         return DNA(ConfigBiology.BASE_MEMORY_SIZE,
                    ConfigBrain.BASE_LEARNING_RATE,
-                   ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_REWARD_DISCOUNT,

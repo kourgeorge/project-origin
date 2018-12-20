@@ -28,7 +28,7 @@ class Zombie(Human):
     def race_basic_dna():
         return DNA(ConfigBiology.BASE_MEMORY_SIZE,
                    ConfigBrain.BASE_LEARNING_RATE,
-                   ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_REWARD_DISCOUNT,

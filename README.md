@@ -76,3 +76,4 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * TBI - creating a visual environment and creatures using unity.
 * TBI - Different types of food/poison.
 * TBI - (maybe) movement depends on size (internal energy).
+* TBI - Implementing advanced environmental phenomenon like epidemic.

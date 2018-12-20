@@ -21,7 +21,7 @@ class Bacterium(AbstractCreature):
             Bacterium._master_brain = BrainDQN(lr=ConfigBrain.BASE_LEARNING_RATE,
                                                observation_shape=self.observation_shape(),
                                                num_actions=self.num_actions(),
-                                               h_size=ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                                               h_size=ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                                                reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT, scope='master' + self.race_name())
             return Bacterium._master_brain
         return Bacterium._master_brain
@@ -34,7 +34,7 @@ class Bacterium(AbstractCreature):
     def race_basic_dna():
         return DNA(ConfigBiology.BASE_MEMORY_SIZE,
                    ConfigBrain.BASE_LEARNING_RATE,
-                   ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_REWARD_DISCOUNT,

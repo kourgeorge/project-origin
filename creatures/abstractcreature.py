@@ -29,7 +29,7 @@ class AbstractCreature:
     def race_basic_dna():
         return DNA(ConfigBiology.BASE_MEMORY_SIZE,
                    ConfigBrain.BASE_LEARNING_RATE,
-                   ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_REWARD_DISCOUNT,
@@ -97,8 +97,8 @@ class AbstractCreature:
     def learning_rate(self):
         return self._dna.learning_rate()
 
-    def brain_hidden_layer_size(self):
-        return self._dna.hidden_layer_size()
+    def brain_structure_param(self):
+        return self._dna.brain_structure_param()
 
     def learning_frequency(self):
         return self._dna.learning_frequency()

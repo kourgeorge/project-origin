@@ -15,9 +15,9 @@ class HumanTorchBrain(Human):
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
-        #self._brain = self.get_master_brain()
+        # self._brain = self.get_master_brain()
         self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-                               num_actions=self.num_actions(), reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
+                              num_actions=self.num_actions(), reward_discount=self.reward_discount())
 
     def get_master_brain(self):
         if HumanTorchBrain._master_brain is None:
@@ -40,10 +40,10 @@ class HumanTorchBrain(Human):
     def race_basic_dna():
         return DNA(ConfigBiology.BASE_MEMORY_SIZE,
                    ConfigBrain.BASE_LEARNING_RATE,
-                   ConfigBrain.BASE_HIDDEN_LAYER_SIZE,
+                   ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   ConfigBrain.BASE_REWARD_DISCOUNT,
+                   0.99,
                    HumanTorchBrain.race_fitrah())
 
     @staticmethod
@@ -54,8 +54,8 @@ class HumanTorchBrain(Human):
     def self_race_enemy():
         return False
 
-    def new_born(self):
-        pass
+    # def new_born(self):
+    #     pass
 
     def decide(self, state):
         eps = max(ConfigBrain.BASE_EPSILON,

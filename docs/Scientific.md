@@ -42,12 +42,12 @@ learn how to survive?
 - Would counter intuitive behavior like [altruism](https://en.wikipedia.org/wiki/Altruism_(biology)), like parenting would develop? What environment (physics) would promote such behaviour?   
 - Would they "understand" the effect of these actions on their own survival and on the environment? 
 - Would they develop non-obvious behavior showing their understanding of the effect of time and age?
-- How fast can creatures adapt to changes in the environment? Such change may include epidemic, dearth, introduction of enemies, poisson and change in the enemy intelligence/fit?
+- How fast can creatures adapt to changes in the environment? Such change may include epidemic, dearth, introduction of enemies, poison and change in the enemy intelligence/fit?
 
 In addition, this project can be used as a tool by researchers in different disciples of science to give possible explanations to a wide range of phenomena in nature and help us reveal the essentiality of specific rules.
 For instance, consider the question of the need for minimal reproduction age in organisms biology.
 One answer may be that this mechanism ensures that ancestors are physically and mentally mature enough to be able to take care of their offsprings. 
-However, this is an insufficient explanation when it comes to germs or other organisms that do not take care of their offsprings but their biolology implements this mechanism.
+However, this is an insufficient explanation when it comes to germs or other organisms that do not take care of their offsprings but their biology implements this mechanism.
 Using the simulation we noted that if no maturity age is implemented in the universe, a population explosion consisting of stupid creatures may happen.
 This statistically can happen because natural selection can push them to reproduce frequently and immediately after birth, allowing their race to flourish without showing any tracts of intelligent behavior.
 However, this phenomenon rarely happens in universes enforcing maturity age.

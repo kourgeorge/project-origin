@@ -6,7 +6,7 @@ The Universe responses to the action, and changes accordingly.
 It also changes the acting creature internal state and maybe other affected creatures, depending on the action.
 
 
-### Food
+### Food:
 Food is distributed in the world in several ways.
 First, at the beginning of time, on the universe creation, the universe may distribute a specific amount of food determined in the config file.
 Then, at each time step, the universe distribute food amount proportional to the currently living creatures.
@@ -34,7 +34,7 @@ In the future, the amount of needed energy for the creature to move may depend o
 
 #### Eating
 As its name, suggests, this action allow the creature to consume food from the space.
-The consumpted food amount is limited by it's the amount in the current cell and by the meal size defined in the biological configuration.
+The consumed food amount is limited by it's the amount in the current cell and by the meal size defined in the biological configuration.
 This action reduces accordingly the amount of food in the creature's cell and adds proportional units of energy to the creature allowing him to continue living.
 
 #### Dividing
@@ -46,7 +46,7 @@ Except the evolutionary DNA mutation, the DNA of the daughter creatures is the s
 #### Mating
 In sexual creatures, the mating creates a new offspring creature, have a recombined and mutated version DNA from its parents.
 Choosing to mate, the creature gets a list of all the creatures in it's surrounding, and probabilistically chooses the one that it is most attracted to.
-Currently, the sexual attraction is implemented by the function s(1-s), where s is the cosine similarity between the two creature's DNA.
+Currently, the sexual attraction is implemented by the function s(1-s), where s is the cosine similarity between the two creatures' DNA.
 Finally, the spouse is selected by the distribution determined by the attraction (softmax overall attractions).
 This action may be limited by age, called maturity age defined by the configuration.
 
@@ -58,7 +58,7 @@ The creature that wins the fight takes half of the enemy energy, therefore, it i
 The fight action requires a substantial amount of energy, controlled in the config file. 
 
 #### Working
-When the creature choose to work, The creature spends working energy (defined in the configuration file) to add food to the cell it is located in.
+When the creature choose to work, it spends working energy (defined in the configuration file) to add food to the cell it is located in.
 Note that the action work only spends energy, and the creature should perform the action each to consume food from the space.
 Therefore, the creature should learn that it should work only if there is no food in the surrounding environment.
 In addition, it should learn that working is not enough to provide it with energy, but it must eat to consume it's labor product.

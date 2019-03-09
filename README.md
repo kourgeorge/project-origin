@@ -4,6 +4,8 @@
 
 [![DOI](https://zenodo.org/badge/141611333.svg)](https://zenodo.org/badge/latestdoi/141611333)
 
+*The paper describing this project is currently being developed in Overleaf: https://www.overleaf.com/read/mhjzhczdstfs.*
+
 **project-origin** is an attempt to create an artificial life environment that allows studying the emergence and evolution of intelligence; an area of study known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
 *The underlying thought under this work is the idea that intelligence is not engineered, intelligence emerges*.
 project-origin aims at demonstrating how by setting basic physical rules, intelligent creatures emerges.  

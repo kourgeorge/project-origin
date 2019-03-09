@@ -7,10 +7,11 @@
 *The paper describing this project is currently being developed in Overleaf: https://www.overleaf.com/read/mhjzhczdstfs.*
 
 **project-origin** is an attempt to create an artificial life environment that allows studying the emergence and evolution of intelligence; an area of study known as [***Noogenesis***](https://en.wikipedia.org/wiki/Noogenesis).
-*The underlying thought under this work is the idea that intelligence is not engineered, intelligence emerges*.
-project-origin aims at demonstrating how by setting basic physical rules, intelligent creatures emerges.  
+project-origin aims at demonstrating how by setting basic physical rules, intelligent behavior appears.  
 Natures with different rules and creatures with different learning mechanisms can be easily simulated enabling the users of project-origin to investigate the tantalizing phenomenon of intelligence.
 It aims at expanding the horizon of artificial intelligence research by implementing mechanisms of intelligence governed by both [Nature and Nurture](https://en.wikipedia.org/wiki/Nature_versus_nurture).
+*The underlying thought under this work is the idea that intelligence is not engineered but rather emerges*.
+
 project-origin does not only allow observing the emergence of behavior and the destiny of different intelligent creatures but make it easy to implement and extend reinforcement learning algorithms.
 While project-origin is built with deep learning models in mind, any learning algorithm can effortlessly be implemented and deployed.   
 For more information about the scientific motivation behind project-origin visit [**this page**](/docs/Scientific.md).

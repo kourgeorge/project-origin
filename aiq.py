@@ -29,8 +29,8 @@ class AIQ:
     @staticmethod
     def get_creature_aiq(creature):
         score = 0
-        scenarios = [AIQ.haven_left, AIQ.haven_right, AIQ.haven_inplace, AIQ.haven_up, AIQ.haven_down]
-                     #AIQ.border_awareness_up, AIQ.border_awareness_down, AIQ.border_awareness_left, AIQ.border_awareness_right]
+        scenarios = [AIQ.haven_left, AIQ.haven_right, AIQ.haven_inplace, AIQ.haven_up, AIQ.haven_down,
+                     AIQ.border_awareness_up, AIQ.border_awareness_down, AIQ.border_awareness_left, AIQ.border_awareness_right]
         w = 0
         for i in range(len(scenarios)):
             test_state, positive_test_type, expected_actions, weight = scenarios[i](creature.vision_range())
@@ -139,7 +139,7 @@ class AIQ:
             sound[:][vision_range + 1:] = -1
             bad_action = Actions.RIGHT
 
-        return np.stack((food, sound, creatures, creatures, energy, age)), False, [bad_action], 0.25
+        return np.stack((food, sound, creatures, creatures, energy, age)), False, [bad_action], 0.5
 
     @staticmethod
     def border_awareness_up(vision_range):

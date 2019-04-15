@@ -48,6 +48,8 @@ class Stats:
             ('DeathCause', self.death_cause),
             ('CreaturesDist', universe.get_creatures_distribution()),
             ('FoodDist', universe.get_food_distribution()),
+            ('Fitrah', np.round(np.nanmean([creature.fitrah() for creature in universe.get_all_creatures()], axis=0),
+                      2)),
         ])
 
     def accumulate_epoch_stats(self, universe):

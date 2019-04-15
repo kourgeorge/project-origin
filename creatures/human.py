@@ -12,7 +12,7 @@ import numpy as np
 
 class Human(AbstractCreature):
     _master_brain = None
-    Fitrah = [1, 1, 1, 1, 2, 2, 2]
+    Fitrah = [1, 1, 1, 1, 2, 2, 2, 2]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
@@ -37,7 +37,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT, Actions.VOCALIZE]
 
     @staticmethod
     def get_race():

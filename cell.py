@@ -50,7 +50,7 @@ class Cell:
 
     def get_state_in_cell(self, races):
         food = [self.get_food()]
-        sounds = [len(self.get_sounds())]
+        sounds = [self.get_sounds()]
         races_energy = [self.race_energy_level(race) for race in races]
         return food + sounds + races_energy
 

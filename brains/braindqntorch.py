@@ -23,7 +23,7 @@ class BrainDQN(AbstractBrain):
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
         self.reward_discount = reward_discount
-        #print("Pytorch DQN. Num parameters: " + str(self.num_trainable_parameters()))
+        print("Pytorch DQN. Num parameters: " + str(self.num_trainable_parameters()))
 
     def think(self, obs):
         with torch.no_grad():
@@ -85,6 +85,6 @@ class DQN(nn.Module):
         self.head = nn.Linear(45, num_actions)
 
     def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = F.relu(self.conv2(x))
+        x = self.bn1(F.relu(self.conv1(x)))
+        x = self.bn2(F.relu(self.conv2(x)))
         return self.head(x.view(x.size(0), -1))

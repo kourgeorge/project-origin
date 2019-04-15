@@ -154,7 +154,7 @@ class Universe:
                 self.statistics.death_cause[2] += 1
             elif cause == 'fall':
                 self.statistics.death_cause[3] += 1
-            else:
+            else: # fatigue
                 self.statistics.death_cause[0] += 1
 
     ## AbstractCreature Actions
@@ -261,7 +261,7 @@ class Universe:
 
     def creature_divide(self, creature):
         self.statistics.action_dist[Actions.enum_to_index(Actions.DIVIDE)] += 1
-        if creature.age() < ConfigBiology.MATURITY_AGE or creature.energy() < 2 * ConfigBiology.INITIAL_ENERGY:
+        if creature.age() < ConfigBiology.MATURITY_AGE:
             if creature.energy() < ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
                 return

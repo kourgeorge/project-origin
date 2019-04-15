@@ -57,3 +57,6 @@ class HumanDQNBrain(Human):
 
     def model_path(self):
         return './models/' + self.race_name()
+
+    def new_born(self):
+        pass

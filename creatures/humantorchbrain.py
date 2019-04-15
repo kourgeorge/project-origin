@@ -15,9 +15,9 @@ class HumanTorchBrain(Human):
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
-        # self._brain = self.get_master_brain()
+        #self._brain = self.get_master_brain()
         self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-                              num_actions=self.num_actions(), reward_discount=self.reward_discount())
+                             num_actions=self.num_actions(), reward_discount=self.reward_discount())
 
     def get_master_brain(self):
         if HumanTorchBrain._master_brain is None:
@@ -43,7 +43,7 @@ class HumanTorchBrain(Human):
                    ConfigBrain.BASE_BRAIN_STRUCTURE_PARAM,
                    ConfigBiology.BASE_LEARN_FREQ,
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
-                   0.99,
+                   ConfigBrain.BASE_REWARD_DISCOUNT,
                    HumanTorchBrain.race_fitrah())
 
     @staticmethod
@@ -56,15 +56,6 @@ class HumanTorchBrain(Human):
 
     # def new_born(self):
     #     pass
-
-    def decide(self, state):
-        eps = max(ConfigBrain.BASE_EPSILON,
-                  1 - (self._age / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
-        brain_actions_prob = self.brain().think(state)
-        action_prob = utils.normalize_dist(brain_actions_prob)
-        decision = utils.epsilon_greedy(eps, action_prob)
-        return decision
-
 
 class HumanTorchBrain2(HumanTorchBrain):
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):

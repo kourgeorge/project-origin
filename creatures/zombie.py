@@ -10,7 +10,7 @@ from evolution import DNA
 class Zombie(Human):
     """Human like creature but with no reason, acting from the inherited fitrah or behave randomly"""
 
-    Fitrah = [0, 0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Zombie, self).__init__(universe, id, dna, age, energy, parents)
@@ -44,9 +44,9 @@ class Zombie(Human):
     def race_fitrah():
         return utils.normalize_dist(Zombie.Fitrah)
 
-    @staticmethod
-    def self_race_enemy():
-        return True
+    # @staticmethod
+    # def self_race_enemy():
+    #     return True
 
     def dying(self):
         pass

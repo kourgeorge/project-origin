@@ -39,7 +39,7 @@ class OriginGUI:
         """Handle all messages currently in the queue, if any."""
         while self.msg_queue.qsize():
             try:
-                self.refresh_data(self.msg_queue.get(0))
+                self.refresh_data(self.msg_queue.get())
             except Exception as exp:
                 print(str(exp))
                 pass

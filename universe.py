@@ -22,6 +22,7 @@ class Universe:
 
             fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
             fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
+            ages = np.random.randint(low=0, high=ConfigBiology.BASE_LIFE_EXPECTANCY, size=num_fathers)
             for n in range(num_fathers):
                 dna = Evolution.mutate_dna(race.race_basic_dna())
 
@@ -154,7 +155,7 @@ class Universe:
                 self.statistics.death_cause[2] += 1
             elif cause == 'fall':
                 self.statistics.death_cause[3] += 1
-            else: # fatigue
+            else:  # fatigue
                 self.statistics.death_cause[0] += 1
 
     ## AbstractCreature Actions

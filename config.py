@@ -3,8 +3,8 @@ __author__ = 'gkour'
 
 class ConfigPhysics:
     SPACE_SIZE = 20
-    NUM_FATHERS = 250
-    ETERNITY = 100000
+    NUM_FATHERS = 700
+    ETERNITY = 80 * 4
     SLIPPERY_SPACE = True
     FOOD_CREATURE_RATIO = 1
     INITIAL_FOOD_AMOUNT = NUM_FATHERS * 10

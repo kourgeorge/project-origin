@@ -12,7 +12,7 @@ import numpy as np
 
 class Human(AbstractCreature):
     _master_brain = None
-    Fitrah = [1, 1, 1, 1, 2, 2, 2, 2]
+    Fitrah = [0, 0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
@@ -37,7 +37,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT, Actions.VOCALIZE]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT]
 
     @staticmethod
     def get_race():
@@ -53,7 +53,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def self_race_enemy():
-        return False
+        return True
 
     def decide(self, state):
         eps = max(ConfigBrain.BASE_EPSILON,
@@ -66,7 +66,12 @@ class Human(AbstractCreature):
     def new_born(self):
         if self.get_parents() is None:
             return
-        oral_tradition = np.concatenate([parent.get_memory() for parent in self.get_parents()])
-        self._memory.extend(random.sample(oral_tradition.tolist(), min(int(self.memory_size()/2), len(oral_tradition))))
+        memories = [parent.get_memory() for parent in self.get_parents() if len(parent.get_memory()) > 0]
+        if len(memories) == 0:
+            return
+
+        oral_tradition = np.concatenate(memories)
+        self._memory.extend(
+            random.sample(oral_tradition.tolist(), min(int(self.memory_size() / 2), len(oral_tradition))))
         for i in range(5):
             self.brain().train(self.get_memory())

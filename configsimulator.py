@@ -9,7 +9,7 @@ from creatures.bacterium import Bacterium
 
 class ConfigSimulator:
     CSV_FILE_PATH = './log/output{}.csv'
-    CSV_LOGGING = False
+    CSV_LOGGING = True
     LOGGING_BATCH_SIZE = 10
     UI_UPDATE_INTERVAL = 200  # ms
-    RACES = [Zombie ]
+    RACES = [HumanTorchBrain]

@@ -15,9 +15,9 @@ class HumanTorchBrain(Human):
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
-        #self._brain = self.get_master_brain()
-        self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-                             num_actions=self.num_actions(), reward_discount=self.reward_discount())
+        self._brain = self.get_master_brain()
+        #self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
+        #                     num_actions=self.num_actions(), reward_discount=self.reward_discount())
 
     def get_master_brain(self):
         if HumanTorchBrain._master_brain is None:
@@ -52,10 +52,10 @@ class HumanTorchBrain(Human):
 
     @staticmethod
     def self_race_enemy():
-        return False
+        return True
 
-    # def new_born(self):
-    #     pass
+    def new_born(self):
+        pass
 
 class HumanTorchBrain2(HumanTorchBrain):
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):

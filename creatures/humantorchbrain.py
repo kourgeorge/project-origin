@@ -10,23 +10,10 @@ import os
 
 
 class HumanTorchBrain(Human):
-    _master_brain = None
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanTorchBrain, self).__init__(universe, id, dna, age, energy, parents)
-        self._brain = self.get_master_brain()
-        #self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-        #                     num_actions=self.num_actions(), reward_discount=self.reward_discount())
-
-    def get_master_brain(self):
-        if HumanTorchBrain._master_brain is None:
-            HumanTorchBrain._master_brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
-                                                     num_actions=self.num_actions(), reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
-            if self.model_path() is not None and os.path.exists(self.model_path()):
-                HumanTorchBrain._master_brain.load_model(self.model_path())
-            return HumanTorchBrain._master_brain
-        return HumanTorchBrain._master_brain
 
     @staticmethod
     def get_race():
@@ -50,21 +37,40 @@ class HumanTorchBrain(Human):
     def race_fitrah():
         return utils.normalize_dist(HumanTorchBrain.Fitrah)
 
-    @staticmethod
-    def self_race_enemy():
-        return True
+    # @staticmethod
+    # def self_race_enemy():
+    #     return True
 
-    def new_born(self):
-        pass
+    def initialize_brain(self):
+        self._brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
+                               num_actions=self.num_actions(), reward_discount=self.reward_discount())
 
-class HumanTorchBrain2(HumanTorchBrain):
+
+class HumanTorchUnifiedBrain(HumanTorchBrain):
+    _master_brain = None
+
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
-        super(HumanTorchBrain2, self).__init__(universe, id, dna, age, energy, parents)
+        super(HumanTorchUnifiedBrain, self).__init__(universe, id, dna, age, energy, parents)
+
+    def initialize_brain(self):
+        self._brain = self.get_master_brain()
+
+    def get_master_brain(self):
+        if HumanTorchUnifiedBrain._master_brain is None:
+            HumanTorchUnifiedBrain._master_brain = BrainDQN(observation_shape=tuple(self.observation_shape()),
+                                                            num_actions=self.num_actions(),
+                                                            reward_discount=ConfigBrain.BASE_REWARD_DISCOUNT)
+            if self.model_path() is not None and os.path.exists(self.model_path()):
+                HumanTorchUnifiedBrain._master_brain.load_model(self.model_path())
+        return HumanTorchUnifiedBrain._master_brain
 
     @staticmethod
     def get_race():
-        return HumanTorchBrain2
+        return HumanTorchUnifiedBrain
 
     @staticmethod
     def race_name():
-        return 'HumanDQNBrain2'
+        return 'HumanTorchUnifiedBrain'
+
+    def new_born(self):
+        pass

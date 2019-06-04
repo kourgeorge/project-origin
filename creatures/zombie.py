@@ -14,7 +14,6 @@ class Zombie(Human):
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Zombie, self).__init__(universe, id, dna, age, energy, parents)
-        self._brain = RandomBrain(self.num_actions())
 
     @staticmethod
     def get_race():
@@ -39,6 +38,9 @@ class Zombie(Human):
         action_prob = utils.normalize_dist(brain_actions_prob) # + self.fitrah()
         decision = utils.epsilon_greedy(0, dist=action_prob)
         return decision
+
+    def initialize_brain(self):
+        self._brain = RandomBrain(self.num_actions())
 
     @staticmethod
     def race_fitrah():

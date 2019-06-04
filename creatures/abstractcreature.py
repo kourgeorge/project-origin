@@ -20,6 +20,7 @@ class AbstractCreature:
         self._parents = parents
         self._memory = deque(maxlen=self.memory_size())
         self._brain = None
+        self.initialize_brain()
 
     #########################################################
     # Virtual function to override when creating a new race #
@@ -58,6 +59,9 @@ class AbstractCreature:
         raise NotImplementedError()
 
     def decide(self, state):
+        raise NotImplementedError()
+
+    def initialize_brain(self):
         raise NotImplementedError()
 
     def __eq__(self, other):

@@ -31,8 +31,10 @@ class Stats:
             ('MaxAge',
              np.round(utils.emptynanmean([creature.life_expectancy() for creature in universe.get_all_creatures()]), 2)),
             ('BrainParam',
-             np.round(utils.emptynanmean([creature.brain_structure_param() for creature in universe.get_all_creatures()]),
-                      2)),
+             np.round(utils.emptynanmean([creature.brain_structure_param() for creature in universe.get_all_creatures()]), 2)),
+            ('MemorySize',
+             np.round(
+                 utils.emptynanmean([creature.memory_size() for creature in universe.get_all_creatures()]),2)),
             ('LFreq',
              np.round(utils.emptynanmean([creature.learning_frequency() for creature in universe.get_all_creatures()]),
                       2)),

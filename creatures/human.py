@@ -12,11 +12,10 @@ import numpy as np
 
 class Human(AbstractCreature):
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
-        self._brain = self.get_master_brain()
         self.new_born()
 
     def get_master_brain(self):
@@ -34,6 +33,9 @@ class Human(AbstractCreature):
                    ConfigBiology.BASE_LIFE_EXPECTANCY,
                    ConfigBrain.BASE_REWARD_DISCOUNT,
                    Human.race_fitrah())
+
+    def initialize_brain(self):
+        self._brain = self.get_master_brain()
 
     @staticmethod
     def get_actions():

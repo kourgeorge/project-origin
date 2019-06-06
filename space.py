@@ -77,9 +77,8 @@ class Space:
         nearby_creatures = creature.cell().creatures()
         if len(nearby_creatures) < 2:
             return None
-        for creature_nearby in nearby_creatures:
-            if creature_nearby != creature:
-                return creature_nearby
+        others = [creat for creat in nearby_creatures if creat != creature]
+        return np.random.permutation(others)[0]
 
     def find_nearby_creature_from_same_race(self, creature):
         others = self.get_nearby_creatures_from_same_race(creature)

@@ -79,6 +79,8 @@ class SimulationPage(tk.Frame):
 
         controller.protocol("WM_DELETE_WINDOW", self.close_window_event)
 
+        self.on_simulation_btn_click()
+
     def close_window_event(self):
         self.stop_simulation()
         self.window_closed = True

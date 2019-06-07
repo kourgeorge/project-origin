@@ -9,7 +9,7 @@ from evolution import DNA
 
 class Zombie(Human):
     """Human like creature but with no reason, acting from the inherited fitrah or behave randomly"""
-
+    _master_brain = None
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
@@ -35,12 +35,18 @@ class Zombie(Human):
 
     def decide(self, state):
         brain_actions_prob = self._brain.think(state)
-        action_prob = utils.normalize_dist(brain_actions_prob) # + self.fitrah()
+        action_prob = utils.normalize_dist(brain_actions_prob)  # + self.fitrah()
         decision = utils.epsilon_greedy(0, dist=action_prob)
         return decision
 
     def initialize_brain(self):
-        self._brain = RandomBrain(self.num_actions())
+        self._brain = self.get_master_brain()
+
+    def get_master_brain(self):
+        if Zombie._master_brain is None:
+            Zombie._master_brain = RandomBrain(self.num_actions())
+            return Zombie._master_brain
+        return Zombie._master_brain
 
     @staticmethod
     def race_fitrah():

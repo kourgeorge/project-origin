@@ -11,18 +11,11 @@ import numpy as np
 
 
 class Human(AbstractCreature):
-    _master_brain = None
     Fitrah = [0, 0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
         self.new_born()
-
-    def get_master_brain(self):
-        if Human._master_brain is None:
-            Human._master_brain = RandomBrain(self.num_actions())
-            return Human._master_brain
-        return Human._master_brain
 
     @staticmethod
     def race_basic_dna():
@@ -34,8 +27,6 @@ class Human(AbstractCreature):
                    ConfigBrain.BASE_REWARD_DISCOUNT,
                    Human.race_fitrah())
 
-    def initialize_brain(self):
-        self._brain = self.get_master_brain()
 
     @staticmethod
     def get_actions():
@@ -55,7 +46,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def self_race_enemy():
-        return True
+        return False
 
     def decide(self, state):
         eps = max(ConfigBrain.BASE_EPSILON,
@@ -63,6 +54,9 @@ class Human(AbstractCreature):
         brain_actions_prob = self.brain().think(state)
         action_prob = utils.normalize_dist(self.fitrah() + brain_actions_prob)
         decision = utils.epsilon_greedy(eps, action_prob)
+
+        # action_prob = utils.normalize_dist((1-eps)*self.fitrah() + eps*brain_actions_prob)
+        # decision = utils.epsilon_greedy(0, action_prob)
         return decision
 
     def new_born(self):

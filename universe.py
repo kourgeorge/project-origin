@@ -28,7 +28,7 @@ class Universe:
 
                 self.create_creature(race, id=self.allocate_id(), dna=dna,
                                      coord=(fathers_locations_i[n], fathers_locations_j[n]),
-                                     age=0, parents=None)
+                                     age=ages[n], parents=None)
 
         self.give_food(ConfigPhysics.INITIAL_FOOD_AMOUNT)
 
@@ -283,14 +283,18 @@ class Universe:
             return
         creature.reduce_energy(ConfigBiology.FIGHT_ENERGY)
 
-        if not creature.self_race_enemy():
-            opponent = self.space().find_nearby_creature_from_different_race(creature)
-        else:
+        if creature.self_race_enemy():
             opponent = self.space().find_nearby_creature(creature)
+        else:
+            opponent = self.space().find_nearby_creature_from_different_race(creature)
         if opponent is None:
             return
 
-        fight_res = utils.roll_fight(creature.energy(), opponent.energy())
+        opponent_support = creature.cell().race_energy_level(opponent.get_race()) - opponent.energy()
+        creature_support = creature.cell().race_energy_level(creature.get_race()) - creature.energy()
+
+        fight_res = utils.roll_fight(creature.energy() + creature_support, opponent.energy() + opponent_support)
+
         if fight_res == -1:
             energy_trans = int(opponent.energy() / 2)
             creature.add_energy(energy_trans)
@@ -300,20 +304,22 @@ class Universe:
             opponent.add_energy(energy_trans)
             creature.reduce_energy(energy_trans)
 
-    def creature_work(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.WORK)] += 1
-        if creature.energy() < ConfigBiology.WORK_ENERGY:
-            self.kill_creature(creature, 'work')
-            return
-        creature.reduce_energy(ConfigBiology.WORK_ENERGY)
-        creature.cell().add_food(ConfigBiology.MEAL_SIZE)
 
-    def creature_vocalize(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.VOCALIZE)] += 1
-        if creature.energy() < ConfigBiology.VOCALIZE_ENERGY:
-            self.kill_creature(creature, 'vocalize')
-            return
-        if [s for s in creature.cell().get_sounds() if s.creature() != creature]:
-            creature.add_energy(2)
-        creature.reduce_energy(ConfigBiology.VOCALIZE_ENERGY)
-        creature.cell().add_sound(Sound(creature, self._time))
+def creature_work(self, creature):
+    self.statistics.action_dist[Actions.enum_to_index(Actions.WORK)] += 1
+    if creature.energy() < ConfigBiology.WORK_ENERGY:
+        self.kill_creature(creature, 'work')
+        return
+    creature.reduce_energy(ConfigBiology.WORK_ENERGY)
+    creature.cell().add_food(ConfigBiology.MEAL_SIZE)
+
+
+def creature_vocalize(self, creature):
+    self.statistics.action_dist[Actions.enum_to_index(Actions.VOCALIZE)] += 1
+    if creature.energy() < ConfigBiology.VOCALIZE_ENERGY:
+        self.kill_creature(creature, 'vocalize')
+        return
+    if [s for s in creature.cell().get_sounds() if s.creature() != creature]:
+        creature.add_energy(2)
+    creature.reduce_energy(ConfigBiology.VOCALIZE_ENERGY)
+    creature.cell().add_sound(Sound(creature, self._time))

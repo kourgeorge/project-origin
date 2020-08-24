@@ -63,6 +63,8 @@ class BrainDQN(AbstractBrain):
         torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), max_norm=1)
         self.optimizer.step()
 
+        self.target_net.load_state_dict(self.policy_net.state_dict())
+
     def save_model(self, path):
         torch.save(self.policy_net.state_dict(), path)
 

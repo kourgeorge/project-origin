@@ -29,10 +29,11 @@ def epsilon_greedy(eps, dist):
 
 
 def dist_selection(dist):
-    select_prob = np.random.choice(dist, p=dist)
-    selection = np.argmax(dist == select_prob)
+    if sum(dist) != 1:
+        dist[0] = dist[0] + (1 - sum(dist))
+    action = np.argmax(np.random.multinomial(1, dist))
 
-    return selection
+    return action
 
 
 # Arg is an int and size is the len of the returning vector
@@ -58,10 +59,10 @@ def softmax(x, temprature=1):
     Columns are predictions (samples).
     """
     # x = normalize(np.reshape(x, (1, -1)), norm='l2')[0]
-    ex_x = np.exp(temprature * np.subtract(x, max(x)))
+    ex_x = np.exp(temprature * np.subtract(x, np.max(x)))
     if np.isinf(np.sum(ex_x)):
         raise Exception('Inf in softmax')
-    return ex_x / ex_x.sum(0)
+    return ex_x / np.sum(ex_x)
 
 
 def roll_fight(energy1, energy2):

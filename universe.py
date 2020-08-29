@@ -104,6 +104,7 @@ class Universe:
         state = creature.get_state()
         decision = creature.decide(state)
         action = creature.index_to_enum(decision)
+        self.statistics.action_dist.append([creature.id(), creature.get_race(), Actions.enum_to_index(action)])
         if action == Actions.LEFT:
             self.creature_move_left(creature)
         if action == Actions.RIGHT:
@@ -160,7 +161,6 @@ class Universe:
 
     ## AbstractCreature Actions
     def creature_eat(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.EAT)] += 1
         if creature.energy() < ConfigBiology.MOVE_ENERGY:
             self.kill_creature(creature)
             return
@@ -171,19 +171,15 @@ class Universe:
         creature.cell().remove_food(meal)
 
     def creature_move_left(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.LEFT)] += 1
         self.move_creature(creature, Actions.LEFT)
 
     def creature_move_right(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.RIGHT)] += 1
         self.move_creature(creature, Actions.RIGHT)
 
     def creature_move_up(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.UP)] += 1
         self.move_creature(creature, Actions.UP)
 
     def creature_move_down(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.DOWN)] += 1
         self.move_creature(creature, Actions.DOWN)
 
     def move_creature(self, creature, direction):
@@ -239,7 +235,6 @@ class Universe:
             creature.update_cell(new_cell)
 
     def creature_mate(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.MATE)] += 1
         if creature.age() < ConfigBiology.MATURITY_AGE:
             if creature.energy() < ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
@@ -261,7 +256,6 @@ class Universe:
                              parents=[creature, spouse])
 
     def creature_divide(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.DIVIDE)] += 1
         if creature.age() < ConfigBiology.MATURITY_AGE:
             if creature.energy() < ConfigBiology.MOVE_ENERGY:
                 self.kill_creature(creature)
@@ -277,7 +271,6 @@ class Universe:
         creature._age = 1
 
     def creature_fight(self, creature):
-        self.statistics.action_dist[Actions.enum_to_index(Actions.FIGHT)] += 1
         if creature.energy() < ConfigBiology.FIGHT_ENERGY:
             self.kill_creature(creature, 'fight')
             return

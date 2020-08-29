@@ -68,7 +68,7 @@ class Dashboard:
         self._line_pop.set_ydata(step_stats_df['Population'])
 
         self._line_age.set_xdata(step_stats_df['Time'])
-        self._line_age.set_ydata(step_stats_df['Age'])
+        self._line_age.set_ydata(step_stats_df['MeanAge'])
 
         self._line_aiq.set_xdata(step_stats_df['Time'])
         self._line_aiq.set_ydata(step_stats_df['AIQ'])

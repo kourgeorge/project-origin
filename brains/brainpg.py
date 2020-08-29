@@ -1,84 +1,105 @@
 __author__ = 'gkour'
 
-import tensorflow as tf
-import tensorflow.contrib.slim as slim
-import utils as utils
+import random
 import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+from brains.abstractbrain import AbstractBrain
+import os.path
+
+#torch.manual_seed(0)
+
+device = "cpu"
 
 
-class BrainPG:
-    sess = None
+def has_err(x):
+    return bool(((x != x) | (x == float("inf")) | (x == float("-inf"))).any().item())
 
-    @staticmethod
-    def init_session():
-        if BrainPG.sess is None:
-            tf.reset_default_graph()
-            BrainPG.sess = tf.Session()
 
-    def __init__(self, lr, s_size, action_size, h_size, scope, gamma, copy_from_scope=None):
-        self._s_size = s_size
-        self._action_size = action_size
-        self._h_size = h_size
-        self._gamma = gamma
-        self._regularization_param = 0.001
+class BrainPG(AbstractBrain):
+    BATCH_SIZE = 20
 
-        # Implementing F(state)=action
-        self.state_in = tf.placeholder(shape=[None, self._s_size], dtype=tf.float32)
-        self.reward_holder = tf.placeholder(shape=[None], dtype=tf.float32)
-        self.action_holder = tf.placeholder(shape=[None], dtype=tf.int32)
+    def __init__(self, observation_shape, num_actions, reward_discount, learning_rate=0.01):
+        super(BrainPG, self).__init__(observation_shape[0], num_actions)
+        self.policy = Policy(observation_shape[0], num_actions).to(device)
+        self.optimizer = optim.Adam(self.policy.parameters(), lr=learning_rate)
+        self.reward_discount = reward_discount
+        self.num_optimizations = 0
+        print("Pytorch PG. Num parameters: " + str(self.num_trainable_parameters()))
 
-        self.action_distribution = self._construct_policy_model(scope)
+    def think(self, obs):
+        with torch.no_grad():
+            action_probs = self.policy(torch.from_numpy(obs).float().unsqueeze_(0))
+        return action_probs[0].tolist()
 
-        taken_action_probability = BrainPG.get_decision_probability(self.action_holder, self.action_distribution)
+    def train(self, experience):
+        minibatch_size = min(BrainPG.BATCH_SIZE, len(experience))
+        if minibatch_size < BrainPG.BATCH_SIZE:
+            return
+        self.num_optimizations += 1
 
-        loss = -tf.reduce_mean(tf.log(taken_action_probability) * self.reward_holder)
-        self.optimize = tf.train.RMSPropOptimizer(learning_rate=lr).minimize(loss)
+        minibatch = random.sample(experience, minibatch_size)
+        state_batch = torch.from_numpy(np.stack([np.stack(data[0]) for data in minibatch])).float()
+        action_batch = torch.FloatTensor([data[1] for data in minibatch])
+        reward_batch = torch.FloatTensor([data[2] for data in minibatch])
+        nextstate_batch = torch.from_numpy(np.stack([data[3] for data in minibatch])).float()
 
-        # Initialize Variables
-        BrainPG.sess.run(tf.variables_initializer(tf.get_collection(tf.GraphKeys.VARIABLES, scope)))
+        # Scale rewards
+        # reward_std = 1 if torch.isnan(reward_batch.std()) else reward_batch.std()
+        # rewards = (reward_batch - reward_batch.mean()) / (reward_std  + np.finfo(np.float32).eps)
 
-        self.saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.VARIABLES, scope))
+        log_prob_actions = torch.log(torch.max(self.policy(state_batch).mul(action_batch), dim=1)[0])
 
-        if copy_from_scope is not None:
-            BrainPG.sess.run(utils.update_target_graph(copy_from_scope, scope))
+        # Calculate loss
+        loss = (torch.mean(torch.mul(log_prob_actions, reward_batch).mul(-1), -1))
 
-    def _construct_policy_model(self, scope):
-        with tf.variable_scope(scope):
-            net = slim.stack(self.state_in, slim.fully_connected, [self._h_size], activation_fn=tf.nn.relu)
+        # Optimize the model
+        self.optimizer.zero_grad()
+        loss.backward()
+        #assert not has_err(self.policy.affine.weight.grad)
+        #assert not has_err(self.policy.controller.weight.grad)
 
-            action_output = slim.fully_connected(net, self._action_size, activation_fn=tf.nn.softmax,
-                                                 weights_regularizer=slim.l2_regularizer(self._regularization_param))
-
-        return action_output
-
-    @staticmethod
-    def get_decision_probability(actual_decision, decisions_probabilities):
-        action_indexes = tf.range(0, tf.shape(decisions_probabilities)[0]) * tf.shape(decisions_probabilities)[
-            1] + actual_decision
-        return tf.gather(tf.reshape(decisions_probabilities, [-1]), action_indexes)
+        torch.nn.utils.clip_grad_norm_(self.policy.parameters(), max_norm=1)
+        # for param in self.policy_net.parameters():
+        #     param.grad.data.clamp_(-1, 1)
+        self.optimizer.step()
+        return loss.item()
 
     def save_model(self, path):
-        self.saver.save(BrainPG.sess, path)
+        torch.save(self.policy.state_dict(), path)
 
     def load_model(self, path):
-        self.saver.restore(BrainPG.sess, path)
+        if os.path.exists(path):
+            self.policy.load_state_dict(torch.load(path))
 
-    def act(self, obs):
-        action_dist = BrainPG.sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})
-        action = utils.dist_selection(action_dist[0])
-        # action = utils.epsilon_greedy(0.01, action_dist[0])
-        return action
+    def num_trainable_parameters(self):
+        return sum(p.numel() for p in self.policy.parameters())
 
-    def act_dist(self, sess, obs):
-        action_dist = sess.run(self.action_distribution, feed_dict={self.state_in: [obs]})
-        return action_dist[0]
 
-    def train(self, batch_obs, batch_acts, batch_rews, batch_newstate):
-        feed_dict = {self.reward_holder: batch_rews,
-                     self.action_holder: batch_acts,
-                     self.state_in: np.vstack(batch_obs)}
+class Policy(nn.Module):
+    def __init__(self, num_channels, num_actions):
+        super(Policy, self).__init__()
+        self.conv1 = nn.Conv2d(num_channels, 4, kernel_size=2)
+        self.bn1 = nn.BatchNorm2d(4)
+        self.conv2 = nn.Conv2d(4, 5, kernel_size=2)
+        self.bn2 = nn.BatchNorm2d(5)
+        self.head = nn.Linear(45, num_actions)
 
-        BrainPG.sess.run([self.optimize], feed_dict=feed_dict)
+        self.model = torch.nn.Sequential(
+            self.conv1,
+            #nn.ReLU,
+            nn.BatchNorm2d(4),
+            self.conv2,
+            #nn.ReLU,
+            nn.BatchNorm2d(5),
+            #nn.Dropout(p=0.6),
+            nn.Sigmoid(),
+            nn.Flatten(),
+            self.head,
+            nn.Softmax(dim=-1)
+        )
 
-    def state_size(self):
-        return self._s_size
+    def forward(self, x):
+        return self.model(x)

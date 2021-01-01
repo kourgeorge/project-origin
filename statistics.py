@@ -13,7 +13,7 @@ class Stats:
 
     def __init__(self):
         self.action_dist = []  # [Left Right Eat Mate Fight]
-        self.death_cause = [0, 0, 0, 0]  # [Fatigue Fight Elderly Fall]
+        self.death_cause = []  # [Fatigue Fight Elderly Fall]
         self.step_stats_df = pd.DataFrame()
         self.epoch_stats_df = pd.DataFrame()
 
@@ -44,10 +44,10 @@ class Stats:
             ('RDiscount', np.round(utils.emptynanmean([creature.reward_discount() for creature in universe.get_all_creatures()]), 2)),
             ('VRange',
              np.round(utils.emptynanmean([creature.vision_range() for creature in universe.get_all_creatures()]), 2)),
-            ('AIQ', AIQ.get_population_aiq(universe)),
+            ('AIQ', 0),
             ('RacesDist', universe.races_dist()),
             ('ActionDist', self.actions_dist_hist()),
-            ('DeathCause', self.death_cause),
+            ('DeathCause', self.actions_death_cause_hist()),
             ('CreaturesDist', universe.get_creatures_distribution()),
             ('FoodDist', universe.get_food_distribution()),
             ('Fitrah', np.round(np.nanmean([creature.fitrah() for creature in universe.get_all_creatures()], axis=0),
@@ -70,8 +70,12 @@ class Stats:
 
     def initialize_inter_step_stats(self):
         self.action_dist = []
-        self.death_cause = np.zeros_like(self.death_cause)
+        self.death_cause = []
 
     def actions_dist_hist(self):
-        actions = [creature_action_log[2] for creature_action_log in self.action_dist]
-        return np.histogram (actions, bins=range(0,Actions.num_actions()))[0]
+        actions = [creature_action_log[2] for creature_action_log in self.action_dist if creature_action_log[1].race_name()=='HumanPGUnifiedBrain']
+        return np.histogram(actions, bins=range(0, Actions.num_actions()+1))[0]
+
+    def actions_death_cause_hist(self):
+        causes = [creature_action_log[2] for creature_action_log in self.death_cause]
+        return np.histogram(causes, bins=range(0, 5))[0]

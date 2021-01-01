@@ -149,15 +149,17 @@ class Universe:
         cell = creature.cell()
         creature.update_cell(None)
         cell.remove_creature(creature)
+
         if self.statistics is not None:
             if cause == 'fight':
-                self.statistics.death_cause[1] += 1
+                self.statistics.death_cause.append([creature.id(), creature.get_race(), 1])
             elif cause == 'elderly':
-                self.statistics.death_cause[2] += 1
+                self.statistics.death_cause.append([creature.id(), creature.get_race(), 2])
             elif cause == 'fall':
-                self.statistics.death_cause[3] += 1
+                self.statistics.death_cause.append([creature.id(), creature.get_race(), 3])
             else:  # fatigue
-                self.statistics.death_cause[0] += 1
+                self.statistics.death_cause.append([creature.id(), creature.get_race(), 0])
+            print(self.statistics.death_cause[-1])
 
     ## AbstractCreature Actions
     def creature_eat(self, creature):
@@ -298,21 +300,21 @@ class Universe:
             creature.reduce_energy(energy_trans)
 
 
-def creature_work(self, creature):
-    self.statistics.action_dist[Actions.enum_to_index(Actions.WORK)] += 1
-    if creature.energy() < ConfigBiology.WORK_ENERGY:
-        self.kill_creature(creature, 'work')
-        return
-    creature.reduce_energy(ConfigBiology.WORK_ENERGY)
-    creature.cell().add_food(ConfigBiology.MEAL_SIZE)
+    def creature_work(self, creature):
+        self.statistics.action_dist[Actions.enum_to_index(Actions.WORK)] += 1
+        if creature.energy() < ConfigBiology.WORK_ENERGY:
+            self.kill_creature(creature, 'work')
+            return
+        creature.reduce_energy(ConfigBiology.WORK_ENERGY)
+        creature.cell().add_food(ConfigBiology.MEAL_SIZE)
 
 
-def creature_vocalize(self, creature):
-    self.statistics.action_dist[Actions.enum_to_index(Actions.VOCALIZE)] += 1
-    if creature.energy() < ConfigBiology.VOCALIZE_ENERGY:
-        self.kill_creature(creature, 'vocalize')
-        return
-    if [s for s in creature.cell().get_sounds() if s.creature() != creature]:
-        creature.add_energy(2)
-    creature.reduce_energy(ConfigBiology.VOCALIZE_ENERGY)
-    creature.cell().add_sound(Sound(creature, self._time))
+    def creature_vocalize(self, creature):
+        self.statistics.action_dist[Actions.enum_to_index(Actions.VOCALIZE)] += 1
+        if creature.energy() < ConfigBiology.VOCALIZE_ENERGY:
+            self.kill_creature(creature, 'vocalize')
+            return
+        if [s for s in creature.cell().get_sounds() if s.creature() != creature]:
+            creature.add_energy(2)
+        creature.reduce_energy(ConfigBiology.VOCALIZE_ENERGY)
+        creature.cell().add_sound(Sound(creature, self._time))

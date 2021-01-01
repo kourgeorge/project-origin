@@ -58,7 +58,7 @@ class SimulationPage(tk.Frame):
         title_label.pack(pady=10, padx=10)
 
         self.s = ttk.Style()
-        self.s.theme_use('vista')
+        #self.s.theme_use('vista')
 
         self.status_label = tk.Label(self, text="Simulator Ready.", bg='white')
         self.status_label.pack(pady=10, padx=10)

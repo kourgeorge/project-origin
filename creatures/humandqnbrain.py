@@ -42,9 +42,6 @@ class HumanDQNBrain(Human):
     def race_fitrah():
         return utils.normalize_dist(HumanDQNBrain.Fitrah)
 
-    @staticmethod
-    def self_race_enemy():
-        return False
 
     def model_path(self):
         return './models/' + self.race_name()

@@ -22,7 +22,7 @@ class Universe:
 
             fathers_locations_i = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
             fathers_locations_j = np.random.choice(ConfigPhysics.SPACE_SIZE, num_fathers)
-            ages = np.random.randint(low=0, high=ConfigBiology.BASE_LIFE_EXPECTANCY, size=num_fathers)
+            ages = np.zeros(num_fathers) #np.random.randint(low=0, high=ConfigBiology.BASE_LIFE_EXPECTANCY, size=num_fathers)
             for n in range(num_fathers):
                 dna = Evolution.mutate_dna(race.race_basic_dna())
 
@@ -96,9 +96,9 @@ class Universe:
         return len(self.get_all_creatures())
 
     def execute_action(self, creature):
-        if creature.age() > creature.life_expectancy():
-            self.kill_creature(creature, cause='elderly')
-            return
+        # if creature.age() > creature.life_expectancy():
+        #     self.kill_creature(creature, cause='elderly')
+        #     return
         creature.increase_age()
         previous_energy = creature.energy()
         state = creature.get_state()
@@ -159,7 +159,7 @@ class Universe:
                 self.statistics.death_cause.append([creature.id(), creature.get_race(), 3])
             else:  # fatigue
                 self.statistics.death_cause.append([creature.id(), creature.get_race(), 0])
-            print(self.statistics.death_cause[-1])
+            #print(self.statistics.death_cause[-1])
 
     ## AbstractCreature Actions
     def creature_eat(self, creature):

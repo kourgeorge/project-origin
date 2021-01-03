@@ -10,7 +10,7 @@ from evolution import DNA
 class Zombie(Human):
     """Human like creature but with no reason, acting from the inherited fitrah or behave randomly"""
     _master_brain = None
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Zombie, self).__init__(universe, id, dna, age, energy, parents)

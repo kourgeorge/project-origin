@@ -8,6 +8,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from brains.abstractbrain import AbstractBrain
 import os.path
+import math
 
 #torch.manual_seed(0)
 
@@ -32,6 +33,8 @@ class BrainPG(AbstractBrain):
     def think(self, obs):
         with torch.no_grad():
             action_probs = self.policy(torch.from_numpy(obs).float().unsqueeze_(0))
+            if math.isnan(action_probs[0][0].item()):
+                raise Exception('nan probability')
         return action_probs[0].tolist()
 
     def train(self, experience):
@@ -40,17 +43,21 @@ class BrainPG(AbstractBrain):
             return
         self.num_optimizations += 1
 
-        minibatch = random.sample(experience, minibatch_size)
+        minibatch = experience #list(experience)[-5:] # random.sample(experience, minibatch_size)
         state_batch = torch.from_numpy(np.stack([np.stack(data[0]) for data in minibatch])).float()
         action_batch = torch.FloatTensor([data[1] for data in minibatch])
+        # removing the discounting from here.
+        #reward_batch = torch.FloatTensor(utils.discount_rewards([data[2] for data in minibatch], self.reward_discount))
         reward_batch = torch.FloatTensor([data[2] for data in minibatch])
         nextstate_batch = torch.from_numpy(np.stack([data[3] for data in minibatch])).float()
 
         # Scale rewards
-        # reward_std = 1 if torch.isnan(reward_batch.std()) else reward_batch.std()
-        # rewards = (reward_batch - reward_batch.mean()) / (reward_std  + np.finfo(np.float32).eps)
+        #reward_std = 1 if torch.isnan(reward_batch.std()) else reward_batch.std()
+        #rewards = (reward_batch - reward_batch.mean()) / (reward_std + np.finfo(np.float32).eps)
 
-        log_prob_actions = torch.log(torch.max(self.policy(state_batch).mul(action_batch), dim=1)[0])
+        prob_action_batch = self.policy(state_batch)
+        prob_actions = torch.max(prob_action_batch.mul(action_batch), dim=1)[0]
+        log_prob_actions = torch.log(prob_actions)
 
         # Calculate loss
         loss = (torch.mean(torch.mul(log_prob_actions, reward_batch).mul(-1), -1))
@@ -58,13 +65,14 @@ class BrainPG(AbstractBrain):
         # Optimize the model
         self.optimizer.zero_grad()
         loss.backward()
-        #assert not has_err(self.policy.affine.weight.grad)
-        #assert not has_err(self.policy.controller.weight.grad)
 
         torch.nn.utils.clip_grad_norm_(self.policy.parameters(), max_norm=1)
         # for param in self.policy_net.parameters():
         #     param.grad.data.clamp_(-1, 1)
         self.optimizer.step()
+        #print(loss.item())
+        if math.isinf(loss.item()):
+            raise Exception('INF probability')
         return loss.item()
 
     def save_model(self, path):
@@ -100,6 +108,16 @@ class Policy(nn.Module):
             self.head,
             nn.Softmax(dim=-1)
         )
+
+        # self.net = nn.Sequential(
+        #     nn.Flatten(),
+        #     nn.Linear(in_features=num_channels, out_features=8, bias=False),
+        #     nn.PReLU(),
+        #     nn.Linear(in_features=8, out_features=8, bias=False),
+        #     nn.PReLU(),
+        #     nn.Linear(in_features=8, out_features=num_actions, bias=False),
+        #     nn.Softmax(dim=-1)
+        # )
 
     def forward(self, x):
         return self.model(x)

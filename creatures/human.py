@@ -11,7 +11,7 @@ import numpy as np
 
 
 class Human(AbstractCreature):
-    Fitrah = [0, 0, 0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(Human, self).__init__(universe, id, dna, age, energy, parents)
@@ -30,7 +30,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE, Actions.FIGHT]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.MATE]
 
     @staticmethod
     def get_race():
@@ -52,11 +52,10 @@ class Human(AbstractCreature):
         eps = max(ConfigBrain.BASE_EPSILON,
                   1 - (self._age / (self.learning_frequency() * ConfigBiology.MATURITY_AGE)))
         brain_actions_prob = self.brain().think(state)
-        action_prob = utils.normalize_dist(self.fitrah() + brain_actions_prob)
-        decision = utils.epsilon_greedy(eps, action_prob)
+        #There is a problem with the dna fitrah (7 instead of 6).
+        #action_prob = utils.normalize_dist(self.fitrah() + brain_actions_prob)
+        decision = utils.epsilon_greedy(eps, brain_actions_prob)
 
-        # action_prob = utils.normalize_dist((1-eps)*self.fitrah() + eps*brain_actions_prob)
-        # decision = utils.epsilon_greedy(0, action_prob)
         return decision
 
     def new_born(self):

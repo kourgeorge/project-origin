@@ -30,7 +30,7 @@ class Human(AbstractCreature):
 
     @staticmethod
     def get_actions():
-        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT]
+        return [Actions.LEFT, Actions.RIGHT, Actions.UP, Actions.DOWN, Actions.EAT, Actions.FIGHT]
 
     @staticmethod
     def get_race():

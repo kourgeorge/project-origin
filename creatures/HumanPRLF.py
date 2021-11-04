@@ -15,7 +15,7 @@ from evolution import DNA
 
 
 class HumanPRLF(Human):
-    Fitrah = [0, 0, 0, 0, 0]
+    Fitrah = [0, 0, 0, 0, 0, 0]
 
     def __init__(self, universe, id, dna, age=0, energy=ConfigBiology.INITIAL_ENERGY, parents=None):
         super(HumanPRLF, self).__init__(universe, id, dna, age, energy, parents)
@@ -149,4 +149,5 @@ def initialize_PRLF_agent(obs_size, n_actions):
         gpu=gpu,
     )
 
+    print("Pytorch PRLF. Num parameters: {}".format(sum(p.numel() for p in q_func.parameters())))
     return agent

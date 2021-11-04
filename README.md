@@ -72,6 +72,8 @@ Please contact us in the following address "kourgeorge at gmail dot com", or sim
 * 07.12.2018 - Adding sexual attraction for spouse selection
 * 08.12.2018 - Improving the architecture and communication between the GUI and the simulator.
 * 12.12.2018 - Adding communication infrastructure.
+* 4.11.2021 - We need to show that the advaced species perform better in the environment, i.e., Zombie<DNA<Brain.
+* TBI - Building a strategic battlefield such as capture the flag. 
 * TBI - Adding Criticism mechanism using social actor critic.
 * TBI - Arcade environment facade that will allow gym like interaction with the environment.
 * TBI - adding Dopamine implementation for RL algorithms.

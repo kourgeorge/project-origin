@@ -13,4 +13,5 @@ class ConfigSimulator:
     CSV_LOGGING = False
     LOGGING_BATCH_SIZE = 10
     UI_UPDATE_INTERVAL = 100  # ms
-    RACES = [HumanPRLFUnifiedBrain, HumanPRLF]
+    RACES = [Zombie, HumanPRLFUnifiedBrain]
+    SIMULATION_TIME_UNIT = 0.5 #s

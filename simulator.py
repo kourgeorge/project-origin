@@ -33,6 +33,7 @@ class Simulator:
         self._report_state()
 
         while self._status == SimState.RUNNING and universe.pass_time():
+            time.sleep(ConfigSimulator.SIMULATION_TIME_UNIT)
             stats.accumulate_step_stats(universe)
             printing.print_step_stats(stats)
             self._report(stats)

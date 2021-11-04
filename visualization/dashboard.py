@@ -102,7 +102,8 @@ class Dashboard:
         actions_dist = np.mean(step_stats_df['ActionDist'].tail(ConfigSimulator.LOGGING_BATCH_SIZE).values, axis=0)
         self._fig_action.clear()
         patches, texts, autotexts = self._fig_action.pie(actions_dist,
-                                                         startangle=90, autopct=self.make_autopct(actions_dist))
+                                                         startangle=90, autopct=self.make_autopct(actions_dist),
+                                                         normalize=True)
         self._fig_action.legend(patches, labels=Actions.get_actions_str(), loc=(1, 0))
 
         ## Death Dist Pie
